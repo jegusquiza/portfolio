@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Impossible Landscapes</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
+
+      <!-- <link rel="stylesheet" href="css/style.css"> -->
+
+
+</head>
+
+<body>
+
+  <a href ="http://www.juanjose.xyz/">
+      <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
+    </a>
+
+  <!-- <h3>Impossible Landscapes</h3> -->
+
+  <article class="article">
+  <header class="header">
+
+    <h1 class="headline">
+      &nbsp; Impossible Landscapes <br>
+    </h1>
+
+    <div class="takemeback">
+    <a href="http://www.juanjose.xyz/bio.html">BACK</a>
+  </div>
+
+  </header>
+
+  <!-- <p></p> -->
+</article>
+
+
+
+
+
+
+<section class="gallery-container">
+  <!--El div .previa se acciona con js para realizar la vista de la imagen en tamaño grande width="525" height="600"-->
+  <div id="previa">
+    <div id="imgFull">
+      <img src="" alt="" width="100%"/>
+    </div>
+  </div>
+  <div class="gallery">
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/83a18f79645403.5cc9b9ec6649d.jpg" alt="83a18f79645403.5cc9b9ec6649d"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/1b14cc79645403.5cc9b9ec67d39.jpg" alt="1b14cc79645403.5cc9b9ec67d39"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/acb6a879645403.5cc9b9ec67508.jpg" alt="acb6a879645403.5cc9b9ec67508"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/8861d479645403.5cc9b9ec67165.jpg" alt="8861d479645403.5cc9b9ec67165"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/d0772b79645403.5cc9b9ec68163.jpg" alt="d0772b79645403.5cc9b9ec68163"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/930e5f79645403.5cc9b9ec6770c.jpg" alt="930e5f79645403.5cc9b9ec6770c"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/98832279645403.5cc9b9ec68925.jpg" alt="98832279645403.5cc9b9ec68925"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/3890a779645403.5cc9b9ec68741.jpg" alt="3890a779645403.5cc9b9ec68741"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/fa1ae579645403.5cc9b9ec66f03.jpg" alt="fa1ae579645403.5cc9b9ec66f03"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/45d07179645403.5cc9b9ec68557.jpg" alt="45d07179645403.5cc9b9ec68557"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/c796e079645403.5cc9b9ec67f6c.jpg" alt="c796e079645403.5cc9b9ec67f6c"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/988ff379645403.5cc9b9ec66c7d.jpg" alt="988ff379645403.5cc9b9ec66c7d"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/c3006079645403.5cc9b9ec67ac1.jpg" alt="c3006079645403.5cc9b9ec67ac1"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/8e7fa179645403.5cc9b9ec668cb.jpg" alt="8e7fa179645403.5cc9b9ec668cb"/>
+    <img src="https://mir-cdn.behance.net/v1/rendition/project_modules/fs/5a384c79645403.5cc9b9ec68361.jpg" alt="5a384c79645403.5cc9b9ec68361"/>
+
+  </div>
+</section>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+
+
+
+    <!-- <script  src="js/index.js"></script> -->
+    <script>
+    $(document).on('ready', inicio);
+      // Funciones claves, apertura y cierre de vista previa
+      function inicio(){
+        $('.gallery img').on('click', abrirFull);
+        $('#previa').on('click', cerrarFull);
+      }
+      //
+      function abrirFull(){
+        var nombre = $(this).attr('alt'),
+            direccion = "https://mir-cdn.behance.net/v1/rendition/project_modules/fs/" + nombre + ".jpg";
+
+        $('#imgFull img').attr('src', direccion);
+        $('#previa').fadeIn();
+      }
+
+    function cerrarFull(){
+      $('#previa').fadeOut();
+    }
+
+    </script>
+
+
+
+
+</body>
+
+<style>
+
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700); */
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+
+
+body {
+      background-color: #131313;
+      color: #fff;
+      font-family: 'Montserrat', 'Extra-Bold';
+    }
+
+
+
+img.home{
+      width: 15%;
+      margin-left: 80%;
+      margin-top: 1%;
+      margin-bottom: 1%;
+      border:0;
+    }
+
+    h1 { font-size: 3.5rem; font-weight: 900; margin: 1rem 0; line-height: 1.1;  }
+    h2 { font-size: 2.5rem; }
+    h3 { font-size: 2rem; }
+    p { font-size: 1.55rem; opacity: 0.8; }
+    .article { max-width: 45rem; padding: 0 1rem; margin: 0 auto; margin-bottom: 10%; margin-top: 5%}
+    img { max-width: 300%; }
+
+
+
+
+
+.gallery-container {
+  position: relative;
+  width: 90%;
+  height: auto;
+  margin: auto;
+  z-index:10;
+}
+
+.gallery {
+  position: relative;
+  min-width: 10px;
+  max-width: 100%;
+  min-height: 300px;
+  max-height: auto;
+  margin: auto;
+}
+.gallery img {
+  width: 310px;
+  height: 200px;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: inline;
+}
+
+.takemeback{
+  text-align: center;
+  font-size: 25px;
+}
+/* .takemeback a{
+  font-size: 30px;
+  text-align: center;
+} */
+/*Diseño del contenedor de la previa*/
+#previa {
+  display: none;
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.7);
+  cursor: pointer;
+  z-index:100;
+}
+#imgFull {
+  width: 900px;
+  height: auto;
+  margin: 6em auto;
+  background: #000;
+}
+
+
+
+@media (min-width: 250px) and (max-width: 479px) {
+
+  .gallery-container {
+    width: 225px;
+
+  }
+
+  .gallery img {
+    width: 200%;
+  margin-left: 0;
+}
+  #imgFull {
+    width: 100%;
+  }
+
+  .takemeback{
+    text-align: center;
+
+  }
+
+  .takemeback a{
+    font-size: 100%;
+  }
+}
+
+
+
+
+</style>
+
+</html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>The divers</title>
+<head>
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel='stylesheet'>
+    <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700'>
+    <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.8.1/tachyons.min.css'> -->
+    <!-- CSS -->
+    <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <!-- <link href="css/style.css" rel="stylesheet" type="text/css"> -->
+
+</head>
+
+<body>
+  <div class="description">
+    <a href ="http://www.juanjose.xyz/">
+      <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
+    </a>
+
+
+    <!-- <div id="particles-js"> -->
+        <div class="container">
+            <div class="row top">
+                <div class="twelve column">
+                  <br>
+                    <h1>The divers</h1>
+                    <h3>Photographer, retoucher, editor</h3>
+                    <hr/>
+
+
+                    <section class="gallery-container">
+  <!--El div .previa se acciona con js para realizar la vista de la imagen en tamaño grande width="525" height="600"-->
+  <div id="previa">
+    <div id="imgFull">
+      <img src="" alt="" width="100%"/>
+    </div>
+  </div>
+  <div class="gallery">
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/551f4583294405.5d38053e6701c.jpg" alt="551f4583294405.5d38053e6701c"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/dccd9783294405.5d38053e66497.jpg" alt="dccd9783294405.5d38053e66497"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/df4e1d83294405.5d38053e65ec6.jpg" alt="df4e1d83294405.5d38053e65ec6"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/e404b483294405.5d38053e65880.jpg" alt="e404b483294405.5d38053e65880"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/6d857e83294405.5d65ba63a41f6.jpg" alt="6d857e83294405.5d65ba63a41f6"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/41c99583294405.5e703a25a8a0f.jpg" alt="41c99583294405.5e703a25a8a0f"/>
+
+  </div>
+</section>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+
+
+
+    <!-- <script  src="js/index.js"></script> -->
+    <script>
+    $(document).on('ready', inicio);
+      // Funciones claves, apertura y cierre de vista previa
+      function inicio(){
+        $('.gallery img').on('click', abrirFull);
+        $('#previa').on('click', cerrarFull);
+      }
+      //
+      function abrirFull(){
+        var nombre = $(this).attr('alt'),
+            direccion = "https://mir-cdn.behance.net/v1/rendition/project_modules/fs/" + nombre + ".jpg";
+
+        $('#imgFull img').attr('src', direccion);
+        $('#previa').fadeIn();
+      }
+
+    function cerrarFull(){
+      $('#previa').fadeOut();
+    }
+
+    </script>
+
+
+                    <!-- <hr/> -->
+
+                    <h2>ABOUT:</h2>
+                  <p>Traveling has always been a source of inspiration for me.
+                   It's the reason why I started taking photographs and how I started exploring photo-compositing and image manipulation. </p>
+
+
+                    <a class="button" target="_blank" href="https://www.instagram.com/p/B5BSqtaJfOp/">PRINTS</a>
+                    <a class="button" target="_blank" href="https://create.adobe.com/2019/8/19/_juan_jose_egusquiza.html">CREATE MAGAZINE</a>
+                    <!-- <a class="button" target="_blank" href="https://lightroom.adobe.com/learn/discover/2352df1c-5c71-4be6-bcc0-856adde28422">LIGHTROOM DISCOVERY</a> -->
+
+
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="one-half column">
+                    <div class="pens pulled">
+                        <h2>TOOLS:</h2>
+                        <ul>
+
+                          <p> Lightroom <br>
+                            Photoshop<br>
+                            Adobe Stock
+
+                          </br>
+
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="one-half column">
+                    <div class="posts pulled">
+                        <h2>CREDITS:</h2>
+                        <ul>
+                        <p>  MICROSOFT  <br>
+                          NYU <br>
+
+                        </p>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    <!-- </div> -->
+    <!-- <div class="row">
+        <div class="u-full-width column cta">
+            <div class="logo smallLogo">
+                V
+            </div>
+            <ul class="footerLinks">
+                <li><a href="https://twitter.com/booduu">Twitter</a></li>
+                <li><a href="https://www.linkedin.com/in/joseph-victory-4ba45617">Linkedin</a></li>
+                <li><a href="https://github.com/j-w-v">Github</a></li>
+                <li><a href="http://codepen.io/j-w-v/">Codepen</a></li>
+                <li><a href="mailto:jwv.gib@gmail.com">Contact</a></li>
+            </ul> -->
+
+            <!-- <button onclick="location.href='mailto:jwv.gib@gmail.com';" class="button-primary ">Contact Me</button> -->
+        <!-- </div> -->
+    <!-- </div> -->
+    <!-- Javascript -->
+    <style>
+    BODY {
+        /* background: #282931; */
+        /* background-color: #131313; */
+        background-color: #191919;
+        -webkit-font-smoothing: antialiased;
+        /* font-family: 'Varela Round', sans-serif; */
+        font-family: 'Montserrat', 'Extra-Bold';
+        height: 100%;
+        margin: 0px;
+    }
+
+    canvas {
+        height: 100vh;
+        z-index: -10;
+        position: fixed;
+        top: 0px;
+    }
+
+    a {
+        color: #bbbbc4;
+        text-decoration: none;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s;
+    }
+
+    a:hover {
+        color: #b75f35;
+        /* color: #fc3565; */
+    }
+
+    h1 {
+        /* color: #fc3565; */
+
+        color: #b75f35;
+        padding-bottom: 0px;
+        margin-bottom: 1%;
+
+    }
+
+    h2 {
+        color: white;
+        /* color: #b75f35; */
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    h3 {
+        color: #bbbbc4;
+        /* color: #b75f35; */
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    p {
+        color: #bbbbc4;
+        font-size: 1.7rem;
+    }
+
+    label {
+        color: #ffffff;
+        display: block;
+        font-size: 0.8em;
+        font-weight: 600;
+        letter-spacing: 0.25em;
+        margin: 0 0 1em 0;
+        text-transform: uppercase;
+    }
+
+    input, textarea {
+          font-size: 17pt;
+        font-weight: 300;
+        letter-spacing: 0.025em;
+        line-height: 1.65;
+
+    }
+
+    hr {
+          margin-top: 3%;
+          margin-bottom: 3%;
+          width: 90%;
+        }
+
+        img.home{
+        width: 10%;
+        margin-left: 80%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        border:0;
+      }
+
+      .gallery-container {
+  position: relative;
+  width: 110%;
+  height: auto;
+  /* margin: auto; */
+  margin-left: 0%;
+  margin-right: 5%;
+  z-index:10;
+}
+
+.gallery {
+  position: relative;
+  min-width: 10px;
+  max-width: 150%;
+  min-height: 250px;
+  max-height: auto;
+  margin: auto;
+}
+.gallery img {
+  width: 310px;
+  height: 200px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: inline;
+}
+/*Diseño del contenedor de la previa*/
+#previa {
+  display: none;
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.7);
+  cursor: pointer;
+  z-index:100;
+}
+#imgFull {
+  width: 1200px;
+  height: auto;
+  margin: 6em auto;
+  background: #000;
+}
+
+    /* input[type=email],
+    input[type=number],
+    input[type=password],
+    input[type=search],
+    input[type=tel],
+    input[type=text],
+    input[type=url],
+    textarea {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        appearance: none;
+        background: rgba(212, 212, 255, 0.035);
+        border: none;
+        border-radius: 0;
+        color: inherit;
+        display: block;
+        outline: 0;
+        padding: 0 1em;
+        text-decoration: none;
+        width: 100%;
+        color: #FFF;
+    } */
+
+    /* input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="search"]:focus,
+    input[type="url"]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #f76f91;
+        box-shadow: 0 0 0 2px #f76f91;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="url"],
+    select {
+        height: 2.75em;
+    } */
+    /*
+    #message{
+      min-width: 100%;
+      min-height: 25rem;
+    } */
+
+    /* .logo a{
+      color: #FFF;
+    }
+
+    .logo {
+        font-family: 'Monoton', cursive;
+        color: white;
+        font-size: 8rem;
+    } */
+
+    .row.top p {
+        color: #bbbbc4;
+        margin-top: 1rem;
+        text-align: justify;
+        font-size: 1.7rem;
+    }
+
+    .contact {
+        display: inline-block;
+    }
+
+    .pulled {}
+
+    .pulled ul {
+        padding-top: 2rem;
+    }
+
+    .pulled ul li {
+        list-style: none;
+        margin-right: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .pulled h2 {
+        color: white;
+
+        font-size: 3rem;
+    }
+
+    .pulled ul li span {
+        font-size: 1.2rem;
+    }
+
+    /* .smallLogo {
+        font-size: 3.5rem;
+    } */
+
+    /* .services h2 {
+        color: #fc3565;
+        padding-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+
+    .services .title {
+        color: #DEDEDE;
+        font-size: 3rem;
+    } */
+
+    .u-full-width {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .cta {
+        text-align: center;
+    }
+
+    .cta p {
+        color: white;
+        font-size: 2rem;
+        display: inline-block;
+        margin: 1.5rem;
+        text-align: center;
+    }
+
+    .footer {}
+
+    .footer p {
+        color: white;
+        font-size: 1rem;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .footerLinks {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .footerLinks li {
+        display: inline-block;
+        color: white;
+        margin: 10px;
+    }
+
+    .button {
+        box-sizing: border-box;
+        /* background-color: transparent; */
+        background-color: #131313;
+
+        border: 0;
+        border-radius: 0;
+        box-shadow: inset 0 0 0 2px #b75f35;
+        color: #b75f35;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 0.8em;
+        font-weight: 600;
+        height: 3.5em;
+        letter-spacing: 0.25em;
+        line-height: 3.5em;
+        padding: 0 1.75em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+        margin-bottom: 2rem;
+    }
+
+    .button:hover {
+        border-bottom-color: transparent;
+        color: #ffffff !important;
+
+        /* color: #f76f91 !important; */
+        /* box-shadow: inset 0 0 0 2px #f76f91; */
+        box-shadow: inset 0 0 0 2px #ffffff;
+
+    }
+
+    .button:focus {
+        color: #fff;
+    }
+
+    iframe{
+            width: 100%;
+            align: "center";
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+
+    /* .services .code {
+        background: #9bf1ff;
+    }
+
+    .services .cms {
+        background: #7C75B2;
+    }
+
+    .services .seo {
+        background: #C2A9B0;
+    }
+
+    .services .social {
+        background: #DEB68F;
+    }
+
+    .services p {
+        color: white;
+    } */
+
+
+    /* Mobile first queries */
+
+
+    /* Larger than mobile */
+
+    @media (min-width: 400px) {}
+
+
+    /* Larger than phablet */
+
+    @media (min-width: 550px) {}
+
+
+    /* Larger than tablet */
+
+    @media (min-width: 750px) {
+        .services {
+            width: 100%;
+            max-width: 100%;
+        }
+        .services .column {
+            margin: 0;
+        }
+    }
+
+
+    /* Larger than desktop */
+
+    @media (min-width: 1000px) {
+        .footer {}
+        .cta {
+            position: fixed;
+            bottom: 0px;
+            text-align: center;
+        }
+    }
+
+
+    /* Larger than Desktop HD */
+
+    @media (min-width: 1200px) {
+        h1 {
+            font-size: 5rem;
+        }
+    }
+
+    @media (min-width: 250px) and (max-width: 479px) {
+
+  .gallery-container {
+    width: 225px;
+
+  }
+
+  .gallery img {
+    width: 200%;
+  margin-left: 0;
+}
+  #imgFull {
+    width: 100%;
+  }
+
+  .takemeback{
+    text-align: center;
+
+  }
+
+  .takemeback a{
+    font-size: 100%;
+  }
+}
+
+    </style>
+
+
+
+</html>

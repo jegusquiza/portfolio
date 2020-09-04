@@ -33,28 +33,36 @@ Juan Jose Egusquiza
     </a>
   </div>
 
-  <div class="description">
-      <!-- <h1>I am a creative technologist using technology to create experimental and immmersive art projects.</h1> -->
-      <!-- <h1>I create images and stories experimenting with new mediums &  technologies.</h1> -->
-      <h1> Exploring new tools and technologies in order to create motion imagery. </h1>
-      <!-- <h1> I create/construct/build an image almost every day using a combinations of new tools and technologies.</h1> -->
-      
-      <h2>
-      <!-- I'm writing something here... -->
-      </h2>
-  </div>
-
   <div class = "go">
-    <a class="button" href="/aboutme.html">ABOUT ME</a>
+    <a class="button" href="/tech.html">TECH</a>
     <a class="button" href="/impossible.html">IMPOSSIBLE LANDSCAPES</a>
+    <a class="button" href="/aboutme.html">ABOUT ME</a>
         <!-- <a class="button" target="_blank" href="https://www.behance.net/gallery/88987125/VERTIGO">TECH</a>
         <a class="button" target="_blank" href="https://www.instagram.com/p/B8cQ5php5EL/">IMAGES</a> -->
   </div>
 
-    <hr class="line_one">
-    <h6> CREATIONS  </h6>
-        <!-- creations -->
-    <hr class="line_two">
+  <!-- <div class="main">
+  <h4>FULL SCREEN VIDEO BACKGROUND DEMO <br /><span style="font-size:10px;">film by https://madcowfilms.co.uk/ </span></h4>
+</div> -->
+
+<video autoplay loop id="video-background" muted>
+  <source src="/video/moving_still.mp4" type="video/mp4">
+</video>
+
+  <!-- <div class="description">
+
+      <h1> </h1>
+
+      <h2>
+
+      </h2>
+  </div> -->
+
+
+
+    <!-- <hr class="line_one"> -->
+    <!-- <h6> CREATIONS  </h6>
+    <hr class="line_two"> -->
 
       <!-- PROJECTS -->
 <div class="c-work">
@@ -191,7 +199,6 @@ Juan Jose Egusquiza
     <!-- WORK ITEM -->
     <!-- <li class="c-work__item">
       <div class="c-work-item js-work-item" data-work-preview-id="5">
-
         <div class="c-work-item__title">
           <h3 class="u-a6">
             <a href="/pythontv.html">PYTHON TV</a>
@@ -266,6 +273,19 @@ body {
 
   }
 
+  #video-background {
+  position: fixed;
+  right: 0;
+  /* margin-right: 2px; */
+
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+}
+
   h1{
     font-size:5vw;
     /* padding: 0.5px; */
@@ -297,11 +317,9 @@ body {
   /* h4{
     font-size:4vw;
     padding: 0.5px;
-
     margin-left: -40%;
     margin-bottom: 0.5%;
     margin-top: 1%;
-
   } */
 
 
@@ -309,6 +327,18 @@ body {
     margin-bottom: 0;
     margin-top: 0;
   } */
+
+  h4 {
+  position: absolute;
+  bottom: 1%;
+  left:5%;
+  width: 94%;
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  text-align: left;
+}
 
   h6{
     font-size:4.8vw;
@@ -360,7 +390,8 @@ body {
   }
 
   .go {
-    margin-left: 5%;
+    margin-left: 3%;
+    margin-top: -2%;
   }
 
   .description{
@@ -368,7 +399,9 @@ body {
   }
 
   a {
-      color: #bbbbc4;
+      /* color: #bbbbc4; */
+      color: #131313;
+      opacity: 0.8;
       text-decoration: none;
       -o-transition: .5s;
       -ms-transition: .5s;
@@ -492,7 +525,7 @@ hr.line_two {
   height: 100vh;
   display: flex;
   align-items: left;
-  margin-top: 5%;
+  margin-top: 2%;
   margin-bottom: 20%;
   margin-left:-15%;
 }
@@ -564,6 +597,16 @@ hr.line_two {
   img.home{
 width: 30%;
 margin-left: 65%;
+}
+
+#video-background {
+
+  margin-right:-90%;
+min-width: 70%;
+min-height: 70%;
+width: auto;
+height: auto;
+
 }
 
 .description h1{
@@ -643,6 +686,8 @@ hr.line_two {
     width: 25%;
     margin-left: 65%;
     }
+
+
 
     .description{
       width: 90%;

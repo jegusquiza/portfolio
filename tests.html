@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Tests</title>
+<head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel='stylesheet'>
+    <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+</head>
+
+<body>
+  <div class="description">
+      <a href ="http://www.juanjose.xyz/">
+        <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
+      </a>
+      </div>
+
+      <div class = "go">
+<a class="button" href="/3D.html">BACK</a>
+</div>
+
+        <div class="container">
+            <div class="row top">
+                <div class="twelve column">
+                  <br>
+                    <h1>...</h1>
+                    <h3>3D Artist</h3>
+                    <hr/>
+
+  <section class="gallery-container">
+
+  <div id="previa">
+    <div id="imgFull">
+      <img src="" alt="" width="100%"/>
+    </div>
+  </div>
+  <div class="gallery">
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/b275d1115245265.604a75c476562.jpg" alt="b275d1115245265.604a75c476562"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/de5b3c115245265.604a75c4705c5.jpg" alt="de5b3c115245265.604a75c4705c5"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/9a2805115245265.604a75c470fbc.jpg" alt="9a2805115245265.604a75c470fbc"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/de2dbe115245265.604a75c473dc4.jpg" alt="de2dbe115245265.604a75c473dc4"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/041f21115245265.604a75c46daa6.jpg" alt="041f21115245265.604a75c46daa6"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/fd23ef115245265.604a75c474bb9.jpg" alt="fd23ef115245265.604a75c474bb9"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/409641115245265.604a75c46f0ed.jpg" alt="409641115245265.604a75c46f0ed"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/f3d2fa115245265.604a75c46e564.jpg" alt="f3d2fa115245265.604a75c46e564"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/32b9ca115245265.604a75c477cb9.jpg" alt="32b9ca115245265.604a75c477cb9"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/033131115245265.604a75c47256a.jpg" alt="033131115245265.604a75c47256a"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/ef9ea8115245265.604a75c476ef6.jpg" alt="ef9ea8115245265.604a75c476ef6"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/4017e4115245265.604a75c4757f9.jpg" alt="4017e4115245265.604a75c4757f9"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/453949115245265.604a75c471bdb.jpg" alt="453949115245265.604a75c471bdb"/>
+    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/2800_opt_1/c486f3115245265.604a75c473023.jpg" alt="c486f3115245265.604a75c473023"/>
+
+
+  </div>
+</section>
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    <!-- <script  src="js/index.js"></script> -->
+    <script>
+    $(document).on('ready', inicio);
+
+      function inicio(){
+        $('.gallery img').on('click', abrirFull);
+        $('#previa').on('click', cerrarFull);
+      }
+      //
+      function abrirFull(){
+        var nombre = $(this).attr('alt'),
+            direccion = "https://mir-cdn.behance.net/v1/rendition/project_modules/fs/" + nombre + ".jpg";
+
+        $('#imgFull img').attr('src', direccion);
+        $('#previa').fadeIn();
+      }
+
+    function cerrarFull(){
+      $('#previa').fadeOut();
+    }
+
+    </script>
+
+
+
+                    <!-- <a class="button" target="_blank" href="https://www.behance.net/gallery/90944511/The-Valley">CASE STUDY</a>
+                    <a class="button" target="_blank" href="https://lightroom.adobe.com/learn/discover/2352df1c-5c71-4be6-bcc0-856adde28422">LIGHTROOM DISCOVERY</a> -->
+
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="one-half column">
+                    <div class="pens pulled">
+                        <h2>TOOLS:</h2>
+                        <ul>
+
+                          <p> Blender3D <br>
+                            Cinema4D<br>
+                            World Creator <br>
+                            Photoshop <br>
+
+                          </br>
+
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- <div class="one-half column">
+                    <div class="posts pulled">
+                        <h2>CREDITS:</h2>
+                        <ul>
+                        <p>  MICROSOFT  <br>
+                          NYU <br>
+                        </p>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+    <style>
+    BODY {
+      width: 100%;
+
+        background-color: #191919;
+        -webkit-font-smoothing: antialiased;
+        font-family: 'Montserrat', 'Extra-Bold';
+        height: 100%;
+        margin: 0px;
+    }
+
+    .container {
+      margin-top: 10%;
+    }
+
+    a {
+        color: #bbbbc4;
+        text-decoration: none;
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s;
+    }
+
+    a:hover {
+        color: #b75f35;
+    }
+
+    h1 {
+        color: #b75f35;
+        padding-bottom: 0px;
+        margin-bottom: 1%;
+    }
+
+    h2 {
+        color: white;
+        font-size: 3rem;
+        font-weight: bold;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    h3 {
+    color: #bbbbc4;
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0px;
+    padding: 0px;
+    text-transform: uppercase;
+    margin-top: 0%;
+}
+
+    p {
+        color: #bbbbc4;
+        font-size: 1.7rem;
+    }
+
+    hr {
+          margin-top: 3%;
+          margin-bottom: 3%;
+          width: 90%;
+        }
+
+        .container {
+          margin-top: 5%;
+        }
+
+        .description {
+          position: relative;
+          margin-left: 80%;
+          margin-top: 1%;
+          }
+
+          .go {
+            position:absolute;
+            margin-left: 13%;
+            margin-top: 0%;
+
+    }
+
+
+
+    img.home{
+    position: relative;
+    width: 53%;
+    border:0;
+    z-index: 2;
+    }
+
+/* All the gallery */
+      .gallery-container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        /* margin: auto; */
+        margin-top: 3%;
+        margin-left: 0%;
+        margin-right: 0%;
+        z-index:10;
+      }
+
+      .gallery {
+        position: relative;
+        display: block;
+        /* min-width: 10px; */
+        max-width: 120%;
+        /* min-height: 250px; */
+        max-height: auto;
+        margin: auto;
+      }
+
+      .gallery img {
+        width: 32%;
+        cursor: pointer;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: inline;
+}
+
+#previa {
+  display: none;
+  width: 100%;
+  height: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.7);
+  cursor: pointer;
+  z-index:100;
+}
+#imgFull {
+  width: 1100px;
+  height: auto;
+  /* margin: 6em auto; */
+  margin-left: 6%;
+  margin-right: 2%;
+  background: #000;
+}
+
+    .button {
+        box-sizing: border-box;
+        /* background-color: transparent; */
+        background-color: #131313;
+
+        border: 0;
+        border-radius: 0;
+        box-shadow: inset 0 0 0 2px #b75f35;
+        color: #b75f35;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 0.8em;
+        font-weight: 600;
+        height: 3.5em;
+        letter-spacing: 0.25em;
+        line-height: 3.5em;
+        padding: 0 1.75em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        white-space: nowrap;
+        margin-bottom: 2rem;
+    }
+
+    .button:hover {
+        border-bottom-color: transparent;
+        color: #ffffff !important;
+
+        /* color: #f76f91 !important; */
+        /* box-shadow: inset 0 0 0 2px #f76f91; */
+        box-shadow: inset 0 0 0 2px #ffffff;
+
+    }
+
+    .button:focus {
+        color: #fff;
+    }
+
+    iframe{
+            width: 100%;
+            align: "center";
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+
+
+    @media screen and (max-width: 480px) {
+
+      img.home{
+          width: 60%;
+        }
+
+          .row.top h1{
+          font-size: 220%;
+        }
+
+        h2{
+          font-size: 90%;
+        }
+
+        h3{
+          font-size: 100%;
+        }
+
+        p{
+          font-size: 80%;
+        }
+
+        .row.top p {
+          font-size: 80%;
+        }
+
+        .gallery-container {
+        }
+
+
+        .gallery {
+          margin-left:1%;
+        }
+
+        .gallery img {
+          width: 100%;
+  }
+
+  #imgFull {
+
+    width: 100%;
+    margin-top: 55%;
+    margin-left: 0%;
+
+  }
+
+    }
+
+    @media (min-width: 481px) and (max-width: 800px) {
+
+            img.home{
+                width: 60%;
+              }
+                .row.top h1{
+                font-size: 220%;
+              }
+
+              h2{
+                font-size: 90%;
+              }
+
+              h3{
+                font-size: 100%;
+              }
+
+              p{
+                font-size: 80%;
+              }
+
+              .row.top p {
+                font-size: 80%;
+              }
+
+              .gallery-container {
+              }
+
+
+              .gallery {
+                margin-left:1%;
+              }
+
+              .gallery img {
+                width: 100%;
+              }
+
+        #imgFull {
+          width: 100%;
+          margin-top: 40%;
+          margin-left: 0%;
+        }
+    }
+
+    @media (min-width: 801px) and (max-width: 1200px) {
+
+      img.home{
+          width: 60%;
+        }
+          .row.top h1{
+          font-size: 220%;
+        }
+
+        h2{
+          font-size: 90%;
+        }
+
+        h3{
+          font-size: 100%;
+        }
+
+        p{
+          font-size: 80%;
+        }
+
+        .row.top p {
+          font-size: 80%;
+        }
+
+        .gallery-container {
+        }
+
+        .gallery {
+          margin-left:1%;
+        }
+
+        .gallery img {
+          width: 100%;
+        }
+
+  #imgFull {
+    width: 100%;
+    margin-top: 40%;
+    margin-left: 0%;
+  }
+    }
+
+    </style>
+</html>

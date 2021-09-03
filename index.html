@@ -1,4 +1,3 @@
-
 <html>
 <title>
 Juan Jose Egusquiza
@@ -21,9 +20,9 @@ Juan Jose Egusquiza
 </head>
 <body>
 
-  <div class="name">
+  <!-- <div class="name">
     <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
-  </div>
+  </div> -->
 
   <div class = "go">
     <a class="button" href="/3D.html">3D</a>
@@ -33,12 +32,17 @@ Juan Jose Egusquiza
   </div>
 
   <div class="description">
-    <h1>I'm a technologist and <br>
-      digital artist passionate <br>
-      about creating still & motion  <br>
-      Impossible Landscapes.  <br>
+    <h1>JUAN JOSE EGUSQUIZA
 
     </h1>
+
+    <h2>
+      Digital Artist
+    </h2>
+
+    <video autoplay loop id="video-background" muted>
+  <source src="video/reel_1.mp4" type="video/mp4">
+</video>
 
   </div>
 
@@ -97,21 +101,36 @@ body {
     text-align:left;
     font-family: 'Montserrat', 'Extra-Bold';
   }
+
+  #video-background {
+position: fixed;
+right: 0;
+/* margin-right: 2px; */
+
+bottom: 0;
+min-width: 100%;
+min-height: 100%;
+width: auto;
+height: auto;
+z-index: -100;
+}
+
+
   h1{
-    font-size:4.2vw;
-    margin-left: 5%;
+    font-size:2.5vw;
+    margin-left: 3%;
     margin-bottom: 0.5%;
-    margin-top: 0.5%;
+    margin-top: 1%;
   }
 
   h2{
-    font-size:2.3vw;
+    font-size:1.8vw;
     padding: 0.5px;
     /* font-family: 'Open Sans'; */
-    margin-left: 5%;
+    margin-left: 3%;
     margin-bottom: 0.5%;
-    margin-top: 1%;
-    opacity: 0.4;
+    margin-top: 0%;
+    opacity: 0.7;
     /* color: #b75f35; */
   }
 
@@ -195,8 +214,8 @@ body {
     .container {
       width: 100%;
       position:relative;
-      margin-top: 6%;
-      margin-left: 0%;
+      margin-top: 1%;
+      margin-left: -41%;
 
   }
 
@@ -306,10 +325,21 @@ margin-left: 67%;
   .container {
 
     margin-top: 5%;
-    margin-left: 0%;
+    margin-left: 10%;
 
 }
   }
+
+  @media (min-width: 801px) and (max-width: 1400px) {
+
+    .container {
+
+      margin-top: 0%;
+      margin-left: -37%;
+
+  }
+
+
 
 
 

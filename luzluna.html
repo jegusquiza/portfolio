@@ -1,441 +1,762 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>A la luz de la Luna</title>
 <head>
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel='stylesheet'>
-    <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <meta charset="UTF-8" />
+  <title>A LA LUZ</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
 </head>
-
 <body>
-  <div class="description">
-      <a href ="http://www.juanjose.xyz/">
-        <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
-      </a>
+
+  <!-- MISMO HEADER QUE EN INDEX -->
+  <header class="site-header">
+    <div class="header-column">
+      <div class="header-label">Name</div>
+      <div class="header-main-link">
+        <a href="index.html">Juan José Egúsquiza Franco</a>, 2026
       </div>
-
-      <div class = "go">
-<a class="button" href="/photography.html">BACK</a>
-</div>
-
-        <div class="container">
-            <div class="row top">
-                <div class="twelve column">
-                  <br>
-                    <h1>A la luz de la Luna</h1>
-                    <h3>Photographer, retoucher, editor</h3>
-                    <hr/>
-
-  <section class="gallery-container">
-
-  <div id="previa">
-    <div id="imgFull">
-      <img src="" alt="" width="100%"/>
+      <div class="header-sub">GMT+1 (Barcelona)</div>
     </div>
-  </div>
-  <div class="gallery">
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/8b6f0c90944511.5e2519eb8593c.jpg" alt="8b6f0c90944511.5e2519eb8593c"/>
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/326f7690944511.5e2519eb884b9.jpg" alt="326f7690944511.5e2519eb884b9"/>
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/67c29f90944511.5e2519eb8609b.jpg" alt="67c29f90944511.5e2519eb8609b"/>
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/090bcb90944511.5e2519eb867d9.jpg" alt="090bcb90944511.5e2519eb867d9"/>
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/51755e90944511.5e27410048535.jpg" alt="51755e90944511.5e27410048535"/>
-    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/77f36e90944511.5e28a7a733896.jpg" alt="77f36e90944511.5e28a7a733896"/>
 
-  </div>
-</section>
+    <div class="header-column">
+      <div class="header-label">Status</div>
+      <div class="header-main-text">
+        Available for<br>Art, Design &amp; Data Projects
+      </div>
+    </div>
 
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <div class="header-column">
+      <div class="header-label">Sitemap</div>
+      <nav class="header-nav">
+        <a href="index.html">Index</a>
+        <a href="aboutme.html">About</a>
+        <a href="https://www.behance.net/jegusquizaf" target="_blank">Stills</a>
+        <a href="https://www.juanjose.xyz/animatedfantasies.html" target="_blank">Experimental</a>
+        <a href="https://www.instagram.com/p/CyYq28YrAme/" target="_blank">Shop (Soon)</a>
+      </nav>
+    </div>
 
-    <!-- <script  src="js/index.js"></script> -->
-    <script>
-    $(document).on('ready', inicio);
+    <div class="header-column">
+      <div class="header-label">Let's connect</div>
+      <nav class="header-nav">
+        <a href="cv.pdf" target="_blank">Resume</a>
+        <a href="https://www.behance.net/jegusquizaf" target="_blank">Behance</a>
+        <a href="https://instagram.com/juanjose_xyz" target="_blank">Instagram</a>
+        <a href="mailto:jegusquizaf@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/juan-jose-egusquiza" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
 
-      function inicio(){
-        $('.gallery img').on('click', abrirFull);
-        $('#previa').on('click', cerrarFull);
-      }
-      //
-      function abrirFull(){
-        var nombre = $(this).attr('alt'),
-            direccion = "https://mir-cdn.behance.net/v1/rendition/project_modules/fs/" + nombre + ".jpg";
+  <!-- CONTENIDO DEL PROYECTO, CENTRADO IGUAL QUE EN INDEX -->
+  <main class="page-content">
+    <div class="project-detail-container">
 
-        $('#imgFull img').attr('src', direccion);
-        $('#previa').fadeIn();
-      }
+      <a href="index.html" class="back-link">← Back to Selected Work</a>
 
-    function cerrarFull(){
-      $('#previa').fadeOut();
-    }
+      <!-- HERO -->
+      <section class="project-hero">
+        <div
+          class="project-hero-image-wrapper"
+          data-video-provider="youtube"
+          data-video-id="YOUR_YOUTUBE_VIDEO_ID"
+        >
+          <!-- Poster / thumbnail: cambia esta ruta para elegir el poster -->
+          <div class="project-hero-poster">
+            <img src="img/luz_VidCover.jpg" alt="The Drift of an Alien – video thumbnail" />
+            <div class="project-hero-play-button"></div>
+          </div>
 
-    </script>
+          <!-- YouTube embed (se muestra al hacer clic en el poster) -->
+          <iframe
+            class="project-hero-iframe"
+            src="https://www.youtube.com/embed/7a6CAccvnQ8"
+            title="Memories of the Mundane"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
 
-
-
-                    <a class="button" target="_blank" href="https://www.behance.net/gallery/90944511/The-Valley">CASE STUDY</a>
-                    <a class="button" target="_blank" href="https://lightroom.adobe.com/learn/discover/2352df1c-5c71-4be6-bcc0-856adde28422">LIGHTROOM DISCOVERY</a>
-
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="one-half column">
-                    <div class="pens pulled">
-                        <h2>TOOLS:</h2>
-                        <ul>
-
-                          <p> Lightroom <br>
-                            Photoshop
-
-                          </br>
-
-
-                        </ul>
-                    </div>
-                </div>
-                <!-- <div class="one-half column">
-                    <div class="posts pulled">
-                        <h2>CREDITS:</h2>
-                        <ul>
-                        <p>  MICROSOFT  <br>
-                          NYU <br>
-
-                        </p>
-                        </ul>
-                    </div>
-                </div> -->
-            </div>
+          <!-- OPCIÓN VIMEO (COMENTADA, PARA USAR MÁS ADELANTE)
+          <iframe
+            class="project-hero-iframe"
+            src="https://player.vimeo.com/video/YOUR_VIMEO_VIDEO_ID?title=0&byline=0&portrait=0"
+            title="The Drift of an Alien — video (Vimeo)"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          -->
         </div>
 
-    <style>
-    BODY {
-      width: 100%;
+        <div class="project-hero-meta">
+          <h1 class="project-title-page">A LA LUZ</h1>
 
-        background-color: #191919;
-        -webkit-font-smoothing: antialiased;
-        font-family: 'Montserrat', 'Extra-Bold';
-        height: 100%;
-        margin: 0px;
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Year</span>
+            <span class="project-meta-value">2020</span>
+          </div>
 
-    .container {
-      margin-top: 10%;
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Format</span>
+            <span class="project-meta-value">
+              PHOTOGRAPHY · PHOTO MANIPULATION · SURREAL
+            </span>
+          </div>
 
-    a {
-        color: #bbbbc4;
-        text-decoration: none;
-        -o-transition: .5s;
-        -ms-transition: .5s;
-        -moz-transition: .5s;
-        -webkit-transition: .5s;
-        transition: .5s;
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Context</span>
+            <span class="project-meta-value">
+              Travel photography
+            </span>
+          </div>
 
-    a:hover {
-        color: #b75f35;
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Role</span>
+            <span class="project-meta-value">
+              Photographer / Editor
+            </span>
+          </div>
+        </div>
+      </section>
 
-    h1 {
-        color: #b75f35;
-        padding-bottom: 0px;
-        margin-bottom: 1%;
-    }
+      <!-- TEXTO + SIDE INFO -->
+      <section class="project-detail-layout">
+        <div class="project-detail-text">
+          <p>
+            A la luz de la Luna is a photo manipulation project conceived during a road trip
+            across the Utah–Arizona deserts between December 2019 and January 2020.
+            What began as a travel adventure evolved into a surreal visual exploration inspired
+            by the vastness and overwhelming beauty of the landscapes I encountered.
+            By layering elements captured throughout the journey, I created dreamlike
+            compositions that reinterpret those environments through a more emotional and
+            imaginative lens.
+          </p>
+          <p>
+            Travel has always been a fundamental source of inspiration for me—it’s what first
+            led me to photography, and eventually to exploring photo compositing and image
+            manipulation as creative tools. This series brings together some of my favorite
+            views from that trip alongside my latest experiments in digital manipulation,
+            blending documentation and imagination into immersive, otherworldly landscapes.
+          </p>
+          <p>
+          The project was later featured as part of Adobe’s advertising campaign, highlighting
+          its creative use of photo compositing and visual storytelling.
+          </p>
 
-    h2 {
-        color: white;
-        font-size: 3rem;
-        font-weight: bold;
-        margin: 0px;
-        padding: 0px;
-    }
+        </div>
 
-    h3 {
-    color: #bbbbc4;
-    font-size: 2rem;
-    font-weight: 300;
-    margin: 0px;
-    padding: 0px;
-    text-transform: uppercase;
-    margin-top: 0%;
-}
+        <div class="project-detail-side">
+          <div class="project-detail-block">
+            <h3>Credits</h3>
+            <ul>
+              <li>Photography &amp; editing — Juan José Egúsquiza</li>
 
-    p {
-        color: #bbbbc4;
-        font-size: 1.7rem;
-    }
+            </ul>
+          </div>
 
-    hr {
-          margin-top: 3%;
-          margin-bottom: 3%;
-          width: 90%;
+          <div class="project-detail-block">
+            <h3>Exhibited at</h3>
+            <ul>
+              <li>This project was featured in Adobe’s advertising campaign</li>
+              <li><a href="https://www.behance.net/gallery/90944511/The-Valley" target="_blank" rel="noopener noreferrer">See More</a></li>
+            </ul>
+          </div>
+
+          <div class="project-detail-block">
+            <h3>Media</h3>
+            <ul>
+              <li>Photography</li>
+
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- GALERÍA (todas imágenes) -->
+      <section class="project-gallery">
+        <div class="project-gallery-grid">
+          <figure class="project-gallery-item">
+            <img src="img/luz_1.jpg" alt="Still 01" />
+            <figcaption>A la luz 01.</figcaption>
+          </figure>
+
+          <figure class="project-gallery-item">
+            <img src="img/luz_2.jpg" alt="Still 02" />
+            <figcaption>A la luz 02.</figcaption>
+          </figure>
+
+          <figure class="project-gallery-item">
+            <img src="img/luz_3.jpg" alt="Still 03" />
+            <figcaption>A la luz 03.</figcaption>
+          </figure>
+
+          <figure class="project-gallery-item">
+            <img src="img/luz_4.jpg" alt="Still 04" />
+            <figcaption>A la luz 04.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <span>© Juan José Egúsquiza Franco</span>
+        <span>Based in Barcelona · Available for collaborations</span>
+      </footer>
+
+    </div> <!-- /.project-detail-container -->
+  </main>
+
+  <!-- SCRIPT: activa el video del HERO al hacer clic en el poster -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var heroWrapper = document.querySelector(".project-hero-image-wrapper");
+
+      if (!heroWrapper) return;
+
+      var poster = heroWrapper.querySelector(".project-hero-poster");
+      var iframe = heroWrapper.querySelector(".project-hero-iframe");
+
+      if (!poster || !iframe) return;
+
+      poster.addEventListener("click", function () {
+        // Añade autoplay al src del iframe (YouTube o Vimeo)
+        var src = iframe.getAttribute("src");
+        if (src.indexOf("autoplay=1") === -1) {
+          var joinChar = src.indexOf("?") === -1 ? "?" : "&";
+          iframe.setAttribute("src", src + joinChar + "autoplay=1");
         }
 
-        .container {
-          margin-top: 5%;
-        }
+        heroWrapper.classList.add("playing");
+      });
+    });
+  </script>
 
-        .description {
-          position: relative;
-          margin-left: 80%;
-          margin-top: 1%;
-          }
-
-          .go {
-            position:absolute;
-            margin-left: 13%;
-            margin-top: 0%;
-
-    }
-
-
-
-    img.home{
-    position: relative;
-    width: 53%;
-    border:0;
-    z-index: 2;
-    }
-
-/* All the gallery */
-      .gallery-container {
-        position: relative;
-        width: 100%;
-        height: auto;
-        /* margin: auto; */
-        margin-top: 3%;
-        margin-left: 0%;
-        margin-right: 0%;
-        z-index:10;
-      }
-
-      .gallery {
-        position: relative;
-        display: block;
-        /* min-width: 10px; */
-        max-width: 120%;
-        /* min-height: 250px; */
-        max-height: auto;
-        margin: auto;
-      }
-
-      .gallery img {
-        width: 32%;
-        cursor: pointer;
-        margin-left: 5px;
-        margin-right: 5px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        display: inline;
+</body>
+<style>
+/* styles.css */
+/* RESET */
+* {
+  box-sizing: border-box;
 }
 
-#previa {
-  display: none;
+body {
+  margin: 0;
+  background-color: #f3f3f3;
+  color: #000;
+  font-family: "Times New Roman", Georgia, "Times", serif;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04; /* adjust 0.02–0.06 */
+  background-image: radial-gradient(#000 1px, transparent 0);
+  background-size: 3px 3px; /* fake “noise” */
+  mix-blend-mode: multiply;
+  z-index: -1;
+}
+
+/* Color de acento único */
+:root {
+  --accent-color: #ff7a3a;
+}
+
+/* ---------- HEADER (estilo Alex, compacto) ---------- */
+
+.site-header {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 8px;
+  padding: 18px 80px 16px 80px;
+  border-bottom: 1px solid #d6d6d6;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.header-column {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.header-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #666;
+}
+
+.header-main-link a,
+.header-sub,
+.header-main-text,
+.header-nav a {
+  color: #111;
+}
+
+.header-main-link a {
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.header-sub,
+.header-main-text {
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.header-main-text {
+  max-width: 16em;
+}
+
+.header-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.header-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+/* Hover solo cambia color de texto */
+.header-main-link a:hover,
+.header-nav a:hover {
+  color: var(--accent-color);
+}
+
+/* ---------- CONTENIDO PRINCIPAL COMÚN (home y project pages) ---------- */
+
+.page-content {
+  padding: 32px 96px 72px 96px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- HOME: INTRO + SELECTED WORK ---------- */
+
+.intro-section {
+  margin-bottom: 48px;
+}
+
+.intro-title {
+  font-size: 26px;
+  font-weight: normal;
+  margin: 0 0 12px 0;
+  line-height: 1.28;
+  max-width: 34em;
+}
+
+.intro-email {
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--accent-color);
+  padding-bottom: 1px;
+  transition: opacity 0.15s ease;
+}
+
+.intro-email:hover {
+  opacity: 0.7;
+}
+
+/* LABEL DE SECCIÓN */
+.section-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Subtítulo de sección */
+.section-subtitle {
+  margin: 0 0 24px 0;
+  font-size: 13px;
+  color: #666;
+  max-width: 38em;
+}
+
+/* LAYOUT DOS COLUMNAS + PREVIEW EN HOME */
+.projects-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  align-items: flex-start;
+}
+
+/* COLUMNAS DE PROYECTOS */
+.projects-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.projects-column-title {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 6px 0;
+  color: #444;
+}
+
+/* LISTA PROYECTOS */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* PROYECTO: título + meta en columna */
+.project-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 0;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.project-title {
+  font-size: 19px;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+}
+
+.project-meta {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+/* Hover proyectos */
+.project-item:hover {
+  color: var(--accent-color);
+  transform: translateX(3px);
+}
+
+.project-item:hover .project-meta {
+  color: var(--accent-color);
+}
+
+/* PREVIEW RECTANGULAR PANORÁMICO */
+.preview-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 940px;
+  height: 340px;
+  border: 1px solid #d6d6d6;
+  background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+.preview-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(0,0,0,0.7);
+.preview-image.active {
+  opacity: 1;
+}
+
+/* ---------- FOOTER COMÚN ---------- */
+
+.site-footer {
+  border-top: 1px solid #d6d6d6;
+  margin-top: 56px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #666;
+}
+
+/* ---------- PROJECT PAGE LAYOUT (header arriba + contenido centrado) ---------- */
+
+/* Contenedor específico de project page, dentro de .page-content */
+.project-detail-container {
+  max-width: 100%; /* usamos el ancho de page-content */
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #666;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--accent-color);
+}
+
+/* HERO: imagen / video principal + meta, debajo del header */
+.project-hero {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 32px;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+/* HERO: wrapper para video embed con poster */
+.project-hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  border: 1px solid #d6d6d6;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* reutilizamos la misma lógica de embed que en la galería */
+.project-hero-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: none; /* se muestra al hacer clic en el poster */
+}
+
+.project-hero-poster {
+  position: absolute;
+  inset: 0;
   cursor: pointer;
-  z-index:100;
-}
-#imgFull {
-  width: 1100px;
-  height: auto;
-  /* margin: 6em auto; */
-  margin-left: 6%;
-  margin-right: 2%;
-  background: #000;
 }
 
-    .button {
-        box-sizing: border-box;
-        /* background-color: transparent; */
-        background-color: #131313;
+.project-hero-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-        border: 0;
-        border-radius: 0;
-        box-shadow: inset 0 0 0 2px #b75f35;
-        color: #b75f35;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 0.8em;
-        font-weight: 600;
-        height: 3.5em;
-        letter-spacing: 0.25em;
-        line-height: 3.5em;
-        padding: 0 1.75em;
-        text-align: center;
-        text-decoration: none;
-        text-transform: uppercase;
-        white-space: nowrap;
-        margin-bottom: 2rem;
-    }
+.project-hero-play-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  margin-left: -36px;
+  margin-top: -36px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .button:hover {
-        border-bottom-color: transparent;
-        color: #ffffff !important;
+.project-hero-play-button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 18px solid #fff;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  margin-left: 3px;
+}
 
-        /* color: #f76f91 !important; */
-        /* box-shadow: inset 0 0 0 2px #f76f91; */
-        box-shadow: inset 0 0 0 2px #ffffff;
+/* Estado activo: cuando se está reproduciendo el video */
+.project-hero-image-wrapper.playing .project-hero-iframe {
+  display: block;
+}
 
-    }
+.project-hero-image-wrapper.playing .project-hero-poster {
+  display: none;
+}
 
-    .button:focus {
-        color: #fff;
-    }
+.project-hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-    iframe{
-            width: 100%;
-            align: "center";
-            margin-bottom: 2%;
-            margin-top: 2%;
-        }
+.project-title-page {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  margin: 0 0 12px 0;
+}
 
+.project-meta-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  column-gap: 8px;
+  font-size: 13px;
+}
 
-    @media screen and (max-width: 480px) {
+.project-meta-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #777;
+  font-size: 11px;
+}
 
-      img.home{
-          width: 60%;
-        }
+.project-meta-value {
+  color: #222;
+}
 
-          .row.top h1{
-          font-size: 220%;
-        }
+/* CUERPO: texto principal + columna lateral (tipo Inferstudio) */
+.project-detail-layout {
+  display: grid;
+  grid-template-columns: 2fr 1.1fr;
+  gap: 40px;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
 
-        h2{
-          font-size: 90%;
-        }
+.project-detail-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+}
 
-        h3{
-          font-size: 100%;
-        }
+.project-detail-text p + p {
+  margin-top: 10px;
+}
 
-        p{
-          font-size: 80%;
-        }
+.project-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-        .row.top p {
-          font-size: 80%;
-        }
+.project-detail-block h3 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #444;
+}
 
-        .gallery-container {
-        }
+.project-detail-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
 
+.project-detail-block li + li {
+  margin-top: 3px;
+}
 
-        .gallery {
-          margin-left:1%;
-        }
+/* GALERÍA DE IMÁGENES SECUNDARIAS EN PROJECT PAGE */
+.project-gallery {
+  margin-top: 8px;
+}
 
-        .gallery img {
-          width: 100%;
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.project-gallery-item {
+  margin: 0;
+  border: 1px solid #d6d6d6;
+  background-color: #f9f9f9;
+  padding: 6px;
+}
+
+.project-gallery-item img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.project-gallery-item figcaption {
+  font-size: 11px;
+  color: #666;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 1100px) {
+  .site-header {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+    padding: 12px 20px 10px 20px;
   }
 
-  #imgFull {
-
-    width: 100%;
-    margin-top: 55%;
-    margin-left: 0%;
-
+  .page-content {
+    padding: 24px 20px 48px 20px;
+    max-width: 100%;
   }
 
-    }
-
-    @media (min-width: 481px) and (max-width: 800px) {
-
-            img.home{
-                width: 60%;
-              }
-                .row.top h1{
-                font-size: 220%;
-              }
-
-              h2{
-                font-size: 90%;
-              }
-
-              h3{
-                font-size: 100%;
-              }
-
-              p{
-                font-size: 80%;
-              }
-
-              .row.top p {
-                font-size: 80%;
-              }
-
-              .gallery-container {
-              }
-
-
-              .gallery {
-                margin-left:1%;
-              }
-
-              .gallery img {
-                width: 100%;
-              }
-
-        #imgFull {
-          width: 100%;
-          margin-top: 40%;
-          margin-left: 0%;
-        }
-    }
-
-    @media (min-width: 801px) and (max-width: 1200px) {
-
-      img.home{
-          width: 60%;
-        }
-          .row.top h1{
-          font-size: 220%;
-        }
-
-        h2{
-          font-size: 90%;
-        }
-
-        h3{
-          font-size: 100%;
-        }
-
-        p{
-          font-size: 80%;
-        }
-
-        .row.top p {
-          font-size: 80%;
-        }
-
-        .gallery-container {
-        }
-
-        .gallery {
-          margin-left:1%;
-        }
-
-        .gallery img {
-          width: 100%;
-        }
-
-  #imgFull {
-    width: 100%;
-    margin-top: 40%;
-    margin-left: 0%;
+  .site-footer {
+    flex-direction: column;
+    gap: 4px;
   }
-    }
 
-    </style>
+  /* Home */
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-wrapper {
+    max-width: 100%;
+    height: 260px;
+    margin-top: 18px;
+  }
+
+  /* Project page */
+  .project-detail-container {
+    padding: 0; /* ya controla page-content */
+  }
+
+  .project-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .project-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-title {
+    font-size: 22px;
+  }
+
+  .project-title {
+    font-size: 17px;
+  }
+}
+
+</style>
 </html>

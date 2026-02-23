@@ -1,378 +1,749 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>NE</title>
 <head>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel='stylesheet'>
-    <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'> -->
+  <meta charset="UTF-8" />
+  <title>NE</title>
+  <link rel="sortcut icon" type="image/png" href="https://78.media.tumblr.com/e21eebe5d8f4912f3d39a4fd55cbf01c/tumblr_pdkfjrWgJM1w2o31do1_75sq.png">
 </head>
 <body>
-  <div class="description">
-      <a href ="http://www.juanjose.xyz/">
-        <img src="https://78.media.tumblr.com/46a7f64c7b10af8b2ff48e7d4acc4b71/tumblr_pdkbu86Jos1w2o31do1_1280.png" class="home">
-      </a>
+
+  <!-- MISMO HEADER QUE EN INDEX -->
+  <header class="site-header">
+    <div class="header-column">
+      <div class="header-label">Name</div>
+      <div class="header-main-link">
+        <a href="index.html">Juan José Egúsquiza Franco</a>, 2026
       </div>
+      <div class="header-sub">GMT+1 (Barcelona)</div>
+    </div>
 
-      <div class = "go">
-  <a class="button" href="/selectedwork.html">BACK</a>
-  </div>
+    <div class="header-column">
+      <div class="header-label">Status</div>
+      <div class="header-main-text">
+        Available for<br>Art, Design &amp; Data Projects
+      </div>
+    </div>
 
-        <div class="container">
-            <div class="row top">
-                <div class="twelve column">
+    <div class="header-column">
+      <div class="header-label">Sitemap</div>
+      <nav class="header-nav">
+        <a href="index.html">Index</a>
+        <a href="aboutme.html">About</a>
+        <a href="https://www.behance.net/jegusquizaf" target="_blank">Stills</a>
+        <a href="https://www.juanjose.xyz/animatedfantasies.html" target="_blank">Experimental</a>
+        <a href="https://www.instagram.com/p/CyYq28YrAme/" target="_blank">Shop (Soon)</a>
+      </nav>
+    </div>
 
-                    <h1>NE</h1>
-                    <h3>Director, 3D artist and creative coder</h3>
-                    <!-- <h3>DIRECTOR, 3D ARTIST AND ANIMATOR</h3> -->
-                    <hr/>
-                  <div class="video">
-                    <iframe src="https://player.vimeo.com/video/229208986" width="1280" height="720" frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen  ></iframe>
-                    <!-- <hr/> -->
-                  </div>
-                    <h2>ABOUT:</h2>
-                    <p> The idea behind this project was to use the capabilities of Virtual Reality to produce an immersive experience centered on a piece of music from
-                      Viacom's music library. This project was created for the Viacom VR Fellowship in collaboration with NYC Media Lab.
-                    </p>
+    <div class="header-column">
+      <div class="header-label">Let's connect</div>
+      <nav class="header-nav">
+        <a href="cv.pdf" target="_blank">Resume</a>
+        <a href="https://www.behance.net/jegusquizaf" target="_blank">Behance</a>
+        <a href="https://instagram.com/juanjose_xyz" target="_blank">Instagram</a>
+        <a href="mailto:jegusquizaf@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/juan-jose-egusquiza" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </header>
 
-<div class="row_img">
-<div class="col_img">
-  <img src="https://media.giphy.com/media/4WEKPppsHP6uLkCDfj/giphy.gif" alt="Mountains" style="width:100%">
-</div>
-<div class="col_img">
-  <img src="https://66.media.tumblr.com/d7d6eb1da059c612a9119f150bace97d/c62238c545172f5d-d4/s1280x1920/025d9f6ebc3aceb0347ef93bb914ba39c3816dea.jpg" alt="Forest" style="width:100%">
-</div>
-<div class="col_img">
-  <img src="https://66.media.tumblr.com/1b266e1fc7178ba2758c1fba79ab2ac5/ea04bb5dd2c56716-3b/s1280x1920/05a7b4428069e9602ab5574d0fd7e32b1d3e301d.jpg" alt="Snow" style="width:100%">
-</div>
-</div>
+  <!-- CONTENIDO DEL PROYECTO, CENTRADO IGUAL QUE EN INDEX -->
+  <main class="page-content">
+    <div class="project-detail-container">
 
+      <a href="index.html" class="back-link">← Back to Selected Work</a>
 
-<p>
-  Approach: I decided to create an experience that would immerse the user into their own personal electronic music venue.
-  The song that I chose, was an instrumental electronic piece, that started with a slow pace, nd progressively evolving and finally
-  arriving at a climax. I've always been a fan of music, lasers and the dance between them; so I created a choreagraphy of lasers
-  that would evolve and dance acording to the music.
-</p>
+      <!-- HERO -->
+      <section class="project-hero">
+        <div
+          class="project-hero-image-wrapper"
+          data-video-provider="youtube"
+          data-video-id="YOUR_YOUTUBE_VIDEO_ID"
+        >
+          <!-- Poster / thumbnail: cambia esta ruta para elegir el poster -->
+          <div class="project-hero-poster">
+            <img src="img/ne_VidCover.jpg" alt="The Drift of an Alien – video thumbnail" />
+            <div class="project-hero-play-button"></div>
+          </div>
 
-                    <a class="button" target="_blank" href="https://vrscout.com/news/viacom-music-vr-fellowship/">VR SCOUT</a>
-                    <a class="button" target="_blank" href="https://www.nycmedialab.org/recent-projects/viacom-vr-summer-fellowship-2017-4z7w4-2zbrp">NYC Media Lab</a>
+          <!-- YouTube embed (se muestra al hacer clic en el poster)
+          <iframe
+            class="project-hero-iframe"
+            src="https://www.youtube.com/embed/MR6edbLQRnk"
+            title="Memories of the Mundane"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+-->
+          <!-- OPCIÓN VIMEO (COMENTADA, PARA USAR MÁS ADELANTE)-->
+          <iframe
+            class="project-hero-iframe"
+            src="https://player.vimeo.com/video/229208986?h=d23efa36a4"
+            title="The Drift of an Alien — video (Vimeo)"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+          ></iframe>
 
-
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="one-half column">
-                    <div class="pens pulled">
-                        <h2>TOOLS:</h2>
-                        <ul>
-                          <p> Unity3D<br>
-
-                          </br>
-                        </ul>
-                    </div>
-                </div>
-                <div class="one-half column">
-                    <div class="posts pulled">
-                        <h2>EXHIBITS:</h2>
-                        <ul>
-                        <p>  Showcased at Viacom (NY - 2017)<br>
-                          and at the Rio2c Creative Conference (Rio - 2018)</p>
-                        </ul>
-                    </div>
-                </div>
-            </div>
         </div>
 
-    <!-- Javascript -->
-    <style>
-    BODY {
-      width: 100%;
-        /* background: #282931; */
-        /* background-color: #131313; */
-        background-color: #191919;
-        -webkit-font-smoothing: antialiased;
-        /* font-family: 'Varela Round', sans-serif; */
-        font-family: 'Montserrat', 'Extra-Bold';
-        height: 100%;
-        margin: 0px;
-    }
+        <div class="project-hero-meta">
+          <h1 class="project-title-page">NE</h1>
 
-    /* canvas {
-        height: 100vh;
-        z-index: -10;
-        position: fixed;
-        top: 0px;
-    } */
+          <div class="project-meta-row">
+            <span class="project-meta-label">Year</span>
+            <span class="project-meta-value">2017</span>
+          </div>
 
-    a {
-        color: #bbbbc4;
-        text-decoration: none;
-        -o-transition: .5s;
-        -ms-transition: .5s;
-        -moz-transition: .5s;
-        -webkit-transition: .5s;
-        transition: .5s;
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Format</span>
+            <span class="project-meta-value">
+              VR · 3D · MUSIC · IMMERSIVE · HTC VIVE
+            </span>
+          </div>
 
-    a:hover {
-        color: #b75f35;
-        /* color: #fc3565; */
-    }
+          <div class="project-meta-row">
+            <span class="project-meta-label">Context</span>
+            <span class="project-meta-value">
+              Virtual Reality Experience
+            </span>
+          </div>
 
-    h1 {
-        /* color: #fc3565; */
-        font-size: 6rem;
-        color: #b75f35;
-        padding-bottom: 0px;
-        margin-bottom: 1%;
+          <div class="project-meta-row">
+            <span class="project-meta-label">Role</span>
+            <span class="project-meta-value">
+              Director, Developer, 3D Artist
+            </span>
+          </div>
+        </div>
+      </section>
 
-    }
+      <!-- TEXTO + SIDE INFO -->
+      <section class="project-detail-layout">
+        <div class="project-detail-text">
+          <p>
+            "NE" is a Musical Virtual Reality Experience created for the
+            Viacom NEXT Fellowship in collaboration with the NYC Media Lab.
+            The experience immerses the user in their own personal audio-visual
+            electronic party. This project was developed using Unity3D and
+            designed for the HTC VIVE platform.
+          </p>
 
-    h2 {
-        color: white;
+        </div>
 
-        /* color: #b75f35; */
-        font-size: 2.3rem;
-        font-weight: bold;
-        margin: 0px;
-        padding: 0px;
-    }
+        <div class="project-detail-side">
+          <div class="project-detail-block">
+            <h3>Credits</h3>
+            <ul>
+              <li>Direction, 3D &amp; Animation — Juan José Egúsquiza</li>
+              <li>Music — "Red Sky Morning" — Viacom Music Library</li>
 
-    h3 {
-      color: #bbbbc4;
-      /* color: #b75f35; */
-      font-size: 2rem;
-      font-weight: 300;
-      margin: 0px;
-      padding: 0px;
-      text-transform: uppercase;
-      margin-top: 0%;
-  }
+            </ul>
+          </div>
 
-  hr {
-        margin-top: 1%;
-        margin-bottom: 0%;
-        width: 100%;
-      }
+          <div class="project-detail-block">
+            <h3>Exhibited at</h3>
+            <ul>
+              <li>Viacom Headquarters / NYC, USA (2017)</li>
+              <li>Rio2C Conference / Rio de Janeiro, Brasil (2018)</li>
+            </ul>
+          </div>
 
-    p {
-        color: #bbbbc4;
-        font-size: 1.5rem;
-    }
+          <div class="project-detail-block">
+            <h3>Media</h3>
+            <ul>
+              <li>VR / Animation</li>
 
-    .container_a {
-      width:90%;
-      margin-top: 4%;
-    }
+            </ul>
+          </div>
+        </div>
+      </section>
 
-    .go {
-    position:absolute;
-    margin-left: 13%;
-    /* margin-top: 45%; */
-    margin-top: -5%;
-    /* z-index: 2; */
-  }
+      <!-- GALERÍA (todas imágenes) -->
+      <section class="project-gallery">
+        <div class="project-gallery-grid">
+          <figure class="project-gallery-item">
+            <img src="img/ne_1.jpg" alt="Still 01" />
+            <figcaption>Visual development sketches 01.</figcaption>
+          </figure>
 
+          <figure class="project-gallery-item">
+            <img src="img/ne_2.jpg" alt="Still 02" />
+            <figcaption>Visual development sketches 02.</figcaption>
+          </figure>
 
+          <figure class="project-gallery-item">
+            <img src="img/ne_3.jpg" alt="Still 03" />
+            <figcaption>Stills 03.</figcaption>
+          </figure>
 
-    .video{
-    width: 100%;
-    margin-top:0%;
-    margin-bottom:0%;
-    }
+          <figure class="project-gallery-item">
+            <img src="img/ne_4.gif" alt="Still 04" />
+            <figcaption>Gif 04.</figcaption>
+          </figure>
+        </div>
+      </section>
 
-        .description {
-    position: relative;
-    margin-left: 80%;
-    margin-top: 1%;
-    /* right: 2px; */
-    /* top: 20px;
-    right: 150px; */
-    /* z-index: 2; */
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <span>© Juan José Egúsquiza Franco</span>
+        <span>Based in Barcelona · Available for collaborations</span>
+      </footer>
 
-  }
+    </div> <!-- /.project-detail-container -->
+  </main>
 
-  img.home{
-    position: relative;
-  width: 53%;
-  /* margin-left: 80%;
-  margin-top: 1%;
-  margin-bottom: 1%; */
-  border:0;
-  z-index: 2;
-  }
+  <!-- SCRIPT: activa el video del HERO al hacer clic en el poster -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var heroWrapper = document.querySelector(".project-hero-image-wrapper");
 
+      if (!heroWrapper) return;
 
+      var poster = heroWrapper.querySelector(".project-hero-poster");
+      var iframe = heroWrapper.querySelector(".project-hero-iframe");
 
+      if (!poster || !iframe) return;
 
-    .row.top p {
-        color: #bbbbc4;
-        margin-top: 1.5rem;
-        text-align: justify;
-        font-size: 1.5rem;
-    }
-
-    .row.top h1{
-      font-size: 5rem;
-    }
-
-    .row {
-      width:100%;
-      margin-top: 2%;
-      margin-bottom: 2%;
-      /* margin-bottom:10%; */
-    }
-
-    .row_img{
-      /* position: relative; */
-      /* display: block; */
-      width:100%;
-      margin-bottom: 5%;
-
-    }
-
-
-    .col_img {
-      display: block;
-      float: left;
-      width: 32%;
-      padding: 4px;
-      margin-bottom: 2%;
-    }
-
-    .button {
-        box-sizing: border-box;
-        /* background-color: transparent; */
-        background-color: #131313;
-
-        border: 0;
-        border-radius: 0;
-        box-shadow: inset 0 0 0 2px #b75f35;
-        color: #b75f35;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 0.8em;
-        font-weight: 600;
-        height: 3.5em;
-        letter-spacing: 0.25em;
-        line-height: 3.5em;
-        padding: 0 1.75em;
-        text-align: center;
-        text-decoration: none;
-        text-transform: uppercase;
-        white-space: nowrap;
-        margin-bottom: 2rem;
-    }
-
-    .button:hover {
-        border-bottom-color: transparent;
-        color: #ffffff !important;
-
-        /* color: #f76f91 !important; */
-        /* box-shadow: inset 0 0 0 2px #f76f91; */
-        box-shadow: inset 0 0 0 2px #ffffff;
-
-    }
-
-    .button:focus {
-        color: #fff;
-    }
-
-
-
-    iframe{
-            width: 100%;
-            align: "center";
-            position: relative;
-
-            margin-bottom: -8%;
-            margin-top: -5%;
+      poster.addEventListener("click", function () {
+        // Añade autoplay al src del iframe (YouTube o Vimeo)
+        var src = iframe.getAttribute("src");
+        if (src.indexOf("autoplay=1") === -1) {
+          var joinChar = src.indexOf("?") === -1 ? "?" : "&";
+          iframe.setAttribute("src", src + joinChar + "autoplay=1");
         }
 
-        @media screen and (max-width: 480px) {
+        heroWrapper.classList.add("playing");
+      });
+    });
+  </script>
 
-          img.home{
-            width: 60%;
-          }
+</body>
+<style>
+/* styles.css */
+/* RESET */
+* {
+  box-sizing: border-box;
+}
 
-          .container {
-            margin-top: 12%;
-          }
+body {
+  margin: 0;
+  background-color: #f3f3f3;
+  color: #000;
+  font-family: "Times New Roman", Georgia, "Times", serif;
+  position: relative;
+}
 
-          .row.top h1{
-            font-size: 220%;
-          }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04; /* adjust 0.02–0.06 */
+  background-image: radial-gradient(#000 1px, transparent 0);
+  background-size: 3px 3px; /* fake “noise” */
+  mix-blend-mode: multiply;
+  z-index: -1;
+}
 
-          h2{
-            font-size: 90%;
-          }
+/* Color de acento único */
+:root {
+  --accent-color: #ff7a3a;
+}
 
-          h3{
-            font-size: 100%;
-          }
+/* ---------- HEADER (estilo Alex, compacto) ---------- */
 
-          p{
-            font-size: 80%;
-          }
+.site-header {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 8px;
+  padding: 18px 80px 16px 80px;
+  border-bottom: 1px solid #d6d6d6;
+  max-width: 1600px;
+  margin: 0 auto;
+}
 
-          .row.top p {
-            font-size: 80%;
-          }
+.header-column {
+  font-size: 14px;
+  line-height: 1.4;
+}
 
-          iframe{
-            margin-bottom: -70%;
-            margin-top: -70%;
-              }
+.header-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: #666;
+}
 
-              .col_img {
-                display: block;
-                float: center;
-                width: 100%;
-                /* padding: 1px;
-                margin-bottom: 2%; */
-              }
+.header-main-link a,
+.header-sub,
+.header-main-text,
+.header-nav a {
+  color: #111;
+}
 
-        }
-    @media (min-width: 481px) and (max-width: 800px) {
+.header-main-link a {
+  text-decoration: none;
+  font-size: 16px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
 
-          img.home{
-            width: 60%;
-          }
+.header-sub,
+.header-main-text {
+  margin-top: 3px;
+  font-size: 14px;
+}
 
-          .row.top h1{
-            font-size: 220%;
-          }
+.header-main-text {
+  max-width: 16em;
+}
 
-          h2{
-            font-size: 90%;
-          }
+.header-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
 
-          h3{
-            font-size: 100%;
-          }
+.header-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
 
-          p{
-            font-size: 80%;
-          }
+/* Hover solo cambia color de texto */
+.header-main-link a:hover,
+.header-nav a:hover {
+  color: var(--accent-color);
+}
 
-          .row.top p {
-            font-size: 80%;
-          }
+/* ---------- CONTENIDO PRINCIPAL COMÚN (home y project pages) ---------- */
 
-          iframe{
-            margin-bottom: -25%;
-            margin-top: -25%;
-              }
-        }
+.page-content {
+  padding: 32px 96px 72px 96px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
 
-    </style>
+/* ---------- HOME: INTRO + SELECTED WORK ---------- */
+
+.intro-section {
+  margin-bottom: 48px;
+}
+
+.intro-title {
+  font-size: 26px;
+  font-weight: normal;
+  margin: 0 0 12px 0;
+  line-height: 1.28;
+  max-width: 34em;
+}
+
+.intro-email {
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--accent-color);
+  padding-bottom: 1px;
+  transition: opacity 0.15s ease;
+}
+
+.intro-email:hover {
+  opacity: 0.7;
+}
+
+/* LABEL DE SECCIÓN */
+.section-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Subtítulo de sección */
+.section-subtitle {
+  margin: 0 0 24px 0;
+  font-size: 13px;
+  color: #666;
+  max-width: 38em;
+}
+
+/* LAYOUT DOS COLUMNAS + PREVIEW EN HOME */
+.projects-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  align-items: flex-start;
+}
+
+/* COLUMNAS DE PROYECTOS */
+.projects-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.projects-column-title {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin: 0 0 6px 0;
+  color: #444;
+}
+
+/* LISTA PROYECTOS */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* PROYECTO: título + meta en columna */
+.project-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 0;
+  color: #000;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.project-title {
+  font-size: 19px;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+}
+
+.project-meta {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+/* Hover proyectos */
+.project-item:hover {
+  color: var(--accent-color);
+  transform: translateX(3px);
+}
+
+.project-item:hover .project-meta {
+  color: var(--accent-color);
+}
+
+/* PREVIEW RECTANGULAR PANORÁMICO */
+.preview-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 940px;
+  height: 340px;
+  border: 1px solid #d6d6d6;
+  background-color: #f9f9f9;
+  overflow: hidden;
+}
+
+.preview-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.preview-image.active {
+  opacity: 1;
+}
+
+/* ---------- FOOTER COMÚN ---------- */
+
+.site-footer {
+  border-top: 1px solid #d6d6d6;
+  margin-top: 56px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #666;
+}
+
+/* ---------- PROJECT PAGE LAYOUT (header arriba + contenido centrado) ---------- */
+
+/* Contenedor específico de project page, dentro de .page-content */
+.project-detail-container {
+  max-width: 100%; /* usamos el ancho de page-content */
+  margin: 0 auto;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #666;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--accent-color);
+}
+
+/* HERO: imagen / video principal + meta, debajo del header */
+.project-hero {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr;
+  gap: 32px;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+/* HERO: wrapper para video embed con poster */
+.project-hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  border: 1px solid #d6d6d6;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* reutilizamos la misma lógica de embed que en la galería */
+.project-hero-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: none; /* se muestra al hacer clic en el poster */
+}
+
+.project-hero-poster {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.project-hero-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-hero-play-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  margin-left: -36px;
+  margin-top: -36px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-hero-play-button::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 18px solid #fff;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+  margin-left: 3px;
+}
+
+/* Estado activo: cuando se está reproduciendo el video */
+.project-hero-image-wrapper.playing .project-hero-iframe {
+  display: block;
+}
+
+.project-hero-image-wrapper.playing .project-hero-poster {
+  display: none;
+}
+
+.project-hero-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-title-page {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.20em;
+  margin: 0 0 12px 0;
+}
+
+.project-meta-row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  column-gap: 8px;
+  font-size: 13px;
+}
+
+.project-meta-label {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #777;
+  font-size: 11px;
+}
+
+.project-meta-value {
+  color: #222;
+}
+
+/* CUERPO: texto principal + columna lateral (tipo Inferstudio) */
+.project-detail-layout {
+  display: grid;
+  grid-template-columns: 2fr 1.1fr;
+  gap: 40px;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
+
+.project-detail-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #333;
+}
+
+.project-detail-text p + p {
+  margin-top: 10px;
+}
+
+.project-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.project-detail-block h3 {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #444;
+}
+
+.project-detail-block ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.project-detail-block li + li {
+  margin-top: 3px;
+}
+
+/* GALERÍA DE IMÁGENES SECUNDARIAS EN PROJECT PAGE */
+.project-gallery {
+  margin-top: 8px;
+}
+
+.project-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.project-gallery-item {
+  margin: 0;
+  border: 1px solid #d6d6d6;
+  background-color: #f9f9f9;
+  padding: 6px;
+}
+
+.project-gallery-item img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.project-gallery-item figcaption {
+  font-size: 11px;
+  color: #666;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 1100px) {
+  .site-header {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 12px;
+    padding: 12px 20px 10px 20px;
+  }
+
+  .page-content {
+    padding: 24px 20px 48px 20px;
+    max-width: 100%;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* Home */
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-wrapper {
+    max-width: 100%;
+    height: 260px;
+    margin-top: 18px;
+  }
+
+  /* Project page */
+  .project-detail-container {
+    padding: 0; /* ya controla page-content */
+  }
+
+  .project-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .project-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .project-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    grid-template-columns: 1fr;
+  }
+
+  .intro-title {
+    font-size: 22px;
+  }
+
+  .project-title {
+    font-size: 17px;
+  }
+}
+
+</style>
 </html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Export Intelligence · Bars</title>
+<style>
+  :root{
+    --bg:#050712;
+    --panel:rgba(255,255,255,0.045);
+    --line:rgba(255,255,255,0.08);
+    --muted:rgba(255,255,255,0.62);
+    --text:#f5f7ff;
+    --blue:#6dd8ff;
+    --blue2:#2b6fff;
+    --pink:#ff71b6;
+    --orange:#ffb347;
+    --shadow:0 22px 60px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;
+    padding:0;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(87,183,255,.12), transparent 26%),
+      radial-gradient(circle at 90% 15%, rgba(255,90,165,.12), transparent 24%),
+      radial-gradient(circle at 50% 100%, rgba(255,179,71,.08), transparent 28%),
+      var(--bg);
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--text);
+    overflow-x:hidden;
+  }
+
+  .page{
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:16px;
+    margin-bottom:18px;
+  }
+
+  .title-wrap h1{
+    margin:0;
+    font-size:30px;
+    line-height:1.02;
+    letter-spacing:-0.03em;
+  }
+
+  .title-wrap p{
+    margin:8px 0 0;
+    color:var(--muted);
+    font-size:13px;
+    max-width:820px;
+    line-height:1.55;
+  }
+
+  .mini-note{
+    color:var(--muted);
+    font-size:12px;
+    max-width:360px;
+    line-height:1.5;
+    text-align:right;
+  }
+
+  .kpis{
+    display:grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap:10px;
+    margin-bottom:16px;
+  }
+
+  .kpi{
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:14px 14px 12px;
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(12px);
+    min-height: 92px;
+  }
+
+  .kpi .k{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    color:rgba(255,255,255,.55);
+    margin-bottom:8px;
+  }
+
+  .kpi .v{
+    font-size:24px;
+    font-weight:800;
+    line-height:1;
+  }
+
+  .kpi .s{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .legend-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+    margin: 0 0 10px;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .legend-item{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .swatch{
+    width:11px;
+    height:11px;
+    border-radius:999px;
+    box-shadow:0 0 0 2px rgba(255,255,255,.12) inset;
+  }
+
+  .panel{
+    margin-top:8px;
+    background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.022));
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:16px 18px 16px;
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(14px);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .panel::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.08), transparent 34%);
+    pointer-events:none;
+  }
+
+  .panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:10px;
+    position:relative;
+    z-index:1;
+  }
+
+  .panel-title{
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    opacity:.85;
+  }
+
+  .panel-sub{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+    max-width:420px;
+  }
+
+  .chart-wrap{
+    position:relative;
+    z-index:1;
+    margin-top:4px;
+  }
+
+  svg.chart{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  .axis-line{
+    stroke:rgba(255,255,255,.16);
+    stroke-width:1;
+  }
+
+  .grid-line{
+    stroke:rgba(255,255,255,.07);
+    stroke-width:.8;
+  }
+
+  .axis-label{
+    fill:var(--muted);
+    font-size:11px;
+  }
+
+  .tick-label{
+    fill:var(--muted);
+    font-size:10px;
+  }
+
+  .company-label{
+    fill:#f5f7ff;
+    font-size:11px;
+    dominant-baseline:middle;
+  }
+
+  .bar-2024{
+    fill:url(#grad2024);
+    opacity:.90;
+    cursor:pointer;
+  }
+
+  .bar-2025{
+    fill:url(#grad2025);
+    opacity:.90;
+    cursor:pointer;
+  }
+
+  .bar-otros{
+    fill:rgba(255,255,255,.35);
+  }
+
+  .bar-dim{
+    opacity:.18;
+  }
+
+  .bar-active{
+    stroke:rgba(255,255,255,.85);
+    stroke-width:1;
+  }
+
+  .tooltip{
+    position:fixed;
+    pointer-events:none;
+    opacity:0;
+    transform: translateY(6px);
+    transition: opacity .16s ease, transform .16s ease;
+    background:rgba(8,10,18,.96);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:14px;
+    padding:12px 14px;
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.45);
+    backdrop-filter: blur(12px);
+    z-index:999;
+  }
+
+  .tooltip.show{
+    opacity:1;
+    transform: translateY(0);
+  }
+
+  .tooltip .t1{
+    font-size:13px;
+    font-weight:800;
+    margin-bottom:6px;
+  }
+
+  .tooltip .t2{
+    font-size:12px;
+    color:#d9e0f5;
+    line-height:1.5;
+  }
+
+  @media (max-width: 960px){
+    .kpis{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .panel-sub{ max-width:none; }
+  }
+
+  @media (max-width: 720px){
+    .page{ padding:14px; }
+    .hero{ flex-direction:column; align-items:flex-start; }
+    .mini-note{ text-align:left; max-width:none; }
+    .kpis{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <div class="title-wrap">
+        <h1>Peruvian pitahaya exporters</h1>
+        <p>
+          Horizontal bars by company. Azul = 2024, rosa = 2025.
+          OTROS agrega empresas &lt; 1000 kg por año para limpiar la lectura.
+        </p>
+      </div>
+      <div class="mini-note">
+        Hover una empresa para aislarla y ver rápidamente el salto de volumen
+        entre 2024 y 2025 en KG y FOB.
+      </div>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="legend-row">
+      <span class="legend-item"><span class="swatch" style="background:linear-gradient(90deg,#6dd8ff,#2b6fff)"></span>2024</span>
+      <span class="legend-item"><span class="swatch" style="background:linear-gradient(90deg,#ff71b6,#ffb347)"></span>2025</span>
+      <span class="legend-item"><span class="swatch" style="background:rgba(255,255,255,.55)"></span>OTROS / &lt; 1000 kg</span>
+    </div>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <div class="panel-title">2024 vs 2025 · KG por empresa</div>
+          <div class="panel-sub">
+            Barras horizontales agrupadas por compañía, ordenadas por KG 2025.
+            La escala X está en KG totales por año; OTROS se muestra al final como
+            la suma del long tail.
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <svg class="chart" id="chart"></svg>
+      </div>
+    </section>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+
+<script>
+const rawData = [
+  {n:"CAMPOSOL", k24:229111, f24:794427, u24:3.47, k25:372949, f25:697947, u25:1.87},
+  {n:"AGROINDUSTRIA BALENO", k24:30968, f24:58863, u24:1.90, k25:120980, f25:239136, u25:1.98},
+  {n:"FRUITXCHANGE", k24:29633, f24:77696, u24:2.62, k25:67050, f25:170653, u25:2.55},
+  {n:"NORTH VALLEY", k24:56571, f24:188577, u24:3.33, k25:0, f25:0, u25:0},
+  {n:"TITAN FRUIT", k24:45291, f24:125276, u24:2.77, k25:60335, f25:180010, u25:2.98},
+  {n:"INKA GREEN", k24:3344, f24:9291, u24:2.78, k25:4298, f25:9174, u25:2.13},
+  {n:"EPIC FARMS", k24:3669, f24:17604, u24:4.80, k25:16682, f25:53688, u25:3.22},
+  {n:"ORGANIC PERUVIAN FOODS", k24:2540, f24:17480, u24:6.88, k25:18659, f25:97072, u25:5.20},
+  {n:"NUTRIFAM TRADING", k24:595, f24:3579, u24:6.01, k25:765, f25:4348, u25:5.69},
+  {n:"R COORP", k24:13316, f24:48772, u24:3.66, k25:0, f25:0, u25:0},
+  {n:"WIBA COMERCIO", k24:2428, f24:5094.8, u24:2.10, k25:0, f25:0, u25:0},
+  {n:"NOVAL COMPANY", k24:1265.765, f24:6385, u24:5.04, k25:2114, f25:8329, u25:3.94},
+  {n:"DRAGON FRUIT EXPORT", k24:0, f24:0, u24:0, k25:54662, f25:114935, u25:2.10},
+  {n:"GCZCOMEX S.A.C.", k24:0, f24:0, u24:0, k25:1139, f25:2846, u25:2.50},
+  {n:"GRUPO CAMPO AGRO", k24:0, f24:0, u24:0, k25:7950, f25:38670, u25:4.86},
+  {n:"INKA TASTY", k24:0, f24:0, u24:0, k25:330, f25:1313, u25:3.98},
+  {n:"NORTERICO", k24:0, f24:0, u24:0, k25:520, f25:1570, u25:3.02},
+  {n:"NITHOS COMPANY", k24:1470, f24:1990, u24:1.35, k25:1160, f25:1740, u25:1.50},
+  {n:"PRONATUR", k24:0, f24:0, u24:0, k25:4482, f25:26002, u25:5.80},
+  {n:"VARDI GREEN", k24:0, f24:0, u24:0, k25:1386, f25:4843, u25:3.49},
+  {n:"OTROS", k24:2971, f24:3601, u24:1.21, k25:1662, f25:4751, u25:2.86}
+];
+
+const threshold = 1000;
+const chart = document.getElementById("chart");
+const tooltip = document.getElementById("tooltip");
+const kpis = document.getElementById("kpis");
+
+const fmt0 = n => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 0 });
+const fmt1 = n => Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 1 });
+
+function aggregateYear(rows, kgKey, fobKey, usdKey) {
+  const base = rows.map(d => ({ ...d }));
+  const others = base.find(d => d.n === "OTROS");
+  const kept = [];
+  let othersKg = others ? (others[kgKey] || 0) : 0;
+  let othersFob = others ? (others[fobKey] || 0) : 0;
+  let othersUsdWeighted = 0;
+  let othersUsdKg = 0;
+
+  base.forEach(d => {
+    const kg = d[kgKey] || 0;
+    const fob = d[fobKey] || 0;
+    const usd = d[usdKey] || 0;
+
+    if (d.n === "OTROS") return;
+
+    if (kg > 0 && kg < threshold) {
+      othersKg += kg;
+      othersFob += fob;
+      othersUsdWeighted += usd * kg;
+      othersUsdKg += kg;
+    } else {
+      kept.push({ ...d });
+    }
+  });
+
+  const othersRow = others ? { ...others } :
+    { n:"OTROS", k24:0,f24:0,u24:0,k25:0,f25:0,u25:0 };
+
+  othersRow[kgKey] = othersKg;
+  othersRow[fobKey] = othersFob;
+  othersRow[usdKey] = othersUsdKg ? (othersUsdWeighted / othersUsdKg)
+                                  : (othersRow[usdKey] || 0);
+
+  kept.push(othersRow);
+  return kept;
+}
+
+function moveOtrosLast(arr) {
+  const idx = arr.findIndex(d => d.n === "OTROS");
+  if (idx >= 0) {
+    const [otros] = arr.splice(idx, 1);
+    arr.push(otros);
+  }
+  return arr;
+}
+
+let data24 = aggregateYear(rawData, "k24", "f24", "u24")
+  .filter(d => d.k24 > 0)
+  .sort((a,b) => b.k24 - a.k24);
+let data25 = aggregateYear(rawData, "k25", "f25", "u25")
+  .filter(d => d.k25 > 0)
+  .sort((a,b) => b.k25 - a.k25);
+
+moveOtrosLast(data24);
+moveOtrosLast(data25);
+
+const mergedMap = new Map();
+[...data24, ...data25].forEach(d => {
+  if (!mergedMap.has(d.n)) mergedMap.set(d.n, { n:d.n, k24:0,f24:0,u24:0,k25:0,f25:0,u25:0 });
+  const base = mergedMap.get(d.n);
+  base.k24 = d.k24 ?? base.k24;
+  base.f24 = d.f24 ?? base.f24;
+  base.u24 = d.u24 ?? base.u24;
+  base.k25 = d.k25 ?? base.k25;
+  base.f25 = d.f25 ?? base.f25;
+  base.u25 = d.u25 ?? base.u25;
+});
+let companies = [...mergedMap.values()];
+companies.sort((a,b) => (b.k25 || 0) - (a.k25 || 0));
+moveOtrosLast(companies);
+
+const maxKg = Math.max(...companies.map(d => Math.max(d.k24 || 0, d.k25 || 0)));
+const sum = arr => arr.reduce((a,d) => a + (d || 0), 0);
+
+const total24 = sum(rawData.map(d => d.k24));
+const total25 = sum(rawData.map(d => d.k25));
+const totalF24 = sum(rawData.map(d => d.f24));
+const totalF25 = sum(rawData.map(d => d.f25));
+const deltaKg = total25 - total24;
+const deltaFob = totalF25 - totalF24;
+
+kpis.innerHTML = `
+  <div class="kpi"><div class="k">2024 total KG</div><div class="v">${fmt0(total24)}</div><div class="s">Base year volume</div></div>
+  <div class="kpi"><div class="k">2025 total KG</div><div class="v">${fmt0(total25)}</div><div class="s">Current year volume</div></div>
+  <div class="kpi"><div class="k">KG delta</div><div class="v">${deltaKg >= 0 ? "+" : ""}${fmt0(deltaKg)}</div><div class="s">YoY change in volume</div></div>
+  <div class="kpi"><div class="k">FOB delta</div><div class="v">${deltaFob >= 0 ? "+" : ""}${fmt0(deltaFob)}</div><div class="s">YoY change in value</div></div>
+`;
+
+// layout
+const rowHeight = 26;
+const rowGap = 4;
+const topPad = 30;
+const bottomPad = 32;
+const leftPad = 180;
+const rightPad = 40;
+const n = companies.length;
+
+const chartWidth = chart.clientWidth || 1200;
+const chartHeight = topPad + bottomPad + 20 + n*(rowHeight+rowGap);
+
+chart.setAttribute("viewBox", `0 0 ${chartWidth} ${chartHeight}`);
+
+// defs
+const defs = document.createElementNS("http://www.w3.org/2000/svg","defs");
+defs.innerHTML = `
+  <linearGradient id="grad2024" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#6dd8ff"/>
+    <stop offset="100%" stop-color="#2b6fff"/>
+  </linearGradient>
+  <linearGradient id="grad2025" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#ff71b6"/>
+    <stop offset="100%" stop-color="#ffb347"/>
+  </linearGradient>
+`;
+chart.appendChild(defs);
+
+// escala x
+function xScale(v){
+  return leftPad + (v / maxKg) * (chartWidth - leftPad - rightPad);
+}
+
+// grid + eje
+const axisGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+const ticks = 5;
+for(let i=0;i<=ticks;i++){
+  const t = (maxKg/ticks)*i;
+  const x = xScale(t);
+  const grid = document.createElementNS("http://www.w3.org/2000/svg","line");
+  grid.setAttribute("x1", x);
+  grid.setAttribute("x2", x);
+  grid.setAttribute("y1", topPad - 6);
+  grid.setAttribute("y2", chartHeight - bottomPad);
+  grid.setAttribute("class","grid-line");
+  axisGroup.appendChild(grid);
+
+  const label = document.createElementNS("http://www.w3.org/2000/svg","text");
+  label.setAttribute("x", x);
+  label.setAttribute("y", chartHeight - bottomPad + 14);
+  label.setAttribute("text-anchor","middle");
+  label.setAttribute("class","tick-label");
+  label.textContent = fmt0(t);
+  axisGroup.appendChild(label);
+}
+
+const axisLine = document.createElementNS("http://www.w3.org/2000/svg","line");
+axisLine.setAttribute("x1", leftPad);
+axisLine.setAttribute("x2", chartWidth - rightPad);
+axisLine.setAttribute("y1", chartHeight - bottomPad);
+axisLine.setAttribute("y2", chartHeight - bottomPad);
+axisLine.setAttribute("class","axis-line");
+axisGroup.appendChild(axisLine);
+
+const axisText = document.createElementNS("http://www.w3.org/2000/svg","text");
+axisText.setAttribute("x", (leftPad + chartWidth - rightPad)/2);
+axisText.setAttribute("y", chartHeight - 6);
+axisText.setAttribute("text-anchor","middle");
+axisText.setAttribute("class","axis-label");
+axisText.textContent = "KG exportados por empresa";
+axisGroup.appendChild(axisText);
+
+chart.appendChild(axisGroup);
+
+// grupo barras
+const barsGroup = document.createElementNS("http://www.w3.org/2000/svg","g");
+barsGroup.setAttribute("id","bars-group");
+chart.appendChild(barsGroup);
+
+// tooltip helpers
+function showTooltip(e, d){
+  const dKg = d.k25 - d.k24;
+  const dF = d.f25 - d.f24;
+  const share24 = total24 ? (d.k24/total24*100) : 0;
+  const share25 = total25 ? (d.k25/total25*100) : 0;
+
+  tooltip.classList.add("show");
+  tooltip.style.left = (e.clientX + 16) + "px";
+  tooltip.style.top = (e.clientY + 16) + "px";
+
+  tooltip.innerHTML = `
+    <div class="t1">${d.n}</div>
+    <div class="t2">
+      <span style="color:#6dd8ff">2024:</span> ${fmt0(d.k24)} kg · ${fmt0(d.f24)} FOB · ${d.u24 ? d.u24.toFixed(2) : "—"} USD/kg<br>
+      <span style="color:#ff71b6">2025:</span> ${fmt0(d.k25)} kg · ${fmt0(d.f25)} FOB · ${d.u25 ? d.u25.toFixed(2) : "—"} USD/kg<br><br>
+      Share 2024: ${fmt1(share24)}% · Share 2025: ${fmt1(share25)}%<br>
+      Δ KG: ${dKg >= 0 ? "+" : ""}${fmt0(dKg)} · Δ FOB: ${dF >= 0 ? "+" : ""}${fmt0(dF)}
+    </div>
+  `;
+}
+
+function hideTooltip(){
+  tooltip.classList.remove("show");
+}
+
+// dibujar filas
+companies.forEach((d, i) => {
+  const yCenter = topPad + i*(rowHeight+rowGap) + rowHeight/2;
+  const group = document.createElementNS("http://www.w3.org/2000/svg","g");
+  group.setAttribute("data-name", d.n);
+
+  const label = document.createElementNS("http://www.w3.org/2000/svg","text");
+  label.setAttribute("x", leftPad - 10);
+  label.setAttribute("y", yCenter);
+  label.setAttribute("text-anchor","end");
+  label.setAttribute("class","company-label");
+  label.textContent = d.n;
+  group.appendChild(label);
+
+  // fondo suave por fila
+  const rowHeightLocal = rowHeight;
+  const rowTop = yCenter - rowHeightLocal / 2;
+  const rowBg = document.createElementNS("http://www.w3.org/2000/svg","rect");
+  rowBg.setAttribute("x", leftPad - 2);
+  rowBg.setAttribute("y", rowTop);
+  rowBg.setAttribute("width", chartWidth - leftPad - rightPad + 4);
+  rowBg.setAttribute("height", rowHeightLocal);
+  rowBg.setAttribute("fill","rgba(255,255,255,.02)");
+  group.appendChild(rowBg);
+
+  // barras 2024 y 2025
+  const barH = 8;
+  const gapY = 5;
+  const x0 = xScale(0);
+
+  const xEnd24 = xScale(d.k24 || 0);
+  const w24 = Math.max(0, xEnd24 - x0);
+  const bar24 = document.createElementNS("http://www.w3.org/2000/svg","rect");
+  bar24.setAttribute("x", x0);
+  bar24.setAttribute("y", yCenter - gapY - barH);
+  bar24.setAttribute("width", w24);
+  bar24.setAttribute("height", barH);
+  bar24.setAttribute("rx", barH/2);
+  bar24.setAttribute("ry", barH/2);
+  bar24.setAttribute("class", "bar-2024" + (d.n === "OTROS" ? " bar-otros" : ""));
+  bar24.dataset.name = d.n;
+  group.appendChild(bar24);
+
+  const xEnd25 = xScale(d.k25 || 0);
+  const w25 = Math.max(0, xEnd25 - x0);
+  const bar25 = document.createElementNS("http://www.w3.org/2000/svg","rect");
+  bar25.setAttribute("x", x0);
+  bar25.setAttribute("y", yCenter + gapY);
+  bar25.setAttribute("width", w25);
+  bar25.setAttribute("height", barH);
+  bar25.setAttribute("rx", barH/2);
+  bar25.setAttribute("ry", barH/2);
+  bar25.setAttribute("class", "bar-2025" + (d.n === "OTROS" ? " bar-otros" : ""));
+  bar25.dataset.name = d.n;
+  group.appendChild(bar25);
+
+  function onEnter(e){
+    highlightCompany(d.n);
+    showTooltip(e, d);
+  }
+
+  function onMove(e){
+    if (!tooltip.classList.contains("show")) return;
+    tooltip.style.left = (e.clientX + 16) + "px";
+    tooltip.style.top = (e.clientY + 16) + "px";
+  }
+
+  function onLeave(){
+    clearHighlight();
+    hideTooltip();
+  }
+
+  [bar24, bar25, rowBg, label].forEach(el => {
+    el.addEventListener("mouseenter", onEnter);
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+  });
+
+  barsGroup.appendChild(group);
+});
+
+function highlightCompany(name){
+  const allBars = chart.querySelectorAll(".bar-2024, .bar-2025");
+  allBars.forEach(b => {
+    const same = b.dataset.name === name;
+    b.classList.toggle("bar-dim", !same);
+    b.classList.toggle("bar-active", same);
+  });
+
+  const labels = chart.querySelectorAll(".company-label");
+  labels.forEach(l => {
+    const same = l.textContent === name;
+    l.style.opacity = same ? "1" : ".25";
+  });
+}
+
+function clearHighlight(){
+  const allBars = chart.querySelectorAll(".bar-2024, .bar-2025");
+  allBars.forEach(b => {
+    b.classList.remove("bar-dim");
+    b.classList.remove("bar-active");
+  });
+  const labels = chart.querySelectorAll(".company-label");
+  labels.forEach(l => l.style.opacity = "1");
+}
+</script>
+</body>
+</html>

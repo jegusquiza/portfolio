@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pitahaya 2024 vs 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center,
+        #101826 0%,
+        #05070f 45%,
+        #010207 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    }
+
+    svg {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    .title {
+      position: absolute;
+      top: 22px;
+      left: 26px;
+      color: #f5f7ff;
+      z-index: 10;
+      padding: 8px 12px;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.06), rgba(6,10,20,0.6));
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .title p {
+      margin: 6px 0 0 0;
+      font-size: 12px;
+      color: #9fb3d8;
+      line-height: 1.4;
+    }
+
+    .controls {
+      position: absolute;
+      top: 22px;
+      right: 26px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+      padding: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top right, rgba(255,255,255,0.06), rgba(6,10,20,0.6));
+      border: 1px solid rgba(255,255,255,0.25);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+    }
+
+    .controls button {
+      background: transparent;
+      color: #f5f5ff;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      padding: 5px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .controls button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.45);
+    }
+
+    .controls button.active {
+      background: linear-gradient(120deg, #ff2a93, #ffb347);
+      border-color: transparent;
+      color: #050814;
+      font-weight: 700;
+      box-shadow: 0 0 22px rgba(255,133,203,0.7);
+    }
+
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle at top left, rgba(40, 15, 60, 0.95), rgba(6, 10, 20, 0.98));
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 16px;
+      padding: 12px 14px;
+      color: #f5f5ff;
+      font-size: 11px;
+      line-height: 1.5;
+      width: 260px;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.85);
+      backdrop-filter: blur(18px);
+      z-index: 20;
+      transform: translate3d(0,0,0);
+    }
+
+    .axis-line {
+      stroke: rgba(255,255,255,0.16);
+      stroke-width: 1.1;
+      shape-rendering: crispEdges;
+    }
+
+    .grid-line {
+      stroke: rgba(147,185,255,0.08);
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+
+    .axis-label {
+      fill: #c4cbe4;
+      font-size: 11px;
+      letter-spacing: 0.03em;
+    }
+
+    .axis-tick {
+      fill: #8f9ac0;
+      font-size: 10px;
+    }
+
+    .month-label {
+      fill: #dbe4ff;
+      font-size: 11px;
+      text-anchor: middle;
+    }
+
+    .delta-line {
+      stroke: url(#grad-delta);
+      stroke-width: 1.4;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .delta-label {
+      fill: #f5f5ff;
+      font-size: 10px;
+      text-anchor: middle;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .bar-front-2024 {
+      fill: url(#grad-front-2024);
+      opacity: 0.94;
+    }
+
+    .bar-side-2024 {
+      fill: url(#grad-side-2024);
+      opacity: 0.9;
+    }
+
+    .bar-top-2024 {
+      fill: url(#grad-top-2024);
+      opacity: 0.98;
+    }
+
+    .bar-front-2025 {
+      fill: url(#grad-front-2025);
+      opacity: 0.94;
+    }
+
+    .bar-side-2025 {
+      fill: url(#grad-side-2025);
+      opacity: 0.9;
+    }
+
+    .bar-top-2025 {
+      fill: url(#grad-top-2025);
+      opacity: 0.98;
+    }
+
+    .bar-piece {
+      transition:
+        opacity 0.14s ease-out,
+        transform 0.14s ease-out;
+      transform-origin: center bottom;
+      filter:
+        drop-shadow(0 4px 10px rgba(0,0,0,0.35))
+        drop-shadow(0 0 6px rgba(255,255,255,0.04));
+    }
+
+    .bar-dimmed {
+      opacity: 0.16 !important;
+    }
+
+    .bar-highlight {
+      transform: translateY(-3px) scale(1.01);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="title">
+  <h1>Pitahaya Perú</h1>
+  <p>
+    KG exportados por mes · Comparación directa 2024 vs 2025<br>
+    Dos barras pegadas por mes: izquierda 2024, derecha 2025
+  </p>
+</div>
+
+<div class="controls">
+  <button id="btn-both" class="active">2024 + 2025</button>
+  <button id="btn-2024">solo 2024</button>
+  <button id="btn-2025">solo 2025</button>
+</div>
+
+<div id="tooltip" class="tooltip"></div>
+
+<svg id="viz"></svg>
+
+<script>
+// ==========================
+// DATA
+// ==========================
+
+const data2024 = [
+  { mes: "Enero",     kg: 24603 },
+  { mes: "Febrero",   kg: 34933 },
+  { mes: "Marzo",     kg: 77901 },
+  { mes: "Abril",     kg: 112583 },
+  { mes: "Mayo",      kg: 150722 },
+  { mes: "Junio",     kg: 6984 },
+  { mes: "Julio",     kg: 4284 },
+  { mes: "Agosto",    kg: 398 },
+  { mes: "Setiembre", kg: 1738 },
+  { mes: "Octubre",   kg: 234 },
+  { mes: "Noviembre", kg: 2029 },
+  { mes: "Diciembre", kg: 8205 }
+];
+
+const data2025 = [
+  { mes: "Enero",     kg: 105632 },
+  { mes: "Febrero",   kg: 189945 },
+  { mes: "Marzo",     kg: 194680 },
+  { mes: "Abril",     kg: 77044 },
+  { mes: "Mayo",      kg: 106259 },
+  { mes: "Junio",     kg: 22972 },
+  { mes: "Julio",     kg: 5560 },
+  { mes: "Agosto",    kg: 439 },
+  { mes: "Setiembre", kg: 711 },
+  { mes: "Octubre",   kg: 529 },
+  { mes: "Noviembre", kg: 517 },
+  { mes: "Diciembre", kg: 32833 }
+];
+
+const mesesOrden = [
+  "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+  "Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"
+];
+
+const merged = mesesOrden.map(m => {
+  const d24 = data2024.find(d => d.mes === m);
+  const d25 = data2025.find(d => d.mes === m);
+  return {
+    mes: m,
+    kg2024: d24 ? d24.kg : 0,
+    kg2025: d25 ? d25.kg : 0
+  };
+});
+
+// ==========================
+// SVG
+// ==========================
+
+const svg = d3.select("#viz");
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+const margin = {
+  top: 140,
+  right: 80,
+  bottom: 80,
+  left: 120
+};
+
+const innerWidth = width - margin.left - margin.right;
+const innerHeight = height - margin.top - margin.bottom;
+
+const gRoot = svg.append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const tooltip = d3.select("#tooltip");
+
+// ==========================
+// DEFINICIONES: GRADIENTES
+// ==========================
+
+const defs = svg.append("defs");
+
+// Gradientes 2024
+const gradFront2024 = defs.append("linearGradient")
+  .attr("id","grad-front-2024")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","0%").attr("y2","100%");
+gradFront2024.append("stop").attr("offset","0%").attr("stop-color","#a7f0ff");
+gradFront2024.append("stop").attr("offset","45%").attr("stop-color","#47d3ff");
+gradFront2024.append("stop").attr("offset","100%").attr("stop-color","#054d7b");
+
+const gradSide2024 = defs.append("linearGradient")
+  .attr("id","grad-side-2024")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","100%");
+gradSide2024.append("stop").attr("offset","0%").attr("stop-color","#3fc3f2");
+gradSide2024.append("stop").attr("offset","100%").attr("stop-color","#071f3a");
+
+const gradTop2024 = defs.append("linearGradient")
+  .attr("id","grad-top-2024")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","0%");
+gradTop2024.append("stop").attr("offset","0%").attr("stop-color","#c6f6ff");
+gradTop2024.append("stop").attr("offset","100%").attr("stop-color","#6dd9ff");
+
+// Gradientes 2025
+const gradFront2025 = defs.append("linearGradient")
+  .attr("id","grad-front-2025")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","0%").attr("y2","100%");
+gradFront2025.append("stop").attr("offset","0%").attr("stop-color","#ffd6f0");
+gradFront2025.append("stop").attr("offset","50%").attr("stop-color","#ff2a93");
+gradFront2025.append("stop").attr("offset","100%").attr("stop-color","#520429");
+
+const gradSide2025 = defs.append("linearGradient")
+  .attr("id","grad-side-2025")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","100%");
+gradSide2025.append("stop").attr("offset","0%").attr("stop-color","#ff8ac8");
+gradSide2025.append("stop").attr("offset","100%").attr("stop-color","#2d0417");
+
+const gradTop2025 = defs.append("linearGradient")
+  .attr("id","grad-top-2025")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","0%");
+gradTop2025.append("stop").attr("offset","0%").attr("stop-color","#ffe0f6");
+gradTop2025.append("stop").attr("offset","100%").attr("stop-color","#ff80c3");
+
+// Gradiente para líneas delta
+const gradDelta = defs.append("linearGradient")
+  .attr("id","grad-delta")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","0%").attr("y2","100%");
+gradDelta.append("stop").attr("offset","0%").attr("stop-color","#8effb0");
+gradDelta.append("stop").attr("offset","50%").attr("stop-color","#f9ffb0");
+gradDelta.append("stop").attr("offset","100%").attr("stop-color","#ff8f8f");
+
+// ==========================
+// CAPAS
+// ==========================
+
+const gBackground = gRoot.append("g").attr("class","background-layer");
+const gMain       = gRoot.append("g").attr("class","main-layer");
+const gDelta      = gRoot.append("g").attr("class","delta-layer");
+const gHud        = gRoot.append("g").attr("class","hud-layer");
+
+// ==========================
+// ESCALAS
+// ==========================
+
+const xScale = d3.scaleBand()
+  .domain(mesesOrden)
+  .range([0, innerWidth])
+  .padding(0.22);
+
+const maxY = d3.max([
+  d3.max(data2024, d => d.kg),
+  d3.max(data2025, d => d.kg)
+]);
+
+const yScale = d3.scaleLinear()
+  .domain([0, maxY])
+  .range([innerHeight, 0])
+  .nice();
+
+// ==========================
+// GRID Y EJES
+// ==========================
+
+const yTicks = yScale.ticks(6);
+
+gMain.selectAll(".grid-line")
+  .data(yTicks)
+  .enter()
+  .append("line")
+  .attr("class","grid-line")
+  .attr("x1", 0)
+  .attr("x2", innerWidth)
+  .attr("y1", d => yScale(d))
+  .attr("y2", d => yScale(d));
+
+gMain.append("line")
+  .attr("class","axis-line")
+  .attr("x1", 0)
+  .attr("x2", innerWidth)
+  .attr("y1", innerHeight)
+  .attr("y2", innerHeight);
+
+gMain.append("line")
+  .attr("class","axis-line")
+  .attr("x1", 0)
+  .attr("x2", 0)
+  .attr("y1", 0)
+  .attr("y2", innerHeight);
+
+gMain.append("text")
+  .attr("class","axis-label")
+  .attr("x", -innerHeight / 2)
+  .attr("y", -82)
+  .attr("text-anchor","middle")
+  .attr("transform","rotate(-90)")
+  .text("KG exportados de pitahaya");
+
+// LEYENDA EJE X + PÍLDORAS DE COLOR
+gMain.append("text")
+  .attr("class","axis-label")
+  .attr("x", innerWidth / 2)
+  .attr("y", innerHeight + 48)
+  .attr("text-anchor","middle")
+  .text("Mes del año");
+
+gMain.append("rect")
+  .attr("x", innerWidth / 2 + 80)
+  .attr("y", innerHeight + 35)
+  .attr("width", 16)
+  .attr("height", 8)
+  .attr("rx", 4)
+  .attr("ry", 4)
+  .style("fill", "url(#grad-front-2024)")
+  .style("opacity", 0.95);
+
+gMain.append("text")
+  .attr("class","axis-tick")
+  .attr("x", innerWidth / 2 + 102)
+  .attr("y", innerHeight + 43)
+  .attr("text-anchor","start")
+  .text("2024 (izquierda)");
+
+gMain.append("rect")
+  .attr("x", innerWidth / 2 + 220)
+  .attr("y", innerHeight + 35)
+  .attr("width", 16)
+  .attr("height", 8)
+  .attr("rx", 4)
+  .attr("ry", 4)
+  .style("fill", "url(#grad-front-2025)")
+  .style("opacity", 0.95);
+
+gMain.append("text")
+  .attr("class","axis-tick")
+  .attr("x", innerWidth / 2 + 242)
+  .attr("y", innerHeight + 43)
+  .attr("text-anchor","start")
+  .text("2025 (derecha)");
+
+gMain.selectAll(".y-tick")
+  .data(yTicks)
+  .enter()
+  .append("text")
+  .attr("class","axis-tick")
+  .attr("x", -14)
+  .attr("y", d => yScale(d) + 4)
+  .attr("text-anchor","end")
+  .text(d => d.toLocaleString("es-ES") + " kg");
+
+gMain.selectAll(".month-label")
+  .data(mesesOrden)
+  .enter()
+  .append("text")
+  .attr("class","month-label")
+  .attr("x", d => xScale(d) + xScale.bandwidth() / 2)
+  .attr("y", innerHeight + 22)
+  .text(d => d.slice(0,3).toUpperCase());
+
+// ==========================
+// BARRAS 3D
+// ==========================
+
+const group = gMain.append("g");
+
+const barGroups = group.selectAll(".month-group")
+  .data(merged)
+  .enter()
+  .append("g")
+  .attr("class","month-group")
+  .attr("transform", d => `translate(${xScale(d.mes)},0)`);
+
+const barWidth = xScale.bandwidth() * 0.35;
+const depth = 10;
+
+barGroups.attr("opacity",0)
+  .attr("transform", d => `translate(${xScale(d.mes)},20)`)
+  .transition()
+  .delay((d,i) => 150 + i*40)
+  .duration(400)
+  .attr("opacity",1)
+  .attr("transform", d => `translate(${xScale(d.mes)},0)`);
+
+// BARRAS 2024
+barGroups.each(function(d) {
+  const gBar = d3.select(this);
+  const x = (xScale.bandwidth() / 2) - barWidth - 2;
+  const y = yScale(d.kg2024);
+  const h = innerHeight - y;
+  const w = barWidth;
+
+  gBar.append("rect")
+    .datum(d)
+    .attr("class","bar-piece bar-front-2024")
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", w)
+    .attr("height", h);
+
+  gBar.append("polygon")
+    .datum(d)
+    .attr("class","bar-piece bar-side-2024")
+    .attr("points", `
+      ${x+w},${y}
+      ${x+w+depth},${y-depth}
+      ${x+w+depth},${y+h-depth}
+      ${x+w},${y+h}
+    `);
+
+  gBar.append("polygon")
+    .datum(d)
+    .attr("class","bar-piece bar-top-2024")
+    .attr("points", `
+      ${x},${y}
+      ${x+depth},${y-depth}
+      ${x+w+depth},${y-depth}
+      ${x+w},${y}
+    `);
+});
+
+// BARRAS 2025
+barGroups.each(function(d) {
+  const gBar = d3.select(this);
+  const x = (xScale.bandwidth() / 2) + 2;
+  const y = yScale(d.kg2025);
+  const h = innerHeight - y;
+  const w = barWidth;
+
+  gBar.append("rect")
+    .datum(d)
+    .attr("class","bar-piece bar-front-2025")
+    .attr("x", x)
+    .attr("y", y)
+    .attr("width", w)
+    .attr("height", h);
+
+  gBar.append("polygon")
+    .datum(d)
+    .attr("class","bar-piece bar-side-2025")
+    .attr("points", `
+      ${x+w},${y}
+      ${x+w+depth},${y-depth}
+      ${x+w+depth},${y+h-depth}
+      ${x+w},${y+h}
+    `);
+
+  gBar.append("polygon")
+    .datum(d)
+    .attr("class","bar-piece bar-top-2025")
+    .attr("points", `
+      ${x},${y}
+      ${x+depth},${y-depth}
+      ${x+w+depth},${y-depth}
+      ${x+w},${y}
+    `);
+});
+
+// ==========================
+// DELTA
+// ==========================
+
+gDelta.selectAll(".delta-line")
+  .data(merged)
+  .enter()
+  .append("line")
+  .attr("class","delta-line")
+  .attr("x1", d => xScale(d.mes) + xScale.bandwidth()/2)
+  .attr("x2", d => xScale(d.mes) + xScale.bandwidth()/2)
+  .attr("y1", d => yScale(d.kg2024))
+  .attr("y2", d => yScale(d.kg2025));
+
+gDelta.selectAll(".delta-label")
+  .data(merged)
+  .enter()
+  .append("text")
+  .attr("class","delta-label")
+  .attr("x", d => xScale(d.mes) + xScale.bandwidth()/2)
+  .attr("y", d => {
+    const y1 = yScale(d.kg2024);
+    const y2 = yScale(d.kg2025);
+    return (y1 + y2) / 2 - 4;
+  })
+  .text(d => {
+    const delta = d.kg2025 - d.kg2024;
+    if (Math.abs(delta) < 500) return "";
+    const sign = delta > 0 ? "+" : "–";
+    return sign + Math.round(Math.abs(delta)/1000) + "k";
+  });
+
+// ==========================
+// INTERACCIÓN OPTIMIZADA
+// ==========================
+
+barGroups
+  .on("mouseenter", (event, d) => focusMonthEnter(event, d))
+  .on("mousemove",  (event, d) => moveTooltip(event, d))
+  .on("mouseleave", resetFocus);
+
+const allBars = gMain.selectAll(".bar-piece");
+const deltaLines = gDelta.selectAll(".delta-line");
+const deltaLabels = gDelta.selectAll(".delta-label");
+
+function focusMonthEnter(event, d) {
+  const month = d.mes;
+
+  allBars
+    .classed("bar-dimmed", b => b.mes !== month)
+    .classed("bar-highlight", b => b.mes === month);
+
+  deltaLines
+    .style("opacity", l => l.mes === month ? 1 : 0);
+
+  deltaLabels
+    .style("opacity", l => l.mes === month ? 1 : 0);
+
+  tooltip.style("opacity", 1);
+  updateTooltipContent(d);
+  moveTooltip(event, d);
+}
+
+function moveTooltip(event, d) {
+  const [mx, my] = d3.pointer(event, document.body);
+  tooltip
+    .style("left", (mx + 16) + "px")
+    .style("top",  (my - 10) + "px");
+}
+
+function updateTooltipContent(d) {
+  const deltaAbs = d.kg2025 - d.kg2024;
+
+  const deltaPct = d.kg2024 > 0
+    ? (deltaAbs / d.kg2024) * 100
+    : null;
+
+  let deltaText;
+
+  if (deltaPct === null) {
+    deltaText = "Sin base 2024 para comparar";
+  } else {
+    const sign = deltaPct >= 0 ? "+" : "–";
+    const color = deltaPct >= 0 ? "#8effb0" : "#ff8f8f";
+
+    deltaText = `
+      Variación:
+      <b style="color:${color}">
+        ${sign}${Math.abs(deltaPct).toFixed(1).replace(".", ",")}%
+      </b>
+    `;
+  }
+
+  tooltip.html(`
+    <div style="font-size:18px;font-weight:700;margin-bottom:8px;">
+      ${d.mes}
+    </div>
+
+    <div style="display:flex;gap:16px;">
+
+      <div>
+        <div style="
+          color:#8bb9ff;
+          font-size:11px;
+          text-transform:uppercase;
+        ">
+          2024
+        </div>
+
+        <div style="font-size:18px;font-weight:700;">
+          ${d.kg2024.toLocaleString("es-ES")} kg
+        </div>
+      </div>
+
+      <div>
+        <div style="
+          color:#ff9fd3;
+          font-size:11px;
+          text-transform:uppercase;
+        ">
+          2025
+        </div>
+
+        <div style="font-size:18px;font-weight:700;">
+          ${d.kg2025.toLocaleString("es-ES")} kg
+        </div>
+      </div>
+
+    </div>
+
+    <div style="
+      margin-top:10px;
+      padding-top:8px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      font-size:12px;
+      color:#dbe8ff;
+    ">
+      ${deltaText}
+    </div>
+  `);
+}
+
+function resetFocus() {
+  allBars
+    .classed("bar-dimmed", false)
+    .classed("bar-highlight", false);
+
+  deltaLines.style("opacity", 0);
+  deltaLabels.style("opacity", 0);
+
+  tooltip.style("opacity", 0);
+}
+
+// ==========================
+// CONTROLES
+// ==========================
+
+const btnBoth = document.getElementById("btn-both");
+const btn2024 = document.getElementById("btn-2024");
+const btn2025 = document.getElementById("btn-2025");
+
+function setMode(mode) {
+  btnBoth.classList.remove("active");
+  btn2024.classList.remove("active");
+  btn2025.classList.remove("active");
+
+  resetFocus();
+
+  const bars2024 = gMain.selectAll(
+    ".bar-front-2024, .bar-side-2024, .bar-top-2024"
+  );
+
+  const bars2025 = gMain.selectAll(
+    ".bar-front-2025, .bar-side-2025, .bar-top-2025"
+  );
+
+  if (mode === "both") {
+    btnBoth.classList.add("active");
+
+    bars2024
+      .transition()
+      .duration(180)
+      .style("opacity", 0.94);
+
+    bars2025
+      .transition()
+      .duration(180)
+      .style("opacity", 0.94);
+  }
+  else if (mode === "2024") {
+    btn2024.classList.add("active");
+
+    bars2024
+      .transition()
+      .duration(180)
+      .style("opacity", 0.98);
+
+    bars2025
+      .transition()
+      .duration(180)
+      .style("opacity", 0.14);
+  }
+  else if (mode === "2025") {
+    btn2025.classList.add("active");
+
+    bars2024
+      .transition()
+      .duration(180)
+      .style("opacity", 0.14);
+
+    bars2025
+      .transition()
+      .duration(180)
+      .style("opacity", 0.98);
+  }
+}
+
+btnBoth.addEventListener("click", () => setMode("both"));
+btn2024.addEventListener("click", () => setMode("2024"));
+btn2025.addEventListener("click", () => setMode("2025"));
+
+// estado inicial
+setMode("both");
+</script>
+
+</body>
+</html>

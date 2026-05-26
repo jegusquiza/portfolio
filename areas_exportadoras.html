@@ -9,7 +9,6 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
 <style>
-
 html,body{
     margin:0;
     width:100%;
@@ -50,7 +49,7 @@ svg{
 }
 
 .region.dim{
-    opacity:.14;
+    opacity:.45; /* antes .14: el mapa ya no desaparece */
 }
 
 .region.active{
@@ -58,6 +57,14 @@ svg{
     stroke:#e8f6ff;
     stroke-width:2.2;
     filter:drop-shadow(0 0 16px rgba(130,210,255,.9));
+}
+
+/* contorno fijo del mapa, siempre visible */
+.map-outline{
+    fill:none;
+    stroke:rgba(255,255,255,.25);
+    stroke-width:1.4;
+    pointer-events:none;
 }
 
 /* ------------------------------------------------ */
@@ -125,21 +132,14 @@ svg{
     position:absolute;
     pointer-events:none;
     opacity:0;
-
     background:rgba(5,12,20,.92);
     border:1px solid rgba(255,255,255,.12);
-
     border-radius:16px;
     padding:16px;
-
     width:260px;
-
     color:white;
-
     backdrop-filter:blur(14px);
-
     transition:.15s;
-
     box-shadow:
         0 20px 60px rgba(0,0,0,.45);
 }
@@ -172,26 +172,16 @@ svg{
     position:absolute;
     top:28px;
     right:28px;
-
     width:320px;
-
     background:rgba(7,13,24,.84);
-
     border:1px solid rgba(255,255,255,.1);
-
     border-radius:16px;
-
     padding:16px;
-
     color:#d8e7ff;
-
     font-size:13px;
-
     line-height:1.5;
-
     backdrop-filter:blur(12px);
 }
-
 </style>
 </head>
 
@@ -199,7 +189,6 @@ svg{
 
 <div class="title">
     <h1>PERÚ — AREAS EXPORTADORAS</h1>
-
     <p>
         Exportaciones de pitahaya · comparación territorial<br>
         2024 ↔ 2025
@@ -207,14 +196,10 @@ svg{
 </div>
 
 <div class="note">
-
     <b>Nota metodológica</b><br><br>
-
     Tumbes y Callao registran participación únicamente en la serie 2025 y han sido excluidos del anillo visual principal por razones de escala y legibilidad visual.<br><br>
-
     <b>Tumbes:</b> 900 kg<br>
     <b>Callao:</b> 1,857 kg
-
 </div>
 
 <div class="tooltip" id="tooltip"></div>
@@ -222,7 +207,6 @@ svg{
 <svg id="viz"></svg>
 
 <script>
-
 // ====================================================
 // DATA 2025
 // ====================================================
@@ -261,13 +245,10 @@ data2024.forEach(d=>{
 });
 
 data2025.forEach(d=>{
-
     d.kg2024 = map2024.get(d.region) || null;
-
     d.delta = d.kg2024
         ? ((d.kg - d.kg2024)/d.kg2024)*100
         : null;
-
 });
 
 const total2025 = d3.sum(data2025,d=>d.kg);
@@ -277,7 +258,6 @@ const total2025 = d3.sum(data2025,d=>d.kg);
 // ====================================================
 
 const svg = d3.select("#viz");
-
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -288,25 +268,25 @@ const height = window.innerHeight;
 const defs = svg.append("defs");
 
 const bgGradient = defs.append("radialGradient")
-.attr("id","bgGradient");
+  .attr("id","bgGradient");
 
 bgGradient.append("stop")
-.attr("offset","0%")
-.attr("stop-color","#2d73ff");
+  .attr("offset","0%")
+  .attr("stop-color","#2d73ff");
 
 bgGradient.append("stop")
-.attr("offset","100%")
-.attr("stop-color","#09111d");
+  .attr("offset","100%")
+  .attr("stop-color","#09111d");
 
 // ====================================================
 // BACKGROUND GLOW
 // ====================================================
 
 svg.append("circle")
-.attr("class","bgGlow")
-.attr("cx",width*0.72)
-.attr("cy",height*0.5)
-.attr("r",420);
+  .attr("class","bgGlow")
+  .attr("cx",width*0.72)
+  .attr("cy",height*0.5)
+  .attr("r",420);
 
 // ====================================================
 // LAYOUT
@@ -325,12 +305,11 @@ const tooltip = d3.select("#tooltip");
 // ====================================================
 
 function normalize(str){
-
-    return str
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g,"")
-        .trim()
-        .toUpperCase();
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .trim()
+    .toUpperCase();
 }
 
 // ====================================================
@@ -340,370 +319,325 @@ function normalize(str){
 d3.json("https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson")
 .then(geo => {
 
-    // ------------------------------------------------
-    // PROJECTION
-    // ------------------------------------------------
+  // PROJECTION
+  const projection = d3.geoMercator()
+    .fitSize([430,650], geo);
 
-    const projection = d3.geoMercator()
-        .fitSize([430,650], geo);
+  const path = d3.geoPath(projection);
 
-    const path = d3.geoPath(projection);
+  // MAP GROUP
+  const mapGroup = svg.append("g")
+    .attr(
+      "transform",
+      `translate(${mapX-215},${mapY-325})`
+    );
 
-    // ------------------------------------------------
-    // MAP GROUP
-    // ------------------------------------------------
+  // contorno fijo
+  const outlineGroup = mapGroup.append("g")
+    .attr("class","map-outline-group");
 
-    const mapGroup = svg.append("g")
-        .attr(
-            "transform",
-            `translate(${mapX-215},${mapY-325})`
-        );
+  outlineGroup.selectAll("path")
+    .data(geo.features)
+    .enter()
+    .append("path")
+    .attr("class","map-outline")
+    .attr("d", path);
 
-    // ------------------------------------------------
-    // DRAW MAP
-    // ------------------------------------------------
+  // relleno de regiones
+  mapGroup.selectAll(".region")
+    .data(geo.features)
+    .enter()
+    .append("path")
+    .attr("class","region")
+    .attr("d", path);
 
-    mapGroup.selectAll("path")
-        .data(geo.features)
-        .enter()
-        .append("path")
-        .attr("class","region")
-        .attr("d", path);
+  // CENTROIDS
+  const centroids = {};
+  geo.features.forEach(f => {
+    centroids[
+      normalize(f.properties.NOMBDEP)
+    ] = path.centroid(f);
+  });
 
-    // ------------------------------------------------
-    // CENTROIDS
-    // ------------------------------------------------
+  // RING GROUP
+  const ringGroup = svg.append("g")
+    .attr(
+      "transform",
+      `translate(${ringX},${ringY})`
+    );
 
-    const centroids = {};
+  // PIE 2025
+  const pie = d3.pie()
+    .sort(null)
+    .value(d=>d.kg)
+    .startAngle(-Math.PI*0.82)
+    .endAngle(Math.PI*1.18);
 
-    geo.features.forEach(f => {
+  const arcs = pie(data2025);
 
-        centroids[
-            normalize(f.properties.NOMBDEP)
-        ] = path.centroid(f);
+  // ARC (único anillo, 2025)
+  const arc = d3.arc()
+    .innerRadius(185)
+    .outerRadius(d =>
+      245 + (d.data.kg / 12000)
+    )
+    .padAngle(.018);
 
+  // COLOR 2025 (cálido)
+  const color = d3.scaleSequential()
+    .domain([
+      0,
+      d3.max(data2025,d=>d.kg)
+    ])
+    .interpolator(d3.interpolateTurbo);
+
+  // LINKS
+  const links = ringGroup.selectAll(".link")
+    .data(arcs)
+    .enter()
+    .append("path")
+    .attr("class","link")
+    .attr("d", d => {
+
+      const [sx,sy] = arc.centroid(d);
+
+      const region = centroids[
+        normalize(d.data.region)
+      ];
+
+      if(!region) return "";
+
+      const tx =
+        region[0]
+        + mapX
+        - 215
+        - ringX;
+
+      const ty =
+        region[1]
+        + mapY
+        - 325
+        - ringY;
+
+      const cx = (sx + tx)/2 - 60;
+      const cy = (sy + ty)/2 - 140;
+
+      return `
+        M ${sx} ${sy}
+        Q ${cx} ${cy}
+        ${tx} ${ty}
+      `;
     });
 
-    // ====================================================
-    // RING GROUP
-    // ====================================================
+  // ARCS
+  const arcSel = ringGroup.selectAll(".arc")
+    .data(arcs)
+    .enter()
+    .append("path")
+    .attr("class","arc")
+    .attr("fill", d => color(d.data.kg))
+    .attr("d", arc);
 
-    const ringGroup = svg.append("g")
-        .attr(
-            "transform",
-            `translate(${ringX},${ringY})`
-        );
+  // LABELS
+  ringGroup.selectAll(".label")
+    .data(arcs)
+    .enter()
+    .append("text")
+    .attr("class","label")
+    .attr("transform", d => {
+      const angle =
+        (d.startAngle + d.endAngle)/2;
+      const r = 365;
+      const x =
+        Math.cos(angle - Math.PI/2) * r;
+      const y =
+        Math.sin(angle - Math.PI/2) * r;
+      return `translate(${x},${y})`;
+    })
+    .text(d=>d.data.region);
 
-    // ------------------------------------------------
-    // PIE
-    // ------------------------------------------------
+  // INTERACTION
+  arcSel.on("mousemove", function(event,d){
 
-    const pie = d3.pie()
-        .sort(null)
-        .value(d=>d.kg)
-        .startAngle(-Math.PI*0.82)
-        .endAngle(Math.PI*1.18);
+    const key = normalize(d.data.region);
 
-    const arcs = pie(data2025);
+    mapGroup.selectAll(".region")
+      .classed("dim", true)
+      .classed("active", false);
 
-    // ------------------------------------------------
-    // ARC
-    // ------------------------------------------------
+    arcSel.classed("active", false);
+    links.classed("active", false);
 
-    const arc = d3.arc()
-        .innerRadius(185)
-        .outerRadius(d =>
-            245 + (d.data.kg / 12000)
+    d3.select(this)
+      .classed("active", true);
+
+    mapGroup.selectAll(".region")
+      .filter(f =>
+        normalize(f.properties.NOMBDEP)
+        === key
+      )
+      .classed("active", true)
+      .classed("dim", false);
+
+    links.classed("active", l =>
+      normalize(l.data.region) === key
+    );
+
+    const kg2024 = map2024.get(d.data.region) || null;
+    const delta = kg2024
+      ? ((d.data.kg - kg2024) / kg2024) * 100
+      : null;
+
+    tooltip
+      .style("opacity",1)
+      .style(
+        "left",
+        (event.pageX+18)+"px"
+      )
+      .style(
+        "top",
+        (event.pageY-10)+"px"
+      )
+      .html(`
+
+        <div style="
+          font-size:20px;
+          font-weight:700;
+          margin-bottom:14px;
+        ">
+          ${d.data.region}
+        </div>
+
+        <div style="
+          display:flex;
+          gap:18px;
+        ">
+
+          <div>
+            <div style="
+              color:#ff9fd3;
+              font-size:11px;
+              text-transform:uppercase;
+            ">
+              2025
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:800;
+            ">
+              ${d3.format(",")(Math.round(d.data.kg))}
+            </div>
+          </div>
+
+          <div>
+            <div style="
+              color:#8bb9ff;
+              font-size:11px;
+              text-transform:uppercase;
+            ">
+              2024
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:800;
+            ">
+              ${
+                kg2024
+                ? d3.format(",")(Math.round(kg2024))
+                : "—"
+              }
+            </div>
+          </div>
+
+        </div>
+
+        <div style="
+          margin-top:14px;
+          padding-top:12px;
+          border-top:1px solid rgba(255,255,255,.08);
+          color:#dbe8ff;
+        ">
+          ${
+            delta !== null
+            ? `
+              Variación:
+              <b style="
+                color:${delta > 0 ? '#8effb0' : '#ff8f8f'};
+              ">
+                ${delta.toFixed(1)}%
+              </b>
+            `
+            : `
+              Sin datos comparables 2024
+            `
+          }
+        </div>
+
+        <div style="
+          margin-top:10px;
+          color:#8ea7c9;
+          font-size:12px;
+        ">
+          ${(d.data.kg / total2025 *100).toFixed(1)}% del total nacional (2025)
+        </div>
+
+      `);
+
+  })
+  .on("mouseleave", () => {
+
+    mapGroup.selectAll(".region")
+      .classed("dim", false)
+      .classed("active", false);
+
+    arcSel.classed("active", false);
+    links.classed("active", false);
+    tooltip.style("opacity",0);
+  });
+
+  // PARTICLE FLOW
+  links.each(function(){
+
+    const pathEl = this;
+    const length =
+      pathEl.getTotalLength();
+
+    const particle = ringGroup.append("circle")
+      .attr("class","particle")
+      .attr("r",1.8);
+
+    function animate(){
+
+      particle
+        .transition()
+        .duration(
+          3500 + Math.random()*2500
         )
-        .padAngle(.018);
+        .ease(d3.easeLinear)
+        .attrTween(
+          "transform",
+          () => t => {
 
-    // ------------------------------------------------
-    // COLOR
-    // ------------------------------------------------
-
-    const color = d3.scaleSequential()
-        .domain([
-            0,
-            d3.max(data2025,d=>d.kg)
-        ])
-        .interpolator(d3.interpolateTurbo);
-
-    // ====================================================
-    // LINKS
-    // ====================================================
-
-    const links = ringGroup.selectAll(".link")
-        .data(arcs)
-        .enter()
-        .append("path")
-        .attr("class","link")
-        .attr("d", d => {
-
-            const [sx,sy] = arc.centroid(d);
-
-            const region = centroids[
-                normalize(d.data.region)
-            ];
-
-            if(!region) return "";
-
-            const tx =
-                region[0]
-                + mapX
-                - 215
-                - ringX;
-
-            const ty =
-                region[1]
-                + mapY
-                - 325
-                - ringY;
-
-            const cx = (sx + tx)/2 - 60;
-            const cy = (sy + ty)/2 - 140;
+            const p =
+              pathEl.getPointAtLength(
+                t * length
+              );
 
             return `
-                M ${sx} ${sy}
-                Q ${cx} ${cy}
-                ${tx} ${ty}
+              translate(${p.x},${p.y})
             `;
-        });
+          }
+        )
+        .on("end", animate);
+    }
 
-    // ====================================================
-    // ARCS
-    // ====================================================
+    animate();
 
-    const arcSel = ringGroup.selectAll(".arc")
-        .data(arcs)
-        .enter()
-        .append("path")
-        .attr("class","arc")
-        .attr("fill", d => color(d.data.kg))
-        .attr("d", arc);
-
-    // ====================================================
-    // LABELS
-    // ====================================================
-
-    ringGroup.selectAll(".label")
-        .data(arcs)
-        .enter()
-        .append("text")
-        .attr("class","label")
-        .attr("transform", d => {
-
-            const angle =
-                (d.startAngle + d.endAngle)/2;
-
-            const r = 365;
-
-            const x =
-                Math.cos(angle - Math.PI/2) * r;
-
-            const y =
-                Math.sin(angle - Math.PI/2) * r;
-
-            return `translate(${x},${y})`;
-        })
-        .text(d=>d.data.region);
-
-    // ====================================================
-    // INTERACTION
-    // ====================================================
-
-    arcSel.on("mousemove", function(event,d){
-
-        const key = normalize(d.data.region);
-
-        mapGroup.selectAll(".region")
-            .classed("dim", true)
-            .classed("active", false);
-
-        arcSel.classed("active", false);
-
-        links.classed("active", false);
-
-        d3.select(this)
-            .classed("active", true);
-
-        mapGroup.selectAll(".region")
-            .filter(f =>
-                normalize(f.properties.NOMBDEP)
-                === key
-            )
-            .classed("active", true)
-            .classed("dim", false);
-
-        links.classed("active", l =>
-            normalize(l.data.region) === key
-        );
-
-        tooltip
-            .style("opacity",1)
-            .style(
-                "left",
-                (event.pageX+18)+"px"
-            )
-            .style(
-                "top",
-                (event.pageY-10)+"px"
-            )
-            .html(`
-
-                <div style="
-                    font-size:20px;
-                    font-weight:700;
-                    margin-bottom:14px;
-                ">
-                    ${d.data.region}
-                </div>
-
-                <div style="
-                    display:flex;
-                    gap:18px;
-                ">
-
-                    <div>
-                        <div style="
-                            color:#8bb9ff;
-                            font-size:11px;
-                            text-transform:uppercase;
-                        ">
-                            2025
-                        </div>
-
-                        <div style="
-                            font-size:28px;
-                            font-weight:800;
-                        ">
-                            ${d3.format(",")(Math.round(d.data.kg))}
-                        </div>
-                    </div>
-
-                    <div>
-                        <div style="
-                            color:#8bb9ff;
-                            font-size:11px;
-                            text-transform:uppercase;
-                        ">
-                            2024
-                        </div>
-
-                        <div style="
-                            font-size:28px;
-                            font-weight:800;
-                        ">
-                            ${
-                                d.data.kg2024
-                                ? d3.format(",")(Math.round(d.data.kg2024))
-                                : "—"
-                            }
-                        </div>
-                    </div>
-
-                </div>
-
-                <div style="
-                    margin-top:14px;
-                    padding-top:12px;
-                    border-top:1px solid rgba(255,255,255,.08);
-                    color:#dbe8ff;
-                ">
-                    ${
-                        d.data.delta
-                        ? `
-                            Variación:
-                            <b style="
-                                color:${
-                                    d.data.delta > 0
-                                    ? '#8effb0'
-                                    : '#ff8f8f'
-                                };
-                            ">
-                                ${d.data.delta.toFixed(1)}%
-                            </b>
-                        `
-                        : `
-                            Sin datos comparables 2024
-                        `
-                    }
-                </div>
-
-                <div style="
-                    margin-top:10px;
-                    color:#8ea7c9;
-                    font-size:12px;
-                ">
-                    ${(
-                        d.data.kg
-                        / total2025
-                        *100
-                    ).toFixed(1)}% del total nacional
-                </div>
-
-            `);
-
-    })
-
-    .on("mouseleave", () => {
-
-        mapGroup.selectAll(".region")
-            .classed("dim", false)
-            .classed("active", false);
-
-        arcSel.classed("active", false);
-
-        links.classed("active", false);
-
-        tooltip.style("opacity",0);
-    });
-
-    // ====================================================
-    // PARTICLE FLOW
-    // ====================================================
-
-    links.each(function(){
-
-        const path = this;
-
-        const length =
-            path.getTotalLength();
-
-        const particle = ringGroup.append("circle")
-            .attr("class","particle")
-            .attr("r",1.8);
-
-        function animate(){
-
-            particle
-                .transition()
-                .duration(
-                    3500 + Math.random()*2500
-                )
-                .ease(d3.easeLinear)
-                .attrTween(
-                    "transform",
-                    () => t => {
-
-                        const p =
-                            path.getPointAtLength(
-                                t * length
-                            );
-
-                        return `
-                            translate(${p.x},${p.y})
-                        `;
-                    }
-                )
-                .on("end", animate);
-        }
-
-        animate();
-
-    });
+  });
 
 });
-
 </script>
 </body>
 </html>

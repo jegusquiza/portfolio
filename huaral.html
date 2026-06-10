@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lima Norte — Flujo Pitahaya</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+<style>
+:root{
+  --bg0:#050814;
+  --bg1:#07111f;
+  --text:#eaf1ff;
+  --muted:#92a6cd;
+  --panel:rgba(7,13,26,.94);
+  --panel2:rgba(9,16,30,.94);
+  --stage-productores:#43d17a;
+  --stage-acopio:#4ea1ff;
+  --stage-exportacion:#ff4b6e;
+  --accent:#43d17a;
+  --shadow:0 18px 42px rgba(0,0,0,.65);
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(40,72,136,.18) 0%, rgba(5,8,20,.78) 40%, #020308 100%);
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--text);
+}
+
+body{ position:relative; }
+body.stage-productores{ --accent:var(--stage-productores); }
+body.stage-acopio{ --accent:var(--stage-acopio); }
+body.stage-exportacion{ --accent:var(--stage-exportacion); }
+
+svg{ width:100vw; height:100vh; display:block; }
+
+.bgGlow{ fill:url(#bgGradient); opacity:.55; pointer-events:none; }
+
+.titleOverlay{
+  position:absolute; top:18px; left:24px; max-width:380px;
+  color:var(--text); z-index:5; padding:18px 18px 16px;
+  border-radius:18px; background:linear-gradient(135deg,rgba(10,18,34,.95),rgba(5,8,16,.98));
+  border:1px solid rgba(255,255,255,.10); box-shadow:var(--shadow); backdrop-filter:blur(12px);
+}
+.titleOverlay h1{ margin:0 0 8px; font-size:21px; letter-spacing:.7px; text-transform:uppercase; }
+.titleOverlay p{ margin:4px 0 0; font-size:12px; color:#a9badc; line-height:1.55; }
+
+.stageSubtitle{
+  margin-top:12px; font-size:11px; text-transform:uppercase; letter-spacing:.18em;
+  color:var(--accent); display:flex; align-items:center; gap:8px;
+}
+.stageSubtitle::before{ content:""; width:22px; height:2px; background:var(--accent); border-radius:999px; }
+
+.stageCard{
+  margin-top:10px; padding:12px 12px 11px; border-radius:16px;
+  background:linear-gradient(180deg, rgba(8,15,30,.98), rgba(7,12,24,.96));
+  border:1px solid color-mix(in srgb, var(--accent) 35%, rgba(255,255,255,.08));
+  box-shadow:0 14px 30px rgba(0,0,0,.52); position:relative; overflow:hidden;
+}
+.stageCard::before{
+  content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--accent); opacity:.95;
+}
+.stageText{ font-size:12px; color:#d6e0f5; line-height:1.55; margin:0 0 8px; }
+.stageMeta{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.stageMetaItem{
+  padding:4px 8px; border-radius:999px; font-size:10px; text-transform:uppercase;
+  letter-spacing:.13em; background:rgba(8,15,30,.98); color:#a8b8d7; border:1px solid rgba(255,255,255,.10);
+}
+.stageMetaItem strong{ font-weight:700; color:#fff; }
+
+.bottomHud{
+  position:absolute; left:0; right:0; bottom:16px; padding:0 24px; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:16px; pointer-events:none;
+}
+.stageNav{
+  pointer-events:auto; display:flex; gap:8px; padding:6px; border-radius:999px;
+  background:rgba(8,15,30,.92); border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 40px rgba(0,0,0,.72); max-width:52vw; overflow-x:auto; -webkit-overflow-scrolling:touch;
+}
+.stageBtn{
+  border:none; outline:none; cursor:pointer; padding:8px 16px; border-radius:999px;
+  font-size:11px; text-transform:uppercase; letter-spacing:.16em; background:transparent; color:#9bb0d4;
+  display:flex; align-items:center; gap:8px; transition:.22s all ease-out; position:relative; white-space:nowrap;
+}
+.stageBtnDot{ width:7px; height:7px; border-radius:999px; background:#51668f; }
+.stageBtn.active{
+  color:#f8fbff; background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 82%, #ffffff 0%), rgba(31,41,55,.9));
+  box-shadow:0 10px 24px rgba(0,0,0,.34);
+}
+.stageBtn.active .stageBtnDot{ background:#fff; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent); }
+.stageBtn::after{
+  content:""; position:absolute; left:16px; right:16px; bottom:4px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:0; transform:scaleX(.3); transform-origin:center;
+  transition:.22s all ease-out;
+}
+.stageBtn.active::after{ opacity:1; transform:scaleX(1); }
+
+.dataChips{
+  pointer-events:auto; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+}
+.dataChip{
+  padding:7px 10px; border-radius:999px; font-size:11px; background:rgba(10,18,34,.96);
+  color:#dfe9ff; border:1px solid rgba(255,255,255,.09); display:flex; align-items:center; gap:7px;
+  box-shadow:0 10px 22px rgba(0,0,0,.22);
+}
+.dataChipLabel{ text-transform:uppercase; letter-spacing:.14em; color:#7f93c4; font-size:9px; }
+.dataChipValue{ font-weight:700; }
+.dataChip[data-chip="stage"]{
+  background:linear-gradient(135deg, rgba(91,196,255,.18), rgba(8,15,30,.96));
+  border-color:color-mix(in srgb, var(--accent) 36%, rgba(255,255,255,.1));
+}
+
+.energyToggles{
+  position:absolute; right:24px; top:20px; z-index:5; display:flex; flex-direction:column; gap:6px;
+}
+.energyToggle{
+  padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(8,15,30,.88);
+  font-size:10px; color:#a8badc; display:flex; align-items:center; gap:6px; cursor:pointer; backdrop-filter:blur(10px);
+}
+.energyToggle input{ accent-color:var(--accent); }
+
+.region{ fill:#050b13; stroke:#2d425f; stroke-width:.9; opacity:.28; pointer-events:none; }
+.region.limaCallao{ fill:#101f32; stroke:#5f7594; opacity:.95; }
+
+.mapLayer, .linksLayer, .stageLayer, .particlesLayer, .labelsLayer, .nodesLayer{
+  pointer-events:none;
+}
+
+.linksLayer, .particlesLayer, .stageLayer, .labelsLayer, .nodesLayer{
+  position:relative;
+}
+
+.node{
+  cursor:pointer;
+  transition:.22s ease;
+  pointer-events:all;
+}
+.nodeCircle{ filter:drop-shadow(0 0 14px rgba(0,0,0,.75)); pointer-events:all; }
+.nodeCircle.torre{ fill:#1d2430; stroke:#6a84a7; stroke-width:1.4; }
+.nodeCircle.callao{ fill:#10243d; stroke:#9fd0ff; stroke-width:1.4; }
+.nodeRing{ fill:none; stroke:color-mix(in srgb, var(--accent) 76%, #ffffff); stroke-width:1; opacity:.82; pointer-events:none; }
+.nodeLabel{ fill:#edf4ff; font-size:11px; letter-spacing:.4px; text-anchor:middle; pointer-events:none; }
+
+.node.active .nodeCircle{ stroke:#fff; stroke-width:2.4; }
+.node.active .nodeRing{ stroke:#fff; opacity:1; }
+body.stage-productores .node.torre .nodeCircle.torre{ fill:#2b6f45; stroke:#a8f0c0; }
+body.stage-acopio .node.torre .nodeCircle.torre{ fill:#2f649b; stroke:#d8f1ff; }
+body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ffd7e0; }
+
+.link{
+  fill:none;
+  stroke:url(#flowGradient);
+  stroke-width:1.9;
+  opacity:.28;
+  mix-blend-mode:screen;
+  pointer-events:all;
+}
+.link.active{ opacity:1; stroke-width:2.8; filter:drop-shadow(0 0 18px rgba(180,190,255,.85)); }
+
+.miniLink{
+  fill:none;
+  stroke:rgba(110,240,165,.65);
+  stroke-width:1.05;
+  opacity:.9;
+  stroke-dasharray:2 5;
+  pointer-events:none;
+}
+
+.distanceLabel{
+  fill:#ffe1ea;
+  font-size:11px;
+  font-weight:700;
+  text-anchor:middle;
+  pointer-events:none;
+  text-shadow:0 0 8px rgba(0,0,0,.7);
+}
+.cityLabel{
+  fill:#b6c7e8;
+  font-size:11px;
+  font-weight:500;
+  text-shadow:0 0 6px rgba(0,0,0,.7);
+  pointer-events:none;
+}
+.cityLabel.callao{ fill:#9fd0ff; }
+
+.particle.red, .particle.blue{ pointer-events:none; }
+.particle.red{ fill:#ffe0eb; opacity:.92; }
+.particle.blue{ fill:#d6f0ff; opacity:.95; }
+
+.tooltip{
+  position:absolute;
+  pointer-events:none;
+  opacity:0;
+  background:rgba(6,12,24,.97);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;
+  padding:14px;
+  width:270px;
+  color:white;
+  backdrop-filter:blur(14px);
+  box-shadow:0 20px 50px rgba(0,0,0,.75);
+  font-size:13px;
+  transition:opacity .12s;
+  z-index:20;
+}
+
+@media (max-width:900px){
+  .bottomHud{ bottom:14px; padding:0 14px; flex-direction:column; align-items:stretch; }
+  .stageNav{ max-width:100%; justify-content:flex-start; }
+  .dataChips{ justify-content:flex-start; }
+}
+@media (max-width:600px){
+  .titleOverlay{ max-width:280px; left:16px; right:16px; }
+  .dataChip{ font-size:10px; }
+  .dataChipLabel{ font-size:9px; letter-spacing:.12em; }
+}
+</style>
+</head>
+<body class="stage-productores">
+
+<div class="titleOverlay">
+  <h1>Lima Norte — Flujo Pitahaya</h1>
+  <p>Visualización del flujo de pitahaya desde zonas productoras de Huaral y Lima Norte hacia el nodo de exportación en Callao, con Torre Blanca como centro de acopio.</p>
+  <div class="stageSubtitle" id="stageSubtitle">Etapa 1 · Productores</div>
+  <div class="stageCard">
+    <div class="stageText" id="stageText">
+      Productores de Huaral y Lima Norte concentran fruta fresca que luego se deriva hacia la planta Torre Blanca como punto de acopio y preclasificación.
+    </div>
+    <div class="stageMeta" id="stageMeta"></div>
+  </div>
+</div>
+
+<div class="energyToggles">
+  <label class="energyToggle">
+    <input type="checkbox" id="toggleLowAnim" />
+    Reducir animaciones
+  </label>
+</div>
+
+<div class="bottomHud">
+  <div class="stageNav" id="stageNav">
+    <button class="stageBtn active" data-stage="productores"><span class="stageBtnDot"></span><span class="stageBtnLabel">Productores</span></button>
+    <button class="stageBtn" data-stage="acopio"><span class="stageBtnDot"></span><span class="stageBtnLabel">Acopio</span></button>
+    <button class="stageBtn" data-stage="exportacion"><span class="stageBtnDot"></span><span class="stageBtnLabel">Exportación</span></button>
+  </div>
+
+  <div class="dataChips">
+    <div class="dataChip"><div class="dataChipLabel">Distancia torre - callao</div><div class="dataChipValue" id="chipDistance">—</div></div>
+    <div class="dataChip"><div class="dataChipLabel">Tiempo estimado</div><div class="dataChipValue" id="chipTime">—</div></div>
+    <div class="dataChip"><div class="dataChipLabel">Modo</div><div class="dataChipValue" id="chipMode">Carretera</div></div>
+    <div class="dataChip" data-chip="stage"><div class="dataChipLabel">Progreso flujo</div><div class="dataChipValue" id="chipStage">33%</div></div>
+  </div>
+</div>
+
+<svg id="viz"></svg>
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const TORRE_BLANCA_LAT = -11.70, TORRE_BLANCA_LON = -77.18;
+const CALLAO_LAT = -12.046842, CALLAO_LON = -77.142709;
+const HUARAL_LAT = -11.495, HUARAL_LON = -77.20778;
+const LIMA_LAT = -12.0464, LIMA_LON = -77.0428;
+
+const svg = d3.select("#viz");
+const width = window.innerWidth;
+const height = window.innerHeight;
+const tooltip = d3.select("#tooltip");
+const root = svg.append("g");
+
+const defs = svg.append("defs");
+const bgGradient = defs.append("radialGradient").attr("id","bgGradient");
+bgGradient.append("stop").attr("offset","0%").attr("stop-color","#264a86").attr("stop-opacity",".55");
+bgGradient.append("stop").attr("offset","100%").attr("stop-color","#050814").attr("stop-opacity","0");
+const flowGradient = defs.append("linearGradient").attr("id","flowGradient").attr("x1","0%").attr("y1","0%").attr("x2","100%").attr("y2","0%");
+flowGradient.append("stop").attr("offset","0%").attr("stop-color","#43d17a");
+flowGradient.append("stop").attr("offset","50%").attr("stop-color","#4ea1ff");
+flowGradient.append("stop").attr("offset","100%").attr("stop-color","#ff4b6e");
+
+svg.append("circle").attr("class","bgGlow").attr("cx",width*0.55).attr("cy",height*0.55).attr("r",430);
+
+const projection = d3.geoMercator().center([-77.05, -11.85]).scale(72000).translate([width*0.55, height*0.55]);
+const path = d3.geoPath(projection);
+
+const nodes = [
+  { id:"torreBlanca", tipo:"torre", nombre:"Procesadora Torre Blanca", rol:"Centro de acopio y clasificación", detalle:"Recibe pitahaya de Huaral y Lima Norte; clasifica y prepara fruta exportable.", lat:TORRE_BLANCA_LAT, lon:TORRE_BLANCA_LON },
+  { id:"callao", tipo:"callao", nombre:"Nodo Callao (aéreo + marítimo)", rol:"Aeropuerto Jorge Chávez + Puerto del Callao", detalle:"Concentra exportación aérea inicial y futura expansión marítima.", lat:CALLAO_LAT, lon:CALLAO_LON }
+];
+const huaral = {lat:HUARAL_LAT, lon:HUARAL_LON};
+const lima = {lat:LIMA_LAT, lon:LIMA_LON};
+
+function haversineKm(lat1,lon1,lat2,lon2){
+  const R = 6371, t = d => d*Math.PI/180, dLat = t(lat2-lat1), dLon = t(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(t(lat1))*Math.cos(t(lat2))*Math.sin(dLon/2)**2;
+  return R * (2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+}
+nodes.forEach(d => { [d.x, d.y] = projection([d.lon, d.lat]); });
+[huaral.x, huaral.y] = projection([huaral.lon, huaral.lat]);
+[lima.x, lima.y] = projection([lima.lon, lima.lat]);
+
+const torre = nodes[0];
+const callao = nodes[1];
+const distKm = haversineKm(torre.lat, torre.lon, callao.lat, callao.lon);
+if(distKm){
+  d3.select("#chipDistance").text(`${distKm.toFixed(1)} km`);
+  d3.select("#chipTime").text(`~${(distKm/60).toFixed(1)} h`);
+}
+
+let stage = "productores";
+let lowAnim = false;
+let pulseTimer = null;
+
+const layers = {
+  map: root.append("g").attr("class","mapLayer"),
+  links: root.append("g").attr("class","linksLayer"),
+  stage: root.append("g").attr("class","stageLayer"),
+  particles: root.append("g").attr("class","particlesLayer"),
+  labels: root.append("g").attr("class","labelsLayer"),
+  nodes: root.append("g").attr("class","nodesLayer")
+};
+
+function setBodyStage(id){ document.body.className = `stage-${id}`; }
+
+function showTooltip(event, d){
+  const W = 270, H = 180;
+  let x = event.pageX + 14, y = event.pageY - 10;
+  x = Math.max(10, Math.min(width - W - 10, x));
+  y = Math.max(10, Math.min(height - H - 10, y));
+  tooltip.style("left", x + "px").style("top", y + "px").style("opacity",1).html(`
+    <div style="font-size:16px;font-weight:800;margin-bottom:6px;">${d.nombre}</div>
+    <div style="color:var(--accent);font-size:11px;text-transform:uppercase;margin-bottom:4px;">${d.rol}</div>
+    <div style="color:#ffeaf3;font-size:13px;line-height:1.45;margin-bottom:4px;">${d.detalle}</div>
+    <div style="color:#b9dbff;font-size:12px;margin-top:4px;">
+      ${d.id === "torreBlanca"
+        ? "Zona productora: Huaral y Lima Norte. Torre Blanca actúa como centro de acopio previo a la exportación."
+        : "Callao integra exportación aérea (Jorge Chávez) y marítima (Puerto del Callao) como nodo de salida."}
+    </div>
+  `);
+}
+
+function clearParticles(){
+  layers.particles.selectAll("*").interrupt().remove();
+  if(pulseTimer){ clearInterval(pulseTimer); pulseTimer = null; }
+}
+
+function startParticlesAlongPath(pathEl){
+  clearParticles();
+  if(lowAnim || !pathEl) return;
+  const len = pathEl.getTotalLength();
+  const spawn = (offset, cls, duration) => {
+    const c = layers.particles.append("circle").attr("class", `particle ${cls}`).attr("r", cls==="red"?2:1.8);
+    const start = pathEl.getPointAtLength(offset * len);
+    c.attr("transform", `translate(${start.x},${start.y})`);
+    c.transition().duration(duration).ease(d3.easeLinear).attrTween("transform", () => t => {
+      const p = pathEl.getPointAtLength((offset + t*(1-offset)) * len);
+      return `translate(${p.x},${p.y})`;
+    }).on("end", function(){ d3.select(this).remove(); });
+  };
+  pulseTimer = setInterval(() => {
+    spawn(0, "red", 3400);
+    spawn(0.25, "blue", 2800);
+  }, 900);
+  spawn(0, "red", 3400);
+  spawn(0.25, "blue", 2800);
+}
+
+function renderMap(){
+  layers.map.selectAll("*").remove();
+  d3.json("https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson").then(geo => {
+    layers.map.selectAll("path.region")
+      .data(geo.features)
+      .enter()
+      .append("path")
+      .attr("class", d => ((d.properties.NOMBDEP || "").toUpperCase().trim()==="LIMA" || (d.properties.NOMBDEP || "").toUpperCase().trim()==="CALLAO") ? "region limaCallao" : "region")
+      .attr("d", path);
+  });
+}
+
+function renderStatic(){
+  layers.labels.selectAll("*").remove();
+  layers.nodes.selectAll("*").remove();
+  layers.labels.append("text").attr("class","cityLabel").attr("x",lima.x+8).attr("y",lima.y+4).text("Lima");
+  layers.labels.append("text").attr("class","cityLabel").attr("x",huaral.x+8).attr("y",huaral.y+4).text("Huaral");
+  layers.labels.append("text").attr("class","cityLabel callao").attr("x",callao.x+8).attr("y",callao.y+4).text("Callao");
+
+  const ng = layers.nodes.selectAll(".node")
+    .data(nodes)
+    .enter()
+    .append("g")
+    .attr("class", d => `node ${d.tipo}`)
+    .attr("transform", d => `translate(${d.x},${d.y})`);
+
+  ng.append("circle").attr("class", d => `nodeCircle ${d.tipo}`).attr("r",10);
+  ng.append("circle").attr("class","nodeRing").attr("r",18);
+  ng.append("text").attr("class","nodeLabel").attr("y",-24).text(d => d.nombre);
+
+  ng.on("mouseover", (event,d) => {
+    layers.nodes.selectAll(".node").classed("active", n => n.id === d.id);
+    layers.links.selectAll(".link").classed("active", true);
+    if(stage === "productores") layers.stage.selectAll(".haloArea").style("opacity",1);
+    showTooltip(event, d);
+  })
+  .on("mousemove", (event,d) => showTooltip(event, d))
+  .on("mouseleave", () => {
+    layers.nodes.selectAll(".node").classed("active", false);
+    layers.links.selectAll(".link").classed("active", false);
+    if(stage !== "productores") layers.stage.selectAll(".haloArea").style("opacity",0);
+    tooltip.style("opacity",0);
+  });
+}
+
+function renderLink(){
+  layers.links.selectAll("*").remove();
+  const {x:sx,y:sy} = torre;
+  const {x:tx,y:ty} = callao;
+  const dx = tx - sx, dy = ty - sy;
+  const mx = sx + dx * 0.5;
+  const my = sy + dy * 0.45 + 16;
+  const link = layers.links.append("path").attr("class","link").attr("d",`M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}`);
+  if(distKm){
+    const len = link.node().getTotalLength();
+    const p = link.node().getPointAtLength(len/2);
+    layers.links.append("text").attr("class","distanceLabel").attr("x",p.x).attr("y",p.y-8).text(`${distKm.toFixed(1)} km · ~${(distKm/60).toFixed(1)} h`);
+  }
+  layers.links.raise();
+  return link;
+}
+
+function drawProducerCluster(){
+  layers.stage.selectAll(".producerExtras").remove();
+  const cluster = [
+    {x: huaral.x - 10, y: huaral.y + 22},
+    {x: huaral.x + 8,  y: huaral.y + 6},
+    {x: huaral.x + 24, y: huaral.y + 18},
+    {x: huaral.x - 18, y: huaral.y + 38},
+    {x: huaral.x + 30, y: huaral.y + 34},
+    {x: huaral.x + 10, y: huaral.y + 50}
+  ].filter(d => d.y < height - 140);
+  const group = layers.stage.append("g").attr("class","producerExtras");
+  group.selectAll("circle").data(cluster).enter().append("circle")
+    .attr("class","mosaic")
+    .attr("cx",d=>d.x).attr("cy",d=>d.y).attr("r",d=>3 + Math.random()*2.2)
+    .attr("fill","#6ef0a5").attr("opacity",.78);
+  group.selectAll("path").data(cluster).enter().append("path")
+    .attr("class","miniLink")
+    .attr("d",d => `M ${d.x} ${d.y} Q ${(d.x + torre.x)/2} ${(d.y + torre.y)/2 + 8} ${torre.x} ${torre.y}`);
+  group.append("circle")
+    .attr("class","haloArea")
+    .attr("cx", torre.x).attr("cy", torre.y).attr("r", 46)
+    .attr("fill","rgba(67,209,122,.08)").attr("stroke","rgba(67,209,122,.32)").attr("opacity",1);
+  group.append("circle")
+    .attr("class","haloArea")
+    .attr("cx", torre.x).attr("cy", torre.y).attr("r", 78)
+    .attr("fill","none").attr("stroke","rgba(67,209,122,.18)").attr("stroke-width",1).attr("stroke-dasharray","6 6").attr("opacity",1);
+}
+
+function renderStage(){
+  setBodyStage(stage);
+  layers.stage.selectAll(".producerExtras").remove();
+  layers.stage.selectAll(".stageOnly").remove();
+  clearParticles();
+  const link = renderLink();
+
+  if(stage === "productores"){
+    drawProducerCluster();
+    layers.nodes.selectAll(".node").classed("active", d => d.id === "torreBlanca");
+    layers.stage.selectAll(".haloArea").style("opacity",1);
+    startParticlesAlongPath(link.node());
+  }else if(stage === "acopio"){
+    layers.stage.append("circle").attr("class","haloArea stageOnly").attr("cx",torre.x).attr("cy",torre.y).attr("r",58).attr("fill","rgba(78,161,255,.16)").attr("stroke","rgba(78,161,255,.95)").attr("opacity",1);
+    layers.stage.append("circle").attr("class","stageOnly").attr("cx",torre.x).attr("cy",torre.y).attr("r",34).attr("fill","rgba(78,161,255,.18)").attr("stroke","rgba(78,161,255,.95)").attr("stroke-width",1.8).attr("opacity",1);
+    layers.stage.append("circle").attr("class","stageOnly").attr("cx",torre.x).attr("cy",torre.y).attr("r",58).attr("fill","none").attr("stroke","rgba(78,161,255,.55)").attr("stroke-width",1.2).attr("stroke-dasharray","5 6").attr("opacity",1);
+    layers.nodes.selectAll(".node").classed("active", d => d.id === "torreBlanca");
+    startParticlesAlongPath(link.node());
+  }else{
+    layers.stage.append("circle").attr("class","haloArea stageOnly").attr("cx",callao.x).attr("cy",callao.y).attr("r",66).attr("fill","rgba(255,75,110,.16)").attr("stroke","rgba(255,75,110,.95)").attr("opacity",1);
+    layers.stage.append("circle").attr("class","stageOnly").attr("cx",callao.x).attr("cy",callao.y).attr("r",38).attr("fill","rgba(255,75,110,.16)").attr("stroke","rgba(255,75,110,.95)").attr("stroke-width",1.8).attr("opacity",1);
+    layers.stage.append("circle").attr("class","stageOnly").attr("cx",callao.x).attr("cy",callao.y).attr("r",66).attr("fill","none").attr("stroke","rgba(255,75,110,.55)").attr("stroke-width",1.2).attr("stroke-dasharray","5 6").attr("opacity",1);
+    layers.nodes.selectAll(".node").classed("active", d => d.id === "callao");
+    startParticlesAlongPath(link.node());
+  }
+
+  d3.select("#chipStage").text(stage === "productores" ? "33%" : stage === "acopio" ? "66%" : "100%");
+  d3.select("#stageSubtitle").text(stage === "productores" ? "Etapa 1 · Productores" : stage === "acopio" ? "Etapa 2 · Acopio y clasificación" : "Etapa 3 · Exportación Callao");
+  d3.select("#stageText").text(stage === "productores"
+    ? "Productores de Huaral y Lima Norte concentran fruta fresca que luego se deriva hacia la planta Torre Blanca como punto de acopio y preclasificación."
+    : stage === "acopio"
+    ? "Torre Blanca recibe los volúmenes de pitahaya, consolida lotes, realiza clasificación por calidad y prepara la carga para despacho hacia Callao."
+    : "La fruta clasificada sale por carretera hacia Callao, donde se conecta con exportación aérea y marítima como nodo de salida.");
+
+  const meta = stage === "productores" ? [
+    {label:"Origen", value:"Huaral + Lima Norte"},
+    {label:"Tipo fruta", value:"Pitahaya fresca"},
+    {label:"Operación", value:"Cosecha + recolección"}
+  ] : stage === "acopio" ? [
+    {label:"Centro", value:"Procesadora Torre Blanca"},
+    {label:"Acción", value:"Consolidación + clasificación"},
+    {label:"Salida", value:"Carga lista para exportación"}
+  ] : [
+    {label:"Nodo", value:"Callao (aéreo + marítimo)"},
+    {label:"Modo", value:"Carretera + aéreo / marítimo"},
+    {label:"Destino", value:"Mercados internacionales"}
+  ];
+
+  const metaWrap = d3.select("#stageMeta");
+  metaWrap.selectAll("*").remove();
+  metaWrap.selectAll(".stageMetaItem").data(meta).enter().append("div").attr("class","stageMetaItem").html(d => `<span>${d.label}</span> · <strong>${d.value}</strong>`);
+  d3.selectAll(".stageBtn").classed("active", function(){ return this.getAttribute("data-stage") === stage; });
+}
+
+d3.selectAll(".stageBtn").on("click", function(){
+  stage = this.getAttribute("data-stage");
+  renderStage();
+});
+
+d3.select("#toggleLowAnim").on("change", function(){
+  lowAnim = this.checked;
+  renderStage();
+});
+
+renderMap();
+renderStatic();
+d3.timeout(() => renderStage(), 350);
+</script>
+</body>
+</html>

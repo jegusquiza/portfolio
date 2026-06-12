@@ -2,30 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pitahaya Export Pilot – Perú → Suiza</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <!-- Inter Tight -->
+  <!-- Fuente Inter Tight -->
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;500;700;900&display=swap" rel="stylesheet" />
-
   <!-- D3 -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
   <style>
-    :root {
-      color-scheme: light;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box }
+    html, body { width: 100%; height: 100% }
 
     body {
       margin: 0;
       overflow: hidden;
-      background: radial-gradient(circle at 10% 0%, #fdf8f0 0, #f4eee5 40%, #e7dfd2 100%);
       font-family: "Inter Tight", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(circle at 12% 6%, rgba(255,255,255,.72) 0 8%, transparent 9%),
+        radial-gradient(circle at 10% 0%, #fdf8f0 0, #f4eee5 38%, #e7dfd2 100%);
     }
 
     svg {
@@ -38,7 +34,8 @@
       position: absolute;
       top: 40px;
       left: 48px;
-      z-index: 10;
+      z-index: 20;
+      pointer-events: none;
     }
 
     .kicker {
@@ -53,17 +50,15 @@
       margin: 10px 0 6px;
       font-size: 52px;
       line-height: 1;
-      letter-spacing: -0.03em;
+      letter-spacing: -.03em;
       color: #151821;
     }
 
-    h1 span {
-      font-weight: 300;
-    }
+    h1 span { font-weight: 300 }
 
     .subtitle {
       color: #5b6473;
-      max-width: 520px;
+      max-width: 560px;
       font-size: 14px;
       font-weight: 400;
     }
@@ -71,24 +66,19 @@
     .panel {
       position: absolute;
       right: 40px;
-      top: 40px;
-      background: rgba(255, 255, 255, 0.18);
+      top: 100px;
+      background: rgba(255,255,255,.9);
       border-radius: 24px;
       padding: 22px 22px 20px;
       width: 280px;
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      box-shadow:
-        0 30px 80px rgba(15, 12, 5, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.6);
-      z-index: 10;
+      box-shadow: 0 20px 50px rgba(15,12,5,.14);
+      z-index: 20;
     }
 
     .panelTitle {
       font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       color: #7b8494;
       margin-bottom: 4px;
@@ -98,7 +88,7 @@
       font-size: 26px;
       font-weight: 800;
       color: #151821;
-      letter-spacing: -0.03em;
+      letter-spacing: -.03em;
       margin-bottom: 6px;
     }
 
@@ -111,7 +101,7 @@
     .metricGroupLabel {
       font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.18em;
+      letter-spacing: .18em;
       text-transform: uppercase;
       color: #a0a8b4;
       margin-bottom: 6px;
@@ -119,14 +109,14 @@
 
     .metricsGrid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2,minmax(0,1fr));
       gap: 10px 24px;
     }
 
     .metricLabel {
       color: #8b95a2;
       font-size: 11px;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
       font-weight: 600;
     }
@@ -144,23 +134,28 @@
       margin-top: 2px;
     }
 
-    @media (max-width: 900px) {
-      .panel {
-        display: none;
-      }
-      h1 {
-        font-size: 40px;
-      }
+    /* Mapas */
+    .map-region {
+      fill: #e8dcc8;
+      stroke: #b89463;
+      stroke-width: 1;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .map-region:hover {
+      fill: #f4c149;
+      stroke: #d4a574;
+      filter: drop-shadow(0 0 8px rgba(244, 193, 73, 0.5));
     }
   </style>
 </head>
-
 <body>
   <div class="title">
     <div class="kicker">EXPORT PILOT</div>
     <h1>500 KG<br /><span>Pitahaya → Suiza</span></h1>
     <div class="subtitle">
-      Validación comercial mediante un pallet aéreo de pitahaya amarilla desde Perú hacia Suiza
+      Validación comercial mediante un pallet aéreo de pitahaya roja desde Perú hacia Suiza
       para el importador <strong>Gralsen</strong>, usando un pallet aéreo como prueba piloto.
     </div>
   </div>
@@ -169,32 +164,27 @@
     <div class="panelTitle">Lote piloto</div>
     <div class="panelMain">500 kg — Air Freight</div>
     <div class="panelNote">
-      Pallet aéreo de pitahaya amarilla fresca consolidado en Torre Blanca y despachado vía Callao.
+      Pallet aéreo de pitahaya roja fresca consolidado en Torre Blanca y despachado vía Callao.
     </div>
-
     <div class="metricGroupLabel">Detalles de la operación</div>
-
     <div class="metricsGrid">
       <div class="metric">
         <div class="metricLabel">Origen</div>
         <div class="metricValue">Perú</div>
         <div class="metricHint">Huaral → Torre Blanca → Callao</div>
       </div>
-
       <div class="metric">
         <div class="metricLabel">Destino</div>
         <div class="metricValue">Suiza</div>
         <div class="metricHint">Aeropuerto Zurich / Basel</div>
       </div>
-
       <div class="metric">
         <div class="metricLabel">Importador</div>
         <div class="metricValue">Gralsen</div>
       </div>
-
       <div class="metric">
         <div class="metricLabel">Producto</div>
-        <div class="metricValue">Pitahaya amarilla</div>
+        <div class="metricValue">Pitahaya roja</div>
       </div>
     </div>
   </div>
@@ -203,473 +193,159 @@
 
   <script>
     const svg = d3.select("#viz");
-    const g = svg.append("g");
-
     const defs = svg.append("defs");
 
-    const panelGradient = defs.append("linearGradient")
-      .attr("id", "panelGradient")
-      .attr("x1", "0%")
-      .attr("x2", "0%")
-      .attr("y1", "0%")
-      .attr("y2", "100%");
+    // Gradiente ruta
+    const routeGradient = defs.append("linearGradient")
+      .attr("id", "routeGradient")
+      .attr("x1", "0%").attr("y1", "0%")
+      .attr("x2", "100%").attr("y2", "0%");
+    routeGradient.append("stop").attr("offset", "0%").attr("stop-color", "#4f9d63");
+    routeGradient.append("stop").attr("offset", "50%").attr("stop-color", "#4d7fd1");
+    routeGradient.append("stop").attr("offset", "100%").attr("stop-color", "#b85a5a");
 
-    panelGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#ffffff")
-      .attr("stop-opacity", 0.9);
-
-    panelGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#f4ece1")
-      .attr("stop-opacity", 0.92);
-
+    // Sombras
     const softShadow = defs.append("filter")
       .attr("id", "softShadow")
-      .attr("x", "-30%")
-      .attr("y", "-30%")
-      .attr("width", "160%")
-      .attr("height", "160%");
-
+      .attr("x", "-30%").attr("y", "-30%")
+      .attr("width", "160%").attr("height", "160%");
     softShadow.append("feDropShadow")
-      .attr("dx", 0)
-      .attr("dy", 26)
-      .attr("stdDeviation", 34)
-      .attr("flood-color", "#0f0a03")
-      .attr("flood-opacity", 0.25);
+      .attr("dx", 0).attr("dy", 26).attr("stdDeviation", 34)
+      .attr("flood-color", "#0f0a03").attr("flood-opacity", 0.20);
 
     const subtleShadow = defs.append("filter")
       .attr("id", "subtleShadow")
-      .attr("x", "-30%")
-      .attr("y", "-30%")
-      .attr("width", "160%")
-      .attr("height", "160%");
-
+      .attr("x", "-30%").attr("y", "-30%")
+      .attr("width", "160%").attr("height", "160%");
     subtleShadow.append("feDropShadow")
-      .attr("dx", 0)
-      .attr("dy", 6)
-      .attr("stdDeviation", 12)
-      .attr("flood-color", "#1b1309")
-      .attr("flood-opacity", 0.16);
+      .attr("dx", 0).attr("dy", 6).attr("stdDeviation", 12)
+      .attr("flood-color", "#1b1309").attr("flood-opacity", 0.12);
 
-    const routeGradient = defs.append("linearGradient")
-      .attr("id", "routeGradient")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
+    // Capas en orden
+    const panelLayer  = svg.append("g");
+    const mapsLayer   = svg.append("g");
+    const routeLayer  = svg.append("g");
+    const palletLayer = svg.append("g");
+    const labelsLayer = svg.append("g");
+    const topLayer    = svg.append("g");
 
-    routeGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#4f9d63");
-
-    routeGradient.append("stop")
-      .attr("offset", "50%")
-      .attr("stop-color", "#4d7fd1");
-
-    routeGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#b85a5a");
-
-    // === PANEL CENTRAL ===
-    const frame = g.append("g");
-
-    frame.append("rect")
-      .attr("x", 60)
-      .attr("y", 80)
-      .attr("width", 1480)
-      .attr("height", 740)
+    // Panel grande
+    panelLayer.append("rect")
+      .attr("x", 60).attr("y", 80)
+      .attr("width", 1480).attr("height", 740)
       .attr("rx", 56)
-      .attr("fill", "url(#panelGradient)")
-      .attr("stroke", "rgba(255,255,255,0.9)")
+      .attr("fill", "#ffffff")
+      .attr("stroke", "rgba(255,255,255,0.95)")
       .attr("stroke-width", 1.4)
-      .attr("filter", "url(#softShadow)");
+      .attr("filter", "url(#softShadow)")
+      .attr("opacity", 0.95);
 
-    frame.append("rect")
-      .attr("x", 82)
-      .attr("y", 102)
-      .attr("width", 1436)
-      .attr("height", 696)
+    panelLayer.append("rect")
+      .attr("x", 82).attr("y", 102)
+      .attr("width", 1436).attr("height", 696)
       .attr("rx", 44)
       .attr("fill", "none")
-      .attr("stroke", "rgba(205,190,170,0.7)")
+      .attr("stroke", "rgba(205,190,170,0.6)")
       .attr("stroke-width", 0.8);
 
-    // === TITULAR CENTRAL 500 KG ===
-    const centerGroup = g.append("g")
+    // Centro 500 KG
+    const centerGroup = topLayer.append("g")
       .attr("transform", "translate(0,-6)");
 
     centerGroup.append("text")
-      .attr("x", 800)
-      .attr("y", 230)
+      .attr("x", 800).attr("y", 230)
       .attr("text-anchor", "middle")
-      .attr("font-size", 132)
+      .attr("font-size", 162)
       .attr("font-weight", 900)
       .attr("fill", "#181d26")
       .attr("letter-spacing", "-0.05em")
       .text("500");
 
     centerGroup.append("text")
-      .attr("x", 800)
-      .attr("y", 274)
+      .attr("x", 800).attr("y", 284)
       .attr("text-anchor", "middle")
-      .attr("font-size", 34)
+      .attr("font-size", 42)
       .attr("font-weight", 600)
       .attr("letter-spacing", "0.55em")
       .attr("fill", "#6a7383")
       .text("KG");
 
     centerGroup.append("text")
-      .attr("x", 800)
-      .attr("y", 310)
+      .attr("x", 800).attr("y", 330)
       .attr("text-anchor", "middle")
-      .attr("font-size", 14)
+      .attr("font-size", 16)
       .attr("font-weight", 500)
       .attr("letter-spacing", "0.22em")
       .attr("fill", "#9aa2ae")
       .text("PILOTO DE EXPORTACIÓN AÉREA");
 
-    // === MINI CARDS PERÚ / SUIZA CON SILUETAS ===
-    const mapsLayer = g.append("g");
+    // Centros de los mapas (calculados dinámicamente)
+    let peruMapCenter  = { x: 240, y: 440 };
+    let swissMapCenter = { x: 1360, y: 340 };
 
-    function mapCard(x, y, w, h, title, subtitle, accentColor) {
-      const card = mapsLayer.append("g")
-        .attr("transform", `translate(${x},${y})`);
-
-      card.append("rect")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", w)
-        .attr("height", h)
-        .attr("rx", 24)
-        .attr("fill", "rgba(255,255,255,0.95)")
-        .attr("stroke", "rgba(214,202,184,0.9)")
-        .attr("stroke-width", 0.9)
-        .attr("filter", "url(#subtleShadow)");
-
-      card.append("text")
-        .attr("x", 24)
-        .attr("y", 32)
-        .attr("font-size", 12)
-        .attr("font-weight", 700)
-        .attr("letter-spacing", "0.15em")
-        .attr("fill", "#9aa2ae")
-        .text(title.toUpperCase());
-
-      card.append("text")
-        .attr("x", 24)
-        .attr("y", 54)
-        .attr("font-size", 20)
-        .attr("font-weight", 800)
-        .attr("fill", "#222633")
-        .text(subtitle);
-
-      card.append("line")
-        .attr("x1", 24)
-        .attr("y1", 66)
-        .attr("x2", 84)
-        .attr("y2", 66)
-        .attr("stroke", accentColor)
-        .attr("stroke-width", 3)
-        .attr("stroke-linecap", "round");
-
-      return card;
-    }
-
-    const peruCard = mapCard(180, 360, 320, 260, "origen", "Perú", "#4f9d63");
-    const swissCard = mapCard(1100, 260, 320, 260, "destino", "Suiza", "#b85a5a");
-
-    // Silueta Perú (único shape para Perú)
-    const peruMap = peruCard.append("g")
-      .attr("transform", "translate(60,92) scale(1.05)");
-
-    peruMap.append("path")
-      .attr("d",
-        "M82,8 L66,16 L52,20 L40,34 L34,52 L28,70 L30,88 L24,110 L30,130 L42,148 L52,158 L64,162 L78,158 L92,148 L102,134 L110,116 L110,96 L106,80 L100,64 L94,52 L88,40 L90,30 L88,18 Z"
-      )
-      .attr("fill", "#f5e7d2")
-      .attr("stroke", "#c7ae8e")
-      .attr("stroke-width", 1.2);
-
-    peruMap.append("circle")
-      .attr("cx", 76)
-      .attr("cy", 92)
-      .attr("r", 4.5)
-      .attr("fill", "#4f9d63")
-      .attr("stroke", "white")
-      .attr("stroke-width", 1.4);
-
-    peruMap.append("text")
-      .attr("x", 88)
-      .attr("y", 88)
-      .attr("font-size", 12)
-      .attr("font-weight", 600)
-      .attr("fill", "#404654")
-      .text("Callao");
-
-    peruMap.append("text")
-      .attr("x", 90)
-      .attr("y", 108)
-      .attr("font-size", 11)
-      .attr("fill", "#7b8494")
-      .text("Procesadora Torre Blanca");
-
-    peruMap.append("circle")
-      .attr("cx", 70)
-      .attr("cy", 80)
-      .attr("r", 3.8)
-      .attr("fill", "#f4c149")
-      .attr("stroke", "white")
-      .attr("stroke-width", 1.2);
-
-    peruMap.append("text")
-      .attr("x", 58)
-      .attr("y", 72)
-      .attr("font-size", 11)
-      .attr("fill", "#7b8494")
-      .attr("text-anchor", "end")
-      .text("Huaral");
-
-    // Silueta Suiza (único shape para Suiza)
-    const swissMap = swissCard.append("g")
-      .attr("transform", "translate(60,98)");
-
-    swissMap.append("path")
-      .attr("d",
-        "M36,40 L52,30 L70,28 L88,32 L104,40 L116,52 L120,64 L116,76 L104,88 L88,96 L70,98 L52,94 L40,86 L32,74 L30,60 L32,50 Z"
-      )
-      .attr("fill", "#f5e7d2")
-      .attr("stroke", "#c7ae8e")
-      .attr("stroke-width", 1.2);
-
-    swissMap.append("circle")
-      .attr("cx", 80)
-      .attr("cy", 60)
-      .attr("r", 4.8)
-      .attr("fill", "#b85a5a")
-      .attr("stroke", "white")
-      .attr("stroke-width", 1.4);
-
-    swissMap.append("text")
-      .attr("x", 94)
-      .attr("y", 56)
-      .attr("font-size", 12)
-      .attr("font-weight", 600)
-      .attr("fill", "#404654")
-      .text("Zurich");
-
-    swissMap.append("text")
-      .attr("x", 94)
-      .attr("y", 76)
-      .attr("font-size", 11)
-      .attr("fill", "#7b8494")
-      .text("Hub de distribución Gralsen");
-
-    // === RUTA ENTRE CARDS (Perú card → Suiza card) ===
-    const routeLayer = g.append("g");
-
-    const peruCenter = { x: 180 + 320 * 0.7, y: 360 + 260 * 0.35 };
-    const swissCenter = { x: 1100 + 320 * 0.3, y: 260 + 260 * 0.35 };
-
-    const controlY = Math.min(peruCenter.y, swissCenter.y) - 120;
-    const routeD = `
-      M ${peruCenter.x} ${peruCenter.y}
-      C ${(peruCenter.x + swissCenter.x) / 2} ${controlY},
-        ${(peruCenter.x + swissCenter.x) / 2} ${controlY},
-        ${swissCenter.x} ${swissCenter.y}
-    `;
-
-    const route = routeLayer.append("path")
-      .attr("d", routeD)
-      .attr("fill", "none")
-      .attr("stroke", "url(#routeGradient)")
-      .attr("stroke-width", 4)
-      .attr("stroke-linecap", "round")
-      .attr("stroke-dasharray", "10 14")
-      .attr("opacity", 0.95);
-
-    const routeLength = route.node().getTotalLength();
-
-    routeLayer.append("circle")
-      .attr("cx", peruCenter.x)
-      .attr("cy", peruCenter.y)
-      .attr("r", 9)
-      .attr("fill", "#4f9d63")
-      .attr("stroke", "white")
-      .attr("stroke-width", 3);
-
-    routeLayer.append("circle")
-      .attr("cx", swissCenter.x)
-      .attr("cy", swissCenter.y)
-      .attr("r", 9)
-      .attr("fill", "#b85a5a")
-      .attr("stroke", "white")
-      .attr("stroke-width", 3);
-
-    routeLayer.append("text")
-      .attr("x", peruCenter.x - 16)
-      .attr("y", peruCenter.y + 26)
-      .attr("text-anchor", "end")
-      .attr("font-size", 14)
-      .attr("font-weight", 700)
-      .attr("fill", "#3b444f")
-      .text("PERÚ");
-
-    routeLayer.append("text")
-      .attr("x", swissCenter.x + 16)
-      .attr("y", swissCenter.y - 16)
-      .attr("text-anchor", "start")
-      .attr("font-size", 14)
-      .attr("font-weight", 700)
-      .attr("fill", "#3b444f")
-      .text("SUIZA");
-
-    const planeGroup = routeLayer.append("g")
-      .attr("id", "plane")
+    // Flecha minimalista orientada hacia la derecha
+    const arrowGroup = topLayer.append("g")
       .attr("filter", "url(#subtleShadow)");
 
-    planeGroup.append("path")
-      .attr("d", "M0,-8 L12,0 L0,8 L2,2 L-10,2 L-10,-2 L2,-2 Z")
-      .attr("fill", "#1f2a3c");
+    // Línea principal de la flecha (horizontal)
+    arrowGroup.append("line")
+      .attr("x1", -10).attr("y1", 0)
+      .attr("x2", 10).attr("y2", 0)
+      .attr("stroke", "#4d7fd1")
+      .attr("stroke-width", 2)
+      .attr("stroke-linecap", "round");
 
-    planeGroup.append("path")
-      .attr("d", "M-4,-10 L2,-4 L-2,-4 Z")
-      .attr("fill", "#1f2a3c")
-      .attr("opacity", 0.9);
+    // Punta de la flecha (mirando a la derecha)
+    arrowGroup.append("polygon")
+      .attr("points", "12,0 2,-5 2,5")
+      .attr("fill", "#4d7fd1");
 
-    planeGroup.append("path")
-      .attr("d", "M-4,10 L2,4 L-2,4 Z")
-      .attr("fill", "#1f2a3c")
-      .attr("opacity", 0.9);
-
-    function animatePlane() {
-      route
-        .attr("stroke-dasharray", routeLength)
-        .attr("stroke-dashoffset", routeLength)
-        .transition()
-        .duration(9000)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0);
-
-      planeGroup
-        .transition()
-        .duration(9000)
-        .ease(d3.easeLinear)
-        .attrTween("transform", function () {
-          return function (t) {
-            const endT = 1.05;
-            const currentLength = Math.min(t * endT * routeLength, routeLength);
-            const p = route.node().getPointAtLength(currentLength);
-            const pAhead = route.node().getPointAtLength(Math.min(currentLength + 2, routeLength));
-            const angle = Math.atan2(pAhead.y - p.y, pAhead.x - p.x) * 180 / Math.PI;
-            return `translate(${p.x},${p.y}) rotate(${angle}) scale(1.3)`;
-          };
-        })
-        .on("end", animatePlane);
-    }
-
-    animatePlane();
-
-    routeLayer.append("text")
-      .attr("x", 800)
-      .attr("y", 360)
-      .attr("text-anchor", "middle")
-      .attr("font-size", 13)
-      .attr("font-weight", 500)
-      .attr("fill", "#6f7888")
-      .text("Vuelo piloto — Lima / Callao → Zurich");
-
-    // === PALLET ISOMÉTRICO (texto despejado) ===
-    const palletLayer = g.append("g")
-      .attr("transform", "translate(800,660)");
-
-    const palletLabel = palletLayer.append("g")
-      .attr("transform", "translate(0,-96)");
-
-    palletLabel.append("text")
-      .attr("x", 0)
-      .attr("y", -4)
-      .attr("text-anchor", "middle")
-      .attr("font-size", 13)
-      .attr("font-weight", 600)
-      .attr("fill", "#7b8494")
-      .text("PALLET PILOTO");
-
-    palletLabel.append("text")
-      .attr("x", 0)
-      .attr("y", 20)
-      .attr("text-anchor", "middle")
-      .attr("font-size", 22)
-      .attr("font-weight", 900)
-      .attr("letter-spacing", "0.08em")
-      .attr("fill", "#222633")
-      .text("500 KG PITAHAYA");
-
-    palletLabel.append("text")
-      .attr("x", 0)
-      .attr("y", 42)
-      .attr("text-anchor", "middle")
-      .attr("font-size", 12)
-      .attr("font-weight", 400)
-      .attr("fill", "#8b95a2")
-      .text("Consolidado en Torre Blanca · Air Freight a Suiza");
+    // Pallet
+    palletLayer.attr("transform", "translate(800,460)");
 
     palletLayer.append("ellipse")
-      .attr("cx", 40)
-      .attr("cy", 78)
-      .attr("rx", 120)
-      .attr("ry", 26)
-      .attr("fill", "rgba(15,10,5,0.22)")
-      .attr("filter", "url(#softShadow)")
-      .attr("opacity", 0.85);
+      .attr("cx", 0).attr("cy", 78)
+      .attr("rx", 150).attr("ry", 28)
+      .attr("fill", "rgba(15,10,5,0.16)")
+      .attr("filter", "url(#softShadow)");
 
     const palletGroup = palletLayer.append("g")
-      .attr("transform", "translate(0,40) scale(1.3)");
-
-    const frontColor = "#c68d49";
-    const sideColor = "#b17633";
-    const topColor = "#f5e1c3";
+      .attr("transform", "translate(-100,40) scale(1.3)");
 
     palletGroup.append("polygon")
       .attr("points", "0,-10 90,-40 200,-5 110,25")
-      .attr("fill", topColor)
+      .attr("fill", "#f5e1c3")
       .attr("stroke", "#b89463")
       .attr("stroke-width", 1.1);
 
     palletGroup.append("polygon")
       .attr("points", "0,-10 110,25 110,55 0,20")
-      .attr("fill", frontColor)
+      .attr("fill", "#c68d49")
       .attr("stroke", "#8c5e2e")
       .attr("stroke-width", 1.1);
 
     palletGroup.append("polygon")
       .attr("points", "110,25 200,-5 200,25 110,55")
-      .attr("fill", sideColor)
+      .attr("fill", "#b17633")
       .attr("stroke", "#7a4f24")
       .attr("stroke-width", 1.1);
 
-    const slatCount = 5;
-    for (let i = 0; i < slatCount; i++) {
-      const t = i / (slatCount - 1);
-      const x1 = 4 + t * 90;
-      const x2 = 14 + t * 90;
+    for (let i = 0; i < 5; i++) {
+      const t = i / 4;
       palletGroup.append("line")
-        .attr("x1", x1)
+        .attr("x1", 4 + t * 90)
         .attr("y1", -8 - t * 11)
-        .attr("x2", x2)
+        .attr("x2", 14 + t * 90)
         .attr("y2", -12 - t * 11)
         .attr("stroke", "#e2c79b")
         .attr("stroke-width", 3.2)
         .attr("stroke-linecap", "round");
     }
 
-    const slotYs = [30, 40, 50];
-    slotYs.forEach(y => {
+    [30, 40, 50].forEach(y => {
       palletGroup.append("rect")
-        .attr("x", 10)
-        .attr("y", y)
-        .attr("width", 80)
-        .attr("height", 4.5)
+        .attr("x", 10).attr("y", y)
+        .attr("width", 80).attr("height", 4.5)
         .attr("fill", "#8c5e2e")
         .attr("opacity", 0.8);
     });
@@ -677,126 +353,342 @@
     const boxesGroup = palletGroup.append("g")
       .attr("transform", "translate(30,-34)");
 
-    const boxTop = "#f9d6b6";
-    const boxFront = "#f4b98b";
-    const boxSide = "#e89d64";
-
     boxesGroup.append("polygon")
       .attr("points", "0,0 70,-26 150,-4 80,22")
-      .attr("fill", boxTop)
+      .attr("fill", "#f9d6b6")
       .attr("stroke", "#d79b61")
       .attr("stroke-width", 0.9);
 
     boxesGroup.append("polygon")
       .attr("points", "0,0 80,22 80,64 0,42")
-      .attr("fill", boxFront)
+      .attr("fill", "#f4b98b")
       .attr("stroke", "#c3804e")
       .attr("stroke-width", 0.9);
 
     boxesGroup.append("polygon")
       .attr("points", "80,22 150,-4 150,38 80,64")
-      .attr("fill", boxSide)
+      .attr("fill", "#e89d64")
       .attr("stroke", "#b06a34")
-    .attr("stroke-width", 0.9);
+      .attr("stroke-width", 0.9);
 
-  const upper = boxesGroup.append("g")
-    .attr("transform", "translate(10,-24)");
+    const upper = boxesGroup.append("g")
+      .attr("transform", "translate(10,-24)");
 
-  upper.append("polygon")
-    .attr("points", "0,0 60,-22 135,-3 75,19")
-    .attr("fill", "#ffe0c1")
-    .attr("stroke", "#d79b61")
-    .attr("stroke-width", 0.9);
+    upper.append("polygon")
+      .attr("points", "0,0 60,-22 135,-3 75,19")
+      .attr("fill", "#ffe0c1")
+      .attr("stroke", "#d79b61")
+      .attr("stroke-width", 0.9);
 
-  upper.append("polygon")
-    .attr("points", "0,0 75,19 75,52 0,32")
-    .attr("fill", "#f5bd90")
-    .attr("stroke", "#c3804e")
-    .attr("stroke-width", 0.9);
+    upper.append("polygon")
+      .attr("points", "0,0 75,19 75,52 0,32")
+      .attr("fill", "#f5bd90")
+      .attr("stroke", "#c3804e")
+      .attr("stroke-width", 0.9);
 
-  upper.append("polygon")
-    .attr("points", "75,19 135,-3 135,30 75,52")
-    .attr("fill", "#e89d64")
-    .attr("stroke", "#b06a34")
-    .attr("stroke-width", 0.9);
+    upper.append("polygon")
+      .attr("points", "75,19 135,-3 135,30 75,52")
+      .attr("fill", "#e89d64")
+      .attr("stroke", "#b06a34")
+      .attr("stroke-width", 0.9);
 
-  for (let i = 1; i <= 2; i++) {
-    const t = i / 3;
-    upper.append("line")
-      .attr("x1", t * 60)
-      .attr("y1", -t * 22)
-      .attr("x2", 10 + t * 60)
-      .attr("y2", -4 - t * 18)
-      .attr("stroke", "rgba(220,150,90,0.65)")
-      .attr("stroke-width", 0.8);
-  }
-
-  // === ETAPAS DEL PROCESO CON COLORES MÁS VIBRANTES Y TIPOS MÁS GRANDES ===
-  const stages = [
-    { id: "01", label: "Cosecha",     sub: "Productores Huaral",       color: "#ff7a4e" },
-    { id: "02", label: "Acopio",      sub: "Procesadora Torre Blanca", color: "#f4c149" },
-    { id: "03", label: "Cadena fría", sub: "Pre-enfriado y packing",   color: "#4f9d63" },
-    { id: "04", label: "Air Freight", sub: "Callao → Europa",          color: "#4d7fd1" },
-    { id: "05", label: "Validación",  sub: "Importador Gralsen",       color: "#b85a5a" }
-  ];
-
-  const stagesLayer = g.append("g")
-    .attr("transform", "translate(0,0)");
-
-  stages.forEach((stage, i) => {
-    const x = 360 + i * 210;
-    const yBase = 750; // un poco más arriba para dejar espacio a textos grandes
-
-    if (i < stages.length - 1) {
-      stagesLayer.append("line")
-        .attr("x1", x + 56)
-        .attr("y1", yBase - 36)
-        .attr("x2", x + 210 - 56)
-        .attr("y2", yBase - 36)
-        .attr("stroke", "rgba(160,150,135,0.9)")
-        .attr("stroke-width", 1.6)
-        .attr("stroke-dasharray", "4 4")
-        .attr("opacity", 0.9);
+    for (let i = 1; i <= 2; i++) {
+      const t = i / 3;
+      upper.append("line")
+        .attr("x1", t * 60)
+        .attr("y1", -t * 22)
+        .attr("x2", 10 + t * 60)
+        .attr("y2", -4 - t * 18)
+        .attr("stroke", "rgba(220,150,90,0.65)")
+        .attr("stroke-width", 0.8);
     }
 
-    // Círculo de color detrás del número
-    stagesLayer.append("circle")
-      .attr("cx", x)
-      .attr("cy", yBase - 12)
-      .attr("r", 28)
-      .attr("fill", stage.color)
-      .attr("opacity", 0.98);
+    // Texto pallet
+    const palletText = labelsLayer.append("g")
+      .attr("transform", "translate(800,590)");
 
-    // Número de etapa
-    stagesLayer.append("text")
-      .attr("x", x)
-      .attr("y", yBase - 2)
+    palletText.append("text")
+      .attr("x", 0).attr("y", 0)
       .attr("text-anchor", "middle")
-      .attr("font-size", 22)
+      .attr("font-size", 15)
+      .attr("font-weight", 600)
+      .attr("fill", "#7b8494")
+      .text("PALLET PILOTO");
+
+    palletText.append("text")
+      .attr("x", 0).attr("y", 28)
+      .attr("text-anchor", "middle")
+      .attr("font-size", 26)
       .attr("font-weight", 900)
-      .attr("fill", "#ffffff")
-      .attr("letter-spacing", "0.2em")
-      .text(stage.id);
+      .attr("letter-spacing", "0.08em")
+      .attr("fill", "#222633")
+      .text("500 KG PITAHAYA");
 
-    // Label principal (más grande y más abajo)
-    stagesLayer.append("text")
-      .attr("x", x)
-      .attr("y", yBase + 34)
+    palletText.append("text")
+      .attr("x", 0).attr("y", 52)
       .attr("text-anchor", "middle")
-      .attr("font-size", 16)
-      .attr("font-weight", 700)
-      .attr("fill", "#262b35")
-      .text(stage.label);
+      .attr("font-size", 14)
+      .attr("font-weight", 400)
+      .attr("fill", "#8b95a2")
+      .text("Consolidado en Torre Blanca · Air Freight a Suiza");
 
-    // Subtítulo (algo más abajo)
-    stagesLayer.append("text")
-      .attr("x", x)
-      .attr("y", yBase + 58)
+    // Etapas - PERFECTAMENTE CENTRADAS
+    const stages = [
+      { id: "01", label: "Cosecha",     sub: "Productores Huaral",       color: "#ff7a4e" },
+      { id: "02", label: "Acopio",      sub: "Procesadora Torre Blanca", color: "#f4c149" },
+      { id: "03", label: "Cadena fría", sub: "Pre-enfriado y packing",   color: "#4f9d63" },
+      { id: "04", label: "Air Freight", sub: "Callao → Europa",          color: "#4d7fd1" },
+      { id: "05", label: "Validación",  sub: "Importador Gralsen",       color: "#b85a5a" }
+    ];
+
+    const stagesLayer = topLayer.append("g");
+
+    const stageSpacing = 260;
+    const firstStageX = 140;
+
+    stages.forEach((stage, i) => {
+      const x = firstStageX + i * stageSpacing;
+      const yBase = 750;
+
+      if (i < stages.length - 1) {
+        stagesLayer.append("line")
+          .attr("x1", x + 130)
+          .attr("y1", yBase - 36)
+          .attr("x2", x + stageSpacing - 130)
+          .attr("y2", yBase - 36)
+          .attr("stroke", "rgba(160,150,135,0.9)")
+          .attr("stroke-width", 1.6)
+          .attr("stroke-dasharray", "4 4");
+      }
+
+      stagesLayer.append("circle")
+        .attr("cx", x + 130)
+        .attr("cy", yBase - 12)
+        .attr("r", 32)
+        .attr("fill", stage.color);
+
+      stagesLayer.append("text")
+        .attr("x", x + 130)
+        .attr("y", yBase - 2)
+        .attr("text-anchor", "middle")
+        .attr("font-size", 26)
+        .attr("font-weight", 900)
+        .attr("fill", "#ffffff")
+        .text(stage.id);
+
+      stagesLayer.append("text")
+        .attr("x", x + 130)
+        .attr("y", yBase + 38)
+        .attr("text-anchor", "middle")
+        .attr("font-size", 18)
+        .attr("font-weight", 700)
+        .attr("fill", "#262b35")
+        .text(stage.label);
+
+      stagesLayer.append("text")
+        .attr("x", x + 130)
+        .attr("y", yBase + 64)
+        .attr("text-anchor", "middle")
+        .attr("font-size", 14)
+        .attr("fill", "#757f8d")
+        .text(stage.sub);
+    });
+
+    // Etiqueta de la ruta
+    routeLayer.append("text")
+      .attr("x", 800)
+      .attr("y", 370)
       .attr("text-anchor", "middle")
-      .attr("font-size", 12.5)
-      .attr("fill", "#757f8d")
-      .text(stage.sub);
-  });
-</script>
+      .attr("font-size", 15)
+      .attr("font-weight", 500)
+      .attr("fill", "#6f7888")
+      .text("Vuelo piloto — Lima / Callao → Zurich");
+
+    // CARGAR MAPAS GEOJSON
+    Promise.all([
+      d3.json("https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson"),
+      d3.json("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
+    ]).then(([peruGeo, worldGeo]) => {
+
+      // MAPA PERÚ - MÁS GRANDE (400x220)
+      const peruMapX = 100;
+      const peruMapY = 300;
+
+      const peruProjection = d3.geoMercator()
+        .fitSize([400, 220], peruGeo);
+
+      const peruPath = d3.geoPath(peruProjection);
+
+      // Calcular centro real del mapa de Perú
+      const peruBounds = d3.geoBounds(peruGeo);
+      const peruCenter = peruProjection([
+        (peruBounds[0][0] + peruBounds[1][0]) / 2,
+        (peruBounds[0][1] + peruBounds[1][1]) / 2
+      ]);
+      peruMapCenter.x = peruMapX + 25 + peruCenter[0];
+      peruMapCenter.y = peruMapY + 75 + peruCenter[1];
+
+      const peruMapGroup = mapsLayer.append("g")
+        .attr("transform", `translate(${peruMapX}, ${peruMapY})`);
+
+      // Background tarjeta
+      peruMapGroup.append("rect")
+        .attr("width", 450).attr("height", 330).attr("rx", 24)
+        .attr("fill", "#ffffff")
+        .attr("stroke", "rgba(214,202,184,0.92)")
+        .attr("stroke-width", 1)
+        .attr("filter", "url(#subtleShadow)");
+
+      // Título
+      peruMapGroup.append("text")
+        .attr("x", 24).attr("y", 36)
+        .attr("font-size", 14).attr("font-weight", 700)
+        .attr("letter-spacing", "0.15em")
+        .attr("fill", "#9aa2ae")
+        .text("ORIGEN");
+
+      peruMapGroup.append("text")
+        .attr("x", 24).attr("y", 62)
+        .attr("font-size", 24).attr("font-weight", 800)
+        .attr("fill", "#222633")
+        .text("Perú");
+
+      peruMapGroup.append("line")
+        .attr("x1", 24).attr("y1", 76).attr("x2", 94).attr("y2", 76)
+        .attr("stroke", "#4f9d63").attr("stroke-width", 3).attr("stroke-linecap", "round");
+
+      // Mapa - dibujar como silueta unificada - CENTRADO VERTICALMENTE
+      const peruFeatures = peruMapGroup.append("g")
+        .attr("transform", "translate(25, 90)");
+
+      peruFeatures.selectAll(".map-region")
+        .data(peruGeo.features)
+        .enter()
+        .append("path")
+        .attr("class", "map-region")
+        .attr("d", peruPath);
+
+      // MAPA SUIZA - MÁS PEQUEÑO (280x160)
+      const swissFeature = worldGeo.features.find(f =>
+        f.properties.ADMIN === "Switzerland" ||
+        f.properties.name === "Switzerland"
+      );
+
+      if (swissFeature) {
+        const swissMapX = 1050;
+        const swissMapY = 400;
+
+        const swissProjection = d3.geoMercator()
+          .fitSize([280, 160], swissFeature);
+
+        const swissPath = d3.geoPath(swissProjection);
+
+        // Calcular centro real del mapa de Suiza
+        const swissBounds = d3.geoBounds(swissFeature);
+        const swissCenter = swissProjection([
+          (swissBounds[0][0] + swissBounds[1][0]) / 2,
+          (swissBounds[0][1] + swissBounds[1][1]) / 2
+        ]);
+        swissMapCenter.x = swissMapX + 30 + swissCenter[0];
+        swissMapCenter.y = swissMapY + 95 + swissCenter[1];
+
+        const swissMapGroup = mapsLayer.append("g")
+          .attr("transform", `translate(${swissMapX}, ${swissMapY})`);
+
+        // Background tarjeta
+        swissMapGroup.append("rect")
+          .attr("width", 340).attr("height", 270).attr("rx", 24)
+          .attr("fill", "#ffffff")
+          .attr("stroke", "rgba(214,202,184,0.92)")
+          .attr("stroke-width", 1)
+          .attr("filter", "url(#subtleShadow)");
+
+        // Título
+        swissMapGroup.append("text")
+          .attr("x", 24).attr("y", 32)
+          .attr("font-size", 12).attr("font-weight", 700)
+          .attr("letter-spacing", "0.15em")
+          .attr("fill", "#9aa2ae")
+          .text("DESTINO");
+
+        swissMapGroup.append("text")
+          .attr("x", 24).attr("y", 54)
+          .attr("font-size", 20).attr("font-weight", 800)
+          .attr("fill", "#222633")
+          .text("Suiza");
+
+        swissMapGroup.append("line")
+          .attr("x1", 24).attr("y1", 66).attr("x2", 84).attr("y2", 66)
+          .attr("stroke", "#b85a5a").attr("stroke-width", 3).attr("stroke-linecap", "round");
+
+        // Mapa
+        const swissFeatures = swissMapGroup.append("g")
+          .attr("transform", "translate(30, 95)");
+
+        swissFeatures.append("path")
+          .attr("class", "map-region")
+          .attr("d", swissPath(swissFeature));
+
+        // AHORA DIBUJAR LA RUTA con los centros correctos
+        const controlY = Math.min(peruMapCenter.y, swissMapCenter.y) - 120;
+
+        const routePath = routeLayer.append("path")
+          .attr("d",
+            `M ${peruMapCenter.x} ${peruMapCenter.y}
+             C ${(peruMapCenter.x + swissMapCenter.x) / 2} ${controlY},
+               ${(peruMapCenter.x + swissMapCenter.x) / 2} ${controlY},
+               ${swissMapCenter.x} ${swissMapCenter.y}`
+          )
+          .attr("fill", "none")
+          .attr("stroke", "url(#routeGradient)")
+          .attr("stroke-width", 4)
+          .attr("stroke-linecap", "round");
+
+        const routeNode   = routePath.node();
+        const routeLength = routeNode.getTotalLength();
+
+        routeLayer.append("circle")
+          .attr("cx", peruMapCenter.x).attr("cy", peruMapCenter.y)
+          .attr("r", 9).attr("fill", "#4f9d63")
+          .attr("stroke", "white").attr("stroke-width", 3);
+
+        routeLayer.append("circle")
+          .attr("cx", swissMapCenter.x).attr("cy", swissMapCenter.y)
+          .attr("r", 9).attr("fill", "#b85a5a")
+          .attr("stroke", "white").attr("stroke-width", 3);
+
+        // Animación del avión y del trazado
+        function animateRoute() {
+          const duration = 9000;
+          const start = performance.now();
+
+          function frameTick(now) {
+            const t = Math.min((now - start) / duration, 1);
+            const len = t * routeLength;
+
+            routePath.attr("stroke-dasharray", `${len} ${Math.max(routeLength - len, 0.01)}`);
+
+            const p  = routeNode.getPointAtLength(len);
+            const p2 = routeNode.getPointAtLength(Math.min(len + 2, routeLength));
+            const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
+
+            arrowGroup.attr("transform", `translate(${p.x},${p.y}) rotate(${angle}) scale(3)`);
+
+            if (t < 1) {
+              requestAnimationFrame(frameTick);
+            } else {
+              requestAnimationFrame(animateRoute);
+            }
+          }
+
+          routePath.attr("stroke-dasharray", `0 ${routeLength}`);
+          requestAnimationFrame(frameTick);
+        }
+
+        animateRoute();
+      }
+
+    }).catch(err => console.error("Error cargando mapas:", err));
+  </script>
 </body>
 </html>

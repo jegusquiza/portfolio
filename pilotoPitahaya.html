@@ -36,6 +36,7 @@
       left: 48px;
       z-index: 20;
       pointer-events: none;
+      max-width: 520px;
     }
 
     .kicker {
@@ -58,7 +59,7 @@
 
     .subtitle {
       color: #5b6473;
-      max-width: 560px;
+      max-width: 520px;
       font-size: 14px;
       font-weight: 400;
     }
@@ -134,7 +135,6 @@
       margin-top: 2px;
     }
 
-    /* Mapas */
     .map-region {
       fill: #e8dcc8;
       stroke: #b89463;
@@ -195,7 +195,6 @@
     const svg = d3.select("#viz");
     const defs = svg.append("defs");
 
-    // Gradiente ruta
     const routeGradient = defs.append("linearGradient")
       .attr("id", "routeGradient")
       .attr("x1", "0%").attr("y1", "0%")
@@ -204,7 +203,6 @@
     routeGradient.append("stop").attr("offset", "50%").attr("stop-color", "#4d7fd1");
     routeGradient.append("stop").attr("offset", "100%").attr("stop-color", "#b85a5a");
 
-    // Sombras
     const softShadow = defs.append("filter")
       .attr("id", "softShadow")
       .attr("x", "-30%").attr("y", "-30%")
@@ -221,7 +219,6 @@
       .attr("dx", 0).attr("dy", 6).attr("stdDeviation", 12)
       .attr("flood-color", "#1b1309").attr("flood-opacity", 0.12);
 
-    // Capas en orden
     const panelLayer  = svg.append("g");
     const mapsLayer   = svg.append("g");
     const routeLayer  = svg.append("g");
@@ -229,7 +226,6 @@
     const labelsLayer = svg.append("g");
     const topLayer    = svg.append("g");
 
-    // Panel grande
     panelLayer.append("rect")
       .attr("x", 60).attr("y", 80)
       .attr("width", 1480).attr("height", 740)
@@ -248,12 +244,12 @@
       .attr("stroke", "rgba(205,190,170,0.6)")
       .attr("stroke-width", 0.8);
 
-    // Centro 500 KG
+    // 500 KG centrado simple: ambos textos anclados al centro en x=800
     const centerGroup = topLayer.append("g")
       .attr("transform", "translate(0,-6)");
 
     centerGroup.append("text")
-      .attr("x", 800).attr("y", 230)
+      .attr("x", 800).attr("y", 240)
       .attr("text-anchor", "middle")
       .attr("font-size", 162)
       .attr("font-weight", 900)
@@ -262,8 +258,9 @@
       .text("500");
 
     centerGroup.append("text")
-      .attr("x", 800).attr("y", 284)
-      .attr("text-anchor", "middle")
+      .attr("x", 800).attr("y", 240)
+      .attr("dx", 110)           // puedes bajar este valor si lo ves aún muy a la derecha
+      .attr("text-anchor", "start")
       .attr("font-size", 42)
       .attr("font-weight", 600)
       .attr("letter-spacing", "0.55em")
@@ -271,7 +268,7 @@
       .text("KG");
 
     centerGroup.append("text")
-      .attr("x", 800).attr("y", 330)
+      .attr("x", 800).attr("y", 280)
       .attr("text-anchor", "middle")
       .attr("font-size", 16)
       .attr("font-weight", 500)
@@ -279,28 +276,16 @@
       .attr("fill", "#9aa2ae")
       .text("PILOTO DE EXPORTACIÓN AÉREA");
 
-    // Centros de los mapas (calculados dinámicamente)
     let peruMapCenter  = { x: 240, y: 440 };
     let swissMapCenter = { x: 1360, y: 340 };
 
-    // Flecha minimalista orientada hacia la derecha
     const arrowGroup = topLayer.append("g")
       .attr("filter", "url(#subtleShadow)");
 
-    // Línea principal de la flecha (horizontal)
-    arrowGroup.append("line")
-      .attr("x1", -10).attr("y1", 0)
-      .attr("x2", 10).attr("y2", 0)
-      .attr("stroke", "#4d7fd1")
-      .attr("stroke-width", 2)
-      .attr("stroke-linecap", "round");
-
-    // Punta de la flecha (mirando a la derecha)
     arrowGroup.append("polygon")
-      .attr("points", "12,0 2,-5 2,5")
+      .attr("points", "12,0 -6,-7 -6,7")
       .attr("fill", "#4d7fd1");
 
-    // Pallet
     palletLayer.attr("transform", "translate(800,460)");
 
     palletLayer.append("ellipse")
@@ -403,7 +388,6 @@
         .attr("stroke-width", 0.8);
     }
 
-    // Texto pallet
     const palletText = labelsLayer.append("g")
       .attr("transform", "translate(800,590)");
 
@@ -432,7 +416,6 @@
       .attr("fill", "#8b95a2")
       .text("Consolidado en Torre Blanca · Air Freight a Suiza");
 
-    // Etapas - PERFECTAMENTE CENTRADAS
     const stages = [
       { id: "01", label: "Cosecha",     sub: "Productores Huaral",       color: "#ff7a4e" },
       { id: "02", label: "Acopio",      sub: "Procesadora Torre Blanca", color: "#f4c149" },
@@ -441,7 +424,7 @@
       { id: "05", label: "Validación",  sub: "Importador Gralsen",       color: "#b85a5a" }
     ];
 
-    const stagesLayer = topLayer.append("g");
+    const stagesLayer = svg.append("g");
 
     const stageSpacing = 260;
     const firstStageX = 140;
@@ -494,23 +477,20 @@
         .text(stage.sub);
     });
 
-    // Etiqueta de la ruta
     routeLayer.append("text")
       .attr("x", 800)
-      .attr("y", 370)
+      .attr("y", 320)
       .attr("text-anchor", "middle")
       .attr("font-size", 15)
       .attr("font-weight", 500)
       .attr("fill", "#6f7888")
       .text("Vuelo piloto — Lima / Callao → Zurich");
 
-    // CARGAR MAPAS GEOJSON
     Promise.all([
       d3.json("https://raw.githubusercontent.com/juaneladio/peru-geojson/master/peru_departamental_simple.geojson"),
       d3.json("https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson")
     ]).then(([peruGeo, worldGeo]) => {
 
-      // MAPA PERÚ - MÁS GRANDE (400x220)
       const peruMapX = 100;
       const peruMapY = 300;
 
@@ -519,7 +499,6 @@
 
       const peruPath = d3.geoPath(peruProjection);
 
-      // Calcular centro real del mapa de Perú
       const peruBounds = d3.geoBounds(peruGeo);
       const peruCenter = peruProjection([
         (peruBounds[0][0] + peruBounds[1][0]) / 2,
@@ -531,7 +510,6 @@
       const peruMapGroup = mapsLayer.append("g")
         .attr("transform", `translate(${peruMapX}, ${peruMapY})`);
 
-      // Background tarjeta
       peruMapGroup.append("rect")
         .attr("width", 450).attr("height", 330).attr("rx", 24)
         .attr("fill", "#ffffff")
@@ -539,7 +517,6 @@
         .attr("stroke-width", 1)
         .attr("filter", "url(#subtleShadow)");
 
-      // Título
       peruMapGroup.append("text")
         .attr("x", 24).attr("y", 36)
         .attr("font-size", 14).attr("font-weight", 700)
@@ -557,7 +534,6 @@
         .attr("x1", 24).attr("y1", 76).attr("x2", 94).attr("y2", 76)
         .attr("stroke", "#4f9d63").attr("stroke-width", 3).attr("stroke-linecap", "round");
 
-      // Mapa - dibujar como silueta unificada - CENTRADO VERTICALMENTE
       const peruFeatures = peruMapGroup.append("g")
         .attr("transform", "translate(25, 90)");
 
@@ -568,7 +544,6 @@
         .attr("class", "map-region")
         .attr("d", peruPath);
 
-      // MAPA SUIZA - MÁS PEQUEÑO (280x160)
       const swissFeature = worldGeo.features.find(f =>
         f.properties.ADMIN === "Switzerland" ||
         f.properties.name === "Switzerland"
@@ -583,7 +558,6 @@
 
         const swissPath = d3.geoPath(swissProjection);
 
-        // Calcular centro real del mapa de Suiza
         const swissBounds = d3.geoBounds(swissFeature);
         const swissCenter = swissProjection([
           (swissBounds[0][0] + swissBounds[1][0]) / 2,
@@ -595,7 +569,6 @@
         const swissMapGroup = mapsLayer.append("g")
           .attr("transform", `translate(${swissMapX}, ${swissMapY})`);
 
-        // Background tarjeta
         swissMapGroup.append("rect")
           .attr("width", 340).attr("height", 270).attr("rx", 24)
           .attr("fill", "#ffffff")
@@ -603,7 +576,6 @@
           .attr("stroke-width", 1)
           .attr("filter", "url(#subtleShadow)");
 
-        // Título
         swissMapGroup.append("text")
           .attr("x", 24).attr("y", 32)
           .attr("font-size", 12).attr("font-weight", 700)
@@ -621,7 +593,6 @@
           .attr("x1", 24).attr("y1", 66).attr("x2", 84).attr("y2", 66)
           .attr("stroke", "#b85a5a").attr("stroke-width", 3).attr("stroke-linecap", "round");
 
-        // Mapa
         const swissFeatures = swissMapGroup.append("g")
           .attr("transform", "translate(30, 95)");
 
@@ -629,8 +600,7 @@
           .attr("class", "map-region")
           .attr("d", swissPath(swissFeature));
 
-        // AHORA DIBUJAR LA RUTA con los centros correctos
-        const controlY = Math.min(peruMapCenter.y, swissMapCenter.y) - 120;
+        const controlY = Math.min(peruMapCenter.y, swissMapCenter.y) - 180;
 
         const routePath = routeLayer.append("path")
           .attr("d",
@@ -657,7 +627,6 @@
           .attr("r", 9).attr("fill", "#b85a5a")
           .attr("stroke", "white").attr("stroke-width", 3);
 
-        // Animación del avión y del trazado
         function animateRoute() {
           const duration = 9000;
           const start = performance.now();
@@ -670,25 +639,25 @@
 
             const p  = routeNode.getPointAtLength(len);
             const p2 = routeNode.getPointAtLength(Math.min(len + 2, routeLength));
-            const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
+  const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
 
-            arrowGroup.attr("transform", `translate(${p.x},${p.y}) rotate(${angle}) scale(3)`);
+  arrowGroup.attr("transform", `translate(${p.x},${p.y}) rotate(${angle}) scale(3)`);
 
-            if (t < 1) {
-              requestAnimationFrame(frameTick);
-            } else {
-              requestAnimationFrame(animateRoute);
-            }
-          }
+  if (t < 1) {
+    requestAnimationFrame(frameTick);
+  } else {
+    requestAnimationFrame(animateRoute);
+  }
+}
 
-          routePath.attr("stroke-dasharray", `0 ${routeLength}`);
-          requestAnimationFrame(frameTick);
-        }
+routePath.attr("stroke-dasharray", `0 ${routeLength}`);
+requestAnimationFrame(frameTick);
+}
 
-        animateRoute();
-      }
+animateRoute();
+}
 
-    }).catch(err => console.error("Error cargando mapas:", err));
-  </script>
+}).catch(err => console.error("Error cargando mapas:", err));
+</script>
 </body>
 </html>

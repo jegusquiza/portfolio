@@ -222,6 +222,7 @@ svg{ width:100vw; height:100vh; display:block; }
 .nodeCircle{ filter:drop-shadow(0 0 14px rgba(0,0,0,.75)); pointer-events:all; }
 .nodeCircle.torre{ fill:#1d2430; stroke:#6a84a7; stroke-width:1.4; }
 .nodeCircle.callao{ fill:#10243d; stroke:#9fd0ff; stroke-width:1.4; }
+.nodeCircle.huaral{ fill:#1a3d25; stroke:#43d17a; stroke-width:1.4; }
 .nodeRing{ fill:none; stroke:color-mix(in srgb, var(--accent) 76%, #ffffff); stroke-width:1; opacity:.82; pointer-events:none; }
 .nodeLabel{ fill:#edf4ff; font-size:13px; letter-spacing:.4px; text-anchor:middle; pointer-events:none; }
 
@@ -270,6 +271,9 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
 .cityLabel-main.callao{
   fill:#b0dcff;
 }
+.cityLabel-main.huaral{
+  fill:#43d17a;
+}
 .cityLabel-secondary{
   fill:#7f93c4;
   font-size:12px;
@@ -290,13 +294,69 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   border:1px solid rgba(255,255,255,.14);
   border-radius:16px;
   padding:14px;
-  width:270px;
+  width:360px;
   color:white;
   backdrop-filter:blur(14px);
   box-shadow:0 20px 50px rgba(0,0,0,.75);
   font-size:14px;
   transition:opacity .12s;
   z-index:20;
+}
+
+.tooltip .tooltip-title{
+  font-size:17px;
+  font-weight:800;
+  margin-bottom:6px;
+  color:#fff;
+}
+
+.tooltip .tooltip-rol{
+  font-size:11px;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:4px;
+}
+
+.tooltip .tooltip-detail{
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:8px;
+  color:#ffeaf3;
+}
+
+.tooltip .tooltip-context{
+  font-size:12px;
+  color:#b9dbff;
+  margin-top:8px;
+  margin-bottom:8px;
+  line-height:1.4;
+}
+
+.tooltip .tooltip-images{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+
+.tooltip .tooltip-image{
+  width:170px;
+  height:130px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+
+.tooltip .tooltip-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .2s ease;
+}
+
+.tooltip .tooltip-image:hover img{
+  transform:scale(1.05);
 }
 
 @media (max-width:1100px){
@@ -312,6 +372,13 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   .bottomHud{ bottom:14px; padding:0 14px; flex-direction:column; align-items:stretch; }
   .stageNav{ max-width:100%; justify-content:flex-start; }
   .dataChips{ justify-content:flex-start; }
+  .tooltip{
+    width:320px;
+  }
+  .tooltip .tooltip-image{
+    width:152px;
+    height:115px;
+  }
 }
 
 @media (max-width:600px){
@@ -325,6 +392,13 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
     bottom:150px;
     width:auto;
     max-width:260px;
+  }
+  .tooltip{
+    width:280px;
+  }
+  .tooltip .tooltip-image{
+    width:132px;
+    height:95px;
   }
 }
 </style>
@@ -409,12 +483,28 @@ const projection = d3.geoMercator()
   .translate([width*0.55, height*0.55]);
 const path = d3.geoPath(projection);
 
+// URLs de imágenes para cada nodo (Tumblr - imágenes directas)
+const nodeImages = {
+  torreBlanca: [
+    "https://64.media.tumblr.com/954032a7c4bb1e3a5d355c8f624e0464/14aeb542321d9c1b-e7/s1280x1920/c39b4d3746a22ea1a240fd6c80394f7819247352.jpg",
+    "https://64.media.tumblr.com/2b3e8b814475934d8360b02fbac9357f/14aeb542321d9c1b-54/s1280x1920/9d0fec0276b9cffdd6cf4cbb028a418de152de3a.jpg"
+  ],
+  callao: [
+    "https://64.media.tumblr.com/e16d11b8945c698e0da8079406c0936d/14aeb542321d9c1b-16/s1280x1920/9de4ae8cc03cb6a1063d61371245b394409148f2.jpg",
+    "https://64.media.tumblr.com/1bfb5139fc9d2c34129d44dd0f00c07e/14aeb542321d9c1b-89/s1280x1920/87b0ddbf6ac552ec088b0fd1a1ed39b0d67a0f79.jpg"
+  ],
+  huaral: [
+    "https://64.media.tumblr.com/9ccb1cb1a79dc0320549003c38222493/14aeb542321d9c1b-5c/s1280x1920/f8beef305e5d76f07151996e8d1fc721ed5667b0.jpg",
+    "https://64.media.tumblr.com/82742455b372dd25c459e29a9c69ac45/14aeb542321d9c1b-9f/s1280x1920/e70f67503ab48b2b444d1a2f8ecb290999a28cb6.jpg"
+  ]
+};
+
 const nodes = [
+  { id:"huaral", tipo:"huaral", nombre:"Huaral", rol:"Zona productora de pitahaya", detalle:"Principal zona de cultivo de pitahaya roja en Lima Norte. Productores locales cultivan y cosechan la fruta fresca bajo el protocolo del comprador suizo.", lat:HUARAL_LAT, lon:HUARAL_LON },
   { id:"torreBlanca", tipo:"torre", nombre:"Procesadora Torre Blanca", rol:"Centro de acopio y clasificación", detalle:"Recibe pitahaya de Huaral y Lima Norte; clasifica y prepara fruta exportable.", lat:TORRE_BLANCA_LAT, lon:TORRE_BLANCA_LON },
   { id:"callao", tipo:"callao", nombre:"Nodo Callao (aéreo + marítimo)", rol:"Aeropuerto Jorge Chávez + Puerto del Callao", detalle:"Concentra exportación aérea inicial y futura expansión marítima.", lat:CALLAO_LAT, lon:CALLAO_LON }
 ];
 
-const huaral = {lat:HUARAL_LAT, lon:HUARAL_LON};
 const lima = {lat:LIMA_LAT, lon:LIMA_LON};
 
 function haversineKm(lat1,lon1,lat2,lon2){
@@ -427,11 +517,11 @@ function haversineKm(lat1,lon1,lat2,lon2){
 }
 
 nodes.forEach(d => { [d.x, d.y] = projection([d.lon, d.lat]); });
-[huaral.x, huaral.y] = projection([huaral.lon, huaral.lat]);
 [lima.x, lima.y] = projection([lima.lon, lima.lat]);
 
-const torre = nodes[0];
-const callao = nodes[1];
+const huaralNode = nodes[0];
+const torre = nodes[1];
+const callao = nodes[2];
 const distKm = haversineKm(torre.lat, torre.lon, callao.lat, callao.lon);
 if(distKm){
   d3.select("#chipDistance").text(`${distKm.toFixed(1)} km`);
@@ -455,23 +545,39 @@ function setBodyStage(id){
 }
 
 function showTooltip(event, d){
-  const W = 270, H = 180;
+  const W = 360, H = 340;
   let x = event.pageX + 14, y = event.pageY - 10;
   x = Math.max(10, Math.min(width - W - 10, x));
   y = Math.max(10, Math.min(height - H - 10, y));
+
+  // Determinar qué imágenes mostrar según el nodo
+  let imageUrls = nodeImages[d.id] || [];
+
+  let imagesHtml = "";
+  if (imageUrls.length > 0) {
+    imagesHtml = `<div class="tooltip-images">`;
+    imageUrls.forEach(url => {
+      imagesHtml += `<div class="tooltip-image"><img src="${url}" alt="Pitahaya"></div>`;
+    });
+    imagesHtml += `</div>`;
+  }
+
   tooltip
     .style("left", x + "px")
     .style("top", y + "px")
     .style("opacity",1)
     .html(`
-      <div style="font-size:16px;font-weight:800;margin-bottom:6px;">${d.nombre}</div>
-      <div style="color:var(--accent);font-size:11px;text-transform:uppercase;margin-bottom:4px;">${d.rol}</div>
-      <div style="color:#ffeaf3;font-size:13px;line-height:1.45;margin-bottom:4px;">${d.detalle}</div>
-      <div style="color:#b9dbff;font-size:12px;margin-top:4px;">
-        ${d.id === "torreBlanca"
+      <div class="tooltip-title">${d.nombre}</div>
+      <div class="tooltip-rol">${d.rol}</div>
+      <div class="tooltip-detail">${d.detalle}</div>
+      <div class="tooltip-context">
+        ${d.id === "huaral"
+          ? "Zona agrícola principal de pitahaya en Huaral. Productores cultivan bajo estándares de exportación suiza."
+          : d.id === "torreBlanca"
           ? "Zona productora: Huaral y Lima Norte. Torre Blanca actúa como centro de acopio previo a la exportación."
           : "Callao integra exportación aérea (Jorge Chávez) y marítima (Puerto del Callao) como nodo de salida."}
       </div>
+      ${imagesHtml}
     `);
 }
 
@@ -538,7 +644,7 @@ function renderMap(){
 
 function renderRoads(){
   const roadsMain = [
-    { from: huaral, to: torre },
+    { from: huaralNode, to: torre },
     { from: torre, to: callao },
     { from: lima, to: callao }
   ];
@@ -550,8 +656,8 @@ function renderRoads(){
     .attr("d", d => `M ${d.from.x} ${d.from.y} L ${d.to.x} ${d.to.y}`);
 
   const roadsSecondary = [
-    { from: {x:huaral.x, y:huaral.y}, to:{x:huaral.x-40, y:huaral.y-50} },
-    { from: {x:huaral.x, y:huaral.y}, to:{x:huaral.x+60, y:huaral.y-30} },
+    { from: {x:huaralNode.x, y:huaralNode.y}, to:{x:huaralNode.x-40, y:huaralNode.y-50} },
+    { from: {x:huaralNode.x, y:huaralNode.y}, to:{x:huaralNode.x+60, y:huaralNode.y-30} },
     { from: {x:lima.x, y:lima.y},   to:{x:lima.x-30, y:lima.y+60} },
     { from: {x:lima.x, y:lima.y},   to:{x:lima.x+50, y:lima.y+40} },
     { from: {x:torre.x-30, y:torre.y+20}, to:{x:torre.x+40, y:torre.y+50} },
@@ -611,9 +717,14 @@ layers.labels.append("text")
   .text("Lima");
 
 layers.labels.append("text")
-  .attr("class","cityLabel-main")
-  .attr("x",huaral.x+8).attr("y",huaral.y+4)
+  .attr("class","cityLabel-main huaral")
+  .attr("x",huaralNode.x+8).attr("y",huaralNode.y+4)
   .text("Huaral");
+
+layers.labels.append("text")
+  .attr("class","cityLabel-main")
+  .attr("x",torre.x+8).attr("y",torre.y+4)
+  .text("Torre Blanca");
 
 layers.labels.append("text")
   .attr("class","cityLabel-main callao")
@@ -623,8 +734,8 @@ layers.labels.append("text")
 // Etiquetas de rol (zonas)
 layers.labels.append("text")
   .attr("class","cityLabel-secondary")
-  .attr("x", huaral.x-10)
-  .attr("y", huaral.y+22)
+  .attr("x", huaralNode.x-10)
+  .attr("y", huaralNode.y+22)
   .text("Zona productora");
 
 layers.labels.append("text")
@@ -662,33 +773,37 @@ ng.append("text")
 ng.on("mouseover", (event,d) => {
     layers.nodes.selectAll(".node").classed("active", n => n.id === d.id);
     layers.links.selectAll(".link").classed("active", true);
-    if(stage === "productores") layers.stage.selectAll(".haloArea").style("opacity",1);
     showTooltip(event, d);
   })
   .on("mousemove", (event,d) => showTooltip(event, d))
   .on("mouseleave", () => {
     layers.nodes.selectAll(".node").classed("active", false);
     layers.links.selectAll(".link").classed("active", false);
-    if(stage !== "productores") layers.stage.selectAll(".haloArea").style("opacity",0);
     tooltip.style("opacity",0);
   });
 }
 
 function renderLink(){
 layers.links.selectAll("*").remove();
+
+// Crear 2 links: Huaral → Torre Blanca y Torre Blanca → Callao
+const link1 = layers.links.append("path")
+  .attr("class","link")
+  .attr("d",`M ${huaralNode.x} ${huaralNode.y} Q ${(huaralNode.x + torre.x)/2} ${(huaralNode.y + torre.y)/2 + 10} ${torre.x} ${torre.y}`);
+
 const {x:sx,y:sy} = torre;
 const {x:tx,y:ty} = callao;
 const dx = tx - sx, dy = ty - sy;
 const mx = sx + dx * 0.5;
 const my = sy + dy * 0.45 + 16;
 
-const link = layers.links.append("path")
+const link2 = layers.links.append("path")
   .attr("class","link")
   .attr("d",`M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}`);
 
 if(distKm){
-  const len = link.node().getTotalLength();
-  const p = link.node().getPointAtLength(len/2);
+  const len = link2.node().getTotalLength();
+  const p = link2.node().getPointAtLength(len/2);
   layers.links.append("text")
     .attr("class","distanceLabel")
     .attr("x",p.x).attr("y",p.y-8)
@@ -696,19 +811,19 @@ if(distKm){
 }
 
 layers.links.raise();
-return link;
+return link2;
 }
 
 function drawProducerCluster(){
 layers.stage.selectAll(".producerExtras").remove();
 
 const cluster = [
-  {x: huaral.x - 10, y: huaral.y + 22},
-  {x: huaral.x + 8,  y: huaral.y + 6},
-  {x: huaral.x + 24, y: huaral.y + 18},
-  {x: huaral.x - 18, y: huaral.y + 38},
-  {x: huaral.x + 30, y: huaral.y + 34},
-  {x: huaral.x + 10, y: huaral.y + 50}
+  {x: huaralNode.x - 10, y: huaralNode.y + 22},
+  {x: huaralNode.x + 8,  y: huaralNode.y + 6},
+  {x: huaralNode.x + 24, y: huaralNode.y + 18},
+  {x: huaralNode.x - 18, y: huaralNode.y + 38},
+  {x: huaralNode.x + 30, y: huaralNode.y + 34},
+  {x: huaralNode.x + 10, y: huaralNode.y + 50}
 ].filter(d => d.y < height - 140);
 
 const group = layers.stage.append("g").attr("class","producerExtras");
@@ -733,14 +848,14 @@ group.selectAll("path")
 
 group.append("circle")
   .attr("class","haloArea")
-  .attr("cx", torre.x).attr("cy", torre.y).attr("r", 46)
+  .attr("cx", huaralNode.x).attr("cy", huaralNode.y).attr("r", 46)
   .attr("fill","rgba(67,209,122,.08)")
   .attr("stroke","rgba(67,209,122,.32)")
   .attr("opacity",1);
 
 group.append("circle")
   .attr("class","haloArea")
-  .attr("cx", torre.x).attr("cy", torre.y).attr("r", 78)
+  .attr("cx", huaralNode.x).attr("cy", huaralNode.y).attr("r", 78)
   .attr("fill","none")
   .attr("stroke","rgba(67,209,122,.18)")
   .attr("stroke-width",1)
@@ -774,7 +889,7 @@ const link = renderLink();
 
 if(stage === "productores"){
   drawProducerCluster();
-  layers.nodes.selectAll(".node").classed("active", d => d.id === "torreBlanca");
+  layers.nodes.selectAll(".node").classed("active", d => d.id === "huaral");
   layers.stage.selectAll(".haloArea").style("opacity",1);
   startParticlesAlongPath(link.node());
 }else if(stage === "acopio"){

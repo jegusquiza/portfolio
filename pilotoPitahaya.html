@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pitahaya Export Pilot – Perú → Suiza</title>
 
-  <!-- Fuente Inter Tight -->
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;500;700;900&display=swap" rel="stylesheet" />
-  <!-- D3 -->
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 
   <style>
@@ -37,6 +35,58 @@
       z-index: 20;
       pointer-events: none;
       max-width: 520px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:18px;
+    }
+
+    .brand-mark{
+      width:140px;
+      height:60px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow:0 14px 32px rgba(15,23,42,.18);
+      background:#ffffff;
+      flex:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .brand-mark img{
+      max-width:110%;
+      max-height:110%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .brand-name{
+      font-size:13px;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+      color:#151821;
+      font-weight:700;
+    }
+
+    .brand-tag{
+      font-size:10px;
+      color:#6a7383;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-weight:600;
     }
 
     .kicker {
@@ -152,8 +202,18 @@
 </head>
 <body>
   <div class="title">
+    <div class="brand">
+      <div class="brand-mark">
+        <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Bioenergía del Perú</span>
+        <span class="brand-tag">Export Pilot · Perú → Suiza</span>
+      </div>
+    </div>
+
     <div class="kicker">EXPORT PILOT</div>
-    <h1>500 KG<br /><span>Pitahaya → Suiza</span></h1>
+    <h1>500 <span style="color:#ff7a4e;">KG</span><br /><span>Pitahaya → Suiza</span></h1>
     <div class="subtitle">
       Validación comercial mediante un pallet aéreo de pitahaya roja desde Perú hacia Suiza
       para el importador <strong>Gralsen</strong>, usando un pallet aéreo como prueba piloto.
@@ -244,7 +304,6 @@
       .attr("stroke", "rgba(205,190,170,0.6)")
       .attr("stroke-width", 0.8);
 
-    // 500 KG centrado simple: ambos textos anclados al centro en x=800
     const centerGroup = topLayer.append("g")
       .attr("transform", "translate(0,-6)");
 
@@ -257,14 +316,16 @@
       .attr("letter-spacing", "-0.05em")
       .text("500");
 
-    centerGroup.append("text")
+    const kgText = centerGroup.append("text")
       .attr("x", 800).attr("y", 240)
-      .attr("dx", 110)           // puedes bajar este valor si lo ves aún muy a la derecha
+      .attr("dx", 110)
       .attr("text-anchor", "start")
       .attr("font-size", 42)
       .attr("font-weight", 600)
-      .attr("letter-spacing", "0.55em")
-      .attr("fill", "#6a7383")
+      .attr("letter-spacing", "0.55em");
+
+    kgText.append("tspan")
+      .attr("fill", "#ff7a4e")
       .text("KG");
 
     centerGroup.append("text")
@@ -639,25 +700,25 @@
 
             const p  = routeNode.getPointAtLength(len);
             const p2 = routeNode.getPointAtLength(Math.min(len + 2, routeLength));
-  const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
+            const angle = Math.atan2(p2.y - p.y, p2.x - p.x) * 180 / Math.PI;
 
-  arrowGroup.attr("transform", `translate(${p.x},${p.y}) rotate(${angle}) scale(3)`);
+            arrowGroup.attr("transform", `translate(${p.x},${p.y}) rotate(${angle}) scale(3)`);
 
-  if (t < 1) {
-    requestAnimationFrame(frameTick);
-  } else {
-    requestAnimationFrame(animateRoute);
-  }
-}
+            if (t < 1) {
+              requestAnimationFrame(frameTick);
+            } else {
+              requestAnimationFrame(animateRoute);
+            }
+          }
 
-routePath.attr("stroke-dasharray", `0 ${routeLength}`);
-requestAnimationFrame(frameTick);
-}
+          routePath.attr("stroke-dasharray", `0 ${routeLength}`);
+          requestAnimationFrame(frameTick);
+        }
 
-animateRoute();
-}
+        animateRoute();
+      }
 
-}).catch(err => console.error("Error cargando mapas:", err));
-</script>
+    }).catch(err => console.error("Error cargando mapas:", err));
+  </script>
 </body>
 </html>

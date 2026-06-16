@@ -47,75 +47,237 @@ svg{ width:100vw; height:100vh; display:block; }
   border-radius:18px; background:linear-gradient(135deg,rgba(10,18,34,.95),rgba(5,8,16,.98));
   border:1px solid rgba(255,255,255,.10); box-shadow:var(--shadow); backdrop-filter:blur(12px);
 }
-.titleOverlay h1{ margin:0 0 8px; font-size:25px; letter-spacing:.7px; text-transform:uppercase; }
-.titleOverlay p{ margin:4px 0 0; font-size:14px; color:#a9badc; line-height:1.55; }
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+.brand-mark{
+  width:140px;
+  height:60px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 14px 32px rgba(0,0,0,.28);
+  background:#ffffff;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-mark img{
+  max-width:110%;
+  max-height:110%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.brand-name{
+  font-size:13px;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:#eaf1ff;
+}
+
+.brand-tag{
+  font-size:10px;
+  color:#a9badc;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.titleOverlay h1{
+  margin:0 0 8px;
+  font-size:25px;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+}
+
+.titleOverlay p{
+  margin:4px 0 0;
+  font-size:14px;
+  color:#a9badc;
+  line-height:1.55;
+}
 
 .stageSubtitle{
-  margin-top:12px; font-size:13px; text-transform:uppercase; letter-spacing:.18em;
-  color:var(--accent); display:flex; align-items:center; gap:8px;
+  margin-top:12px;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
-.stageSubtitle::before{ content:""; width:22px; height:2px; background:var(--accent); border-radius:999px; }
+.stageSubtitle::before{
+  content:"";
+  width:22px;
+  height:2px;
+  background:var(--accent);
+  border-radius:999px;
+}
 
 .stageCard{
-  margin-top:10px; padding:12px 12px 11px; border-radius:16px;
+  margin-top:10px;
+  padding:12px 12px 11px;
+  border-radius:16px;
   background:linear-gradient(180deg, rgba(8,15,30,.98), rgba(7,12,24,.96));
   border:1px solid color-mix(in srgb, var(--accent) 35%, rgba(255,255,255,.08));
-  box-shadow:0 14px 30px rgba(0,0,0,.52); position:relative; overflow:hidden;
+  box-shadow:0 14px 30px rgba(0,0,0,.52);
+  position:relative;
+  overflow:hidden;
 }
 .stageCard::before{
-  content:""; position:absolute; inset:0 auto 0 0; width:4px; background:var(--accent); opacity:.95;
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:var(--accent);
+  opacity:.95;
 }
-.stageText{ font-size:14px; color:#d6e0f5; line-height:1.55; margin:0 0 8px; }
-.stageMeta{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.stageText{
+  font-size:14px;
+  color:#d6e0f5;
+  line-height:1.55;
+  margin:0 0 8px;
+}
+.stageMeta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:4px;
+}
 .stageMetaItem{
-  padding:4px 8px; border-radius:999px; font-size:11px; text-transform:uppercase;
-  letter-spacing:.13em; background:rgba(8,15,30,.98); color:#a8b8d7; border:1px solid rgba(255,255,255,.10);
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  background:rgba(8,15,30,.98);
+  color:#a8b8d7;
+  border:1px solid rgba(255,255,255,.10);
 }
-.stageMetaItem strong{ font-weight:700; color:#fff; }
+.stageMetaItem strong{
+  font-weight:700;
+  color:#fff;
+}
 
 .bottomHud{
-  position:absolute; left:0; right:0; bottom:16px; padding:0 24px; z-index:5;
-  display:flex; align-items:center; justify-content:space-between; gap:16px; pointer-events:none;
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:16px;
+  padding:0 24px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  pointer-events:none;
 }
 .stageNav{
-  pointer-events:auto; display:flex; gap:8px; padding:6px; border-radius:999px;
-  background:rgba(8,15,30,.92); border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 18px 40px rgba(0,0,0,.72); max-width:52vw; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  pointer-events:auto;
+  display:flex;
+  gap:8px;
+  padding:6px;
+  border-radius:999px;
+  background:rgba(8,15,30,.92);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 18px 40px rgba(0,0,0,.72);
+  max-width:52vw;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
 }
 .stageBtn{
-  border:none; outline:none; cursor:pointer; padding:9px 17px; border-radius:999px;
-  font-size:12px; text-transform:uppercase; letter-spacing:.16em; background:transparent; color:#9bb0d4;
-  display:flex; align-items:center; gap:8px; transition:.22s all ease-out; position:relative; white-space:nowrap;
+  border:none;
+  outline:none;
+  cursor:pointer;
+  padding:9px 17px;
+  border-radius:999px;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  background:transparent;
+  color:#9bb0d4;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:.22s all ease-out;
+  position:relative;
+  white-space:nowrap;
 }
 .stageBtnDot{ width:7px; height:7px; border-radius:999px; background:#51668f; }
 .stageBtn.active{
-  color:#f8fbff; background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 82%, #ffffff 0%), rgba(31,41,55,.9));
+  color:#f8fbff;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 82%, #ffffff 0%), rgba(31,41,55,.9));
   box-shadow:0 10px 24px rgba(0,0,0,.34);
 }
-.stageBtn.active .stageBtnDot{ background:#fff; box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent); }
+.stageBtn.active .stageBtnDot{
+  background:#fff;
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 40%, transparent);
+}
 .stageBtn::after{
-  content:""; position:absolute; left:16px; right:16px; bottom:4px; height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:0; transform:scaleX(.3); transform-origin:center;
+  content:"";
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:4px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  opacity:0;
+  transform:scaleX(.3);
+  transform-origin:center;
   transition:.22s all ease-out;
 }
-.stageBtn.active::after{ opacity:1; transform:scaleX(1); }
+.stageBtn.active::after{
+  opacity:1;
+  transform:scaleX(1);
+}
 
 .dataChips{
-  pointer-events:auto; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+  pointer-events:auto;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 .dataChip{
-  padding:7px 10px; border-radius:999px; font-size:12px; background:rgba(10,18,34,.96);
-  color:#dfe9ff; border:1px solid rgba(255,255,255,.09); display:flex; align-items:center; gap:7px;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:12px;
+  background:rgba(10,18,34,.96);
+  color:#dfe9ff;
+  border:1px solid rgba(255,255,255,.09);
+  display:flex;
+  align-items:center;
+  gap:7px;
   box-shadow:0 10px 22px rgba(0,0,0,.22);
 }
-.dataChipLabel{ text-transform:uppercase; letter-spacing:.14em; color:#7f93c4; font-size:10px; }
+.dataChipLabel{
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#7f93c4;
+  font-size:10px;
+}
 .dataChipValue{ font-weight:700; }
 .dataChip[data-chip="stage"]{
   background:linear-gradient(135deg, rgba(91,196,255,.18), rgba(8,15,30,.96));
   border-color:color-mix(in srgb, var(--accent) 36%, rgba(255,255,255,.1));
 }
 
-/* Panel lateral: progresión */
 .sideHud{
   position:absolute;
   top:20px;
@@ -171,7 +333,6 @@ svg{ width:100vw; height:100vh; display:block; }
   transition:width .25s ease-out;
 }
 
-/* Mapa y capas */
 .region{ fill:#050b13; stroke:#2d425f; stroke-width:.9; opacity:.28; pointer-events:none; }
 .region.limaCallao{ fill:#101f32; stroke:#5f7594; opacity:.95; }
 .regionOutline{
@@ -197,13 +358,11 @@ svg{ width:100vw; height:100vh; display:block; }
   opacity:.5;
 }
 
-/* Retícula tipo blueprint */
 .mapGrid line{
   stroke:#151f32;
   stroke-width:.5;
   opacity:.35;
 }
-
 .frameTicks line{
   stroke:#27354c;
   stroke-width:.7;
@@ -240,7 +399,11 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   mix-blend-mode:screen;
   pointer-events:all;
 }
-.link.active{ opacity:1; stroke-width:2.8; filter:drop-shadow(0 0 18px rgba(180,190,255,.85)); }
+.link.active{
+  opacity:1;
+  stroke-width:2.8;
+  filter:drop-shadow(0 0 18px rgba(180,190,255,.85));
+}
 
 .miniLink{
   fill:none;
@@ -260,7 +423,6 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   text-shadow:0 0 8px rgba(0,0,0,.7);
 }
 
-/* Labels principales vs secundarias */
 .cityLabel-main{
   fill:#f5f6ff;
   font-size:15px;
@@ -268,12 +430,8 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   text-shadow:0 0 8px rgba(0,0,0,.9);
   pointer-events:none;
 }
-.cityLabel-main.callao{
-  fill:#b0dcff;
-}
-.cityLabel-main.huaral{
-  fill:#43d17a;
-}
+.cityLabel-main.callao{ fill:#b0dcff; }
+.cityLabel-main.huaral{ fill:#43d17a; }
 .cityLabel-secondary{
   fill:#7f93c4;
   font-size:12px;
@@ -372,13 +530,8 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   .bottomHud{ bottom:14px; padding:0 14px; flex-direction:column; align-items:stretch; }
   .stageNav{ max-width:100%; justify-content:flex-start; }
   .dataChips{ justify-content:flex-start; }
-  .tooltip{
-    width:320px;
-  }
-  .tooltip .tooltip-image{
-    width:152px;
-    height:115px;
-  }
+  .tooltip{ width:320px; }
+  .tooltip .tooltip-image{ width:152px; height:115px; }
 }
 
 @media (max-width:600px){
@@ -393,19 +546,24 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
     width:auto;
     max-width:260px;
   }
-  .tooltip{
-    width:280px;
-  }
-  .tooltip .tooltip-image{
-    width:132px;
-    height:95px;
-  }
+  .tooltip{ width:280px; }
+  .tooltip .tooltip-image{ width:132px; height:95px; }
 }
 </style>
 </head>
 <body class="stage-productores">
 
 <div class="titleOverlay">
+  <div class="brand">
+    <div class="brand-mark">
+      <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+    </div>
+    <div class="brand-text">
+      <span class="brand-name">Bioenergía del Perú</span>
+      <span class="brand-tag">Lima Norte · Pitahaya</span>
+    </div>
+  </div>
+
   <h1>Lima Norte — Flujo Pitahaya</h1>
   <p>Visualización del flujo de pitahaya desde zonas productoras de Huaral y Lima Norte hacia el nodo de exportación en Callao, con Torre Blanca como centro de acopio.</p>
   <div class="stageSubtitle" id="stageSubtitle">Etapa 1 · Productores</div>
@@ -440,8 +598,8 @@ body.stage-exportacion .node.callao .nodeCircle.callao{ fill:#a92f49; stroke:#ff
   </div>
 
   <div class="dataChips">
-    <div class="dataChip"><div class="dataChipLabel">Distancia torre - callao</div><div class="dataChipValue" id="chipDistance">—</div></div>
-    <div class="dataChip"><div class="dataChipLabel">Tiempo estimado</div><div class="dataChipValue" id="chipTime">—</div></div>
+    <div class="dataChip"><div class="dataChipLabel">Distancia torre - callao</div><div class="dataChipValue" id="chipDistance">75 km</div></div>
+    <div class="dataChip"><div class="dataChipLabel">Tiempo estimado</div><div class="dataChipValue" id="chipTime">63 km recta · auto: 1h 15–1h 25 min</div></div>
     <div class="dataChip"><div class="dataChipLabel">Modo</div><div class="dataChipValue" id="chipMode">Carretera</div></div>
     <div class="dataChip" data-chip="stage"><div class="dataChipLabel">Progreso flujo</div><div class="dataChipValue" id="chipStage">33%</div></div>
   </div>
@@ -483,7 +641,6 @@ const projection = d3.geoMercator()
   .translate([width*0.55, height*0.55]);
 const path = d3.geoPath(projection);
 
-// URLs de imágenes para cada nodo (Tumblr - imágenes directas)
 const nodeImages = {
   torreBlanca: [
     "https://64.media.tumblr.com/954032a7c4bb1e3a5d355c8f624e0464/14aeb542321d9c1b-e7/s1280x1920/c39b4d3746a22ea1a240fd6c80394f7819247352.jpg",
@@ -522,11 +679,6 @@ nodes.forEach(d => { [d.x, d.y] = projection([d.lon, d.lat]); });
 const huaralNode = nodes[0];
 const torre = nodes[1];
 const callao = nodes[2];
-const distKm = haversineKm(torre.lat, torre.lon, callao.lat, callao.lon);
-if(distKm){
-  d3.select("#chipDistance").text(`${distKm.toFixed(1)} km`);
-  d3.select("#chipTime").text(`~${(distKm/60).toFixed(1)} h`);
-}
 
 let stage = "productores";
 let pulseTimer = null;
@@ -550,7 +702,6 @@ function showTooltip(event, d){
   x = Math.max(10, Math.min(width - W - 10, x));
   y = Math.max(10, Math.min(height - H - 10, y));
 
-  // Determinar qué imágenes mostrar según el nodo
   let imageUrls = nodeImages[d.id] || [];
 
   let imagesHtml = "";
@@ -710,7 +861,6 @@ function renderStatic(){
 layers.labels.selectAll("*").remove();
 layers.nodes.selectAll("*").remove();
 
-// Ciudades principales
 layers.labels.append("text")
   .attr("class","cityLabel-main")
   .attr("x",lima.x+8).attr("y",lima.y+4)
@@ -731,7 +881,6 @@ layers.labels.append("text")
   .attr("x",callao.x+8).attr("y",callao.y+4)
   .text("Callao");
 
-// Etiquetas de rol (zonas)
 layers.labels.append("text")
   .attr("class","cityLabel-secondary")
   .attr("x", huaralNode.x-10)
@@ -786,7 +935,6 @@ ng.on("mouseover", (event,d) => {
 function renderLink(){
 layers.links.selectAll("*").remove();
 
-// Crear 2 links: Huaral → Torre Blanca y Torre Blanca → Callao
 const link1 = layers.links.append("path")
   .attr("class","link")
   .attr("d",`M ${huaralNode.x} ${huaralNode.y} Q ${(huaralNode.x + torre.x)/2} ${(huaralNode.y + torre.y)/2 + 10} ${torre.x} ${torre.y}`);
@@ -801,13 +949,13 @@ const link2 = layers.links.append("path")
   .attr("class","link")
   .attr("d",`M ${sx} ${sy} Q ${mx} ${my} ${tx} ${ty}`);
 
-if(distKm){
+if(true){
   const len = link2.node().getTotalLength();
   const p = link2.node().getPointAtLength(len/2);
   layers.links.append("text")
     .attr("class","distanceLabel")
     .attr("x",p.x).attr("y",p.y-8)
-    .text(`${distKm.toFixed(1)} km · ~${(distKm/60).toFixed(1)} h`);
+    .text(`75 km · 63 km recta · 1h 15–1h 25 min`);
 }
 
 layers.links.raise();
@@ -1000,8 +1148,8 @@ updateSideHud();
 }
 
 d3.selectAll(".stageBtn").on("click", function(){
-stage = this.getAttribute("data-stage");
-renderStage();
+  stage = this.getAttribute("data-stage");
+  renderStage();
 });
 
 renderMap();

@@ -62,6 +62,58 @@
       z-index:1;
     }
 
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .brand-mark{
+      width:140px;
+      height:60px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow:0 14px 32px rgba(15,23,42,.18);
+      background:#ffffff;
+      flex:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .brand-mark img{
+      max-width:110%;
+      max-height:110%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .brand-name{
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+      color:#111827;
+    }
+
+    .brand-tag{
+      font-size:10px;
+      color:#6b7280;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+
     .kicker{
       font-family:"IBM Plex Mono", ui-monospace, monospace;
       font-size:12px;
@@ -436,6 +488,16 @@
   <div class="page">
     <div class="hero">
       <div class="hero-inner">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Bioenergía del Perú</span>
+            <span class="brand-tag">Flujo de exportación · Pitahaya</span>
+          </div>
+        </div>
+
         <div class="kicker">Pitahaya · Piloto 500 kg · Torre Blanca → Gralsen</div>
         <h1>Flujo de exportación · Pitahaya</h1>
         <div class="subtitle">
@@ -596,7 +658,6 @@
       6: 'var(--s6)', 7: 'var(--s7)', 8: 'var(--s8)', 9: 'var(--s9)', 10:'var(--s10)'
     };
 
-    // Crear gradientes sutiles para cada paso (color más tenue)
     const stepBgGradient = {
       1: 'linear-gradient(135deg, rgba(249,115,115,.25), rgba(249,115,115,.08))',
       2: 'linear-gradient(135deg, rgba(245,158,11,.25), rgba(245,158,11,.08))',
@@ -615,7 +676,6 @@
     const details = document.getElementById('details');
     const svg = document.getElementById('svg-layer');
     const diagram = document.getElementById('diagram');
-    const panelSelected = document.getElementById('panel-selected');
 
     detailsData.forEach(d => {
       const el = document.createElement('div');

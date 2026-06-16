@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadena de suministro · Pitahaya Perú → Suiza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --border:rgba(15,23,42,.10);
+      --line:#c81e3a;
+      --shadow:0 28px 70px rgba(15,23,42,.10);
+      --shadow-soft:0 10px 28px rgba(15,23,42,.06);
+      --shadow-card:0 16px 38px rgba(15,23,42,.07);
+
+      --s1:#ef4444;
+      --s2:#f59e0b;
+      --s3:#3b82f6;
+      --s4:#22c55e;
+      --s5:#ec4899;
+      --s6:#6366f1;
+      --s7:#0ea5e9;
+
+      --g1: linear-gradient(135deg, rgba(248,113,113,.16), rgba(251,146,60,.10), #ffffff);
+      --g2: linear-gradient(135deg, rgba(245,158,11,.16), rgba(251,191,36,.10), #ffffff);
+      --g3: linear-gradient(135deg, rgba(59,130,246,.16), rgba(14,165,233,.10), #ffffff);
+      --g4: linear-gradient(135deg, rgba(34,197,94,.16), rgba(20,184,166,.10), #ffffff);
+      --g5: linear-gradient(135deg, rgba(236,72,153,.16), rgba(244,114,182,.10), #ffffff);
+      --g6: linear-gradient(135deg, rgba(99,102,241,.16), rgba(129,140,248,.10), #ffffff);
+      --g7: linear-gradient(135deg, rgba(14,165,233,.16), rgba(34,197,94,.10), #ffffff);
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(248,250,252,1) 0 14%, transparent 15%),
+        radial-gradient(circle at 88% 10%, rgba(254,226,226,.75) 0 10%, transparent 11%),
+        radial-gradient(circle at 16% 86%, rgba(219,234,254,.75) 0 10%, transparent 11%),
+        linear-gradient(180deg,#f9fafb,#edf2f7 55%,#e5edf9);
+      overflow-x:hidden;
+    }
+
+    .page{
+      width:min(1700px, calc(100vw - 32px));
+      margin:18px auto 28px;
+      display:grid;
+      grid-template-columns:minmax(0,1.55fr) 380px;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width:1240px){.page{grid-template-columns:1fr}}
+
+    .hero{
+      grid-column:1 / -1;
+      position:relative;
+      border:1px solid rgba(148,163,184,.26);
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,252,.98)),
+        radial-gradient(circle at 100% 0%, rgba(219,234,254,.70) 0 32%, transparent 33%);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      padding:18px 22px 20px;
+    }
+    .hero-inner{position:relative;z-index:1}
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:30px;
+    }
+    .brand-mark{
+      width:140px;
+      height:60px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow:0 14px 32px rgba(15,23,42,.22);
+      background:#ffffff;
+      flex:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .brand-mark img{
+      max-width:110%;
+      max-height:110%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand-name{
+      font-size:14px;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+      font-family:"IBM Plex Mono",monospace;
+      color:#0f172a;
+    }
+    .brand-tag{
+      font-size:11px;
+      color:#6b7280;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-family:"IBM Plex Mono",monospace;
+    }
+
+    .kicker{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.24em;
+      color:#6b7280;
+      margin-bottom:8px;
+      margin-top:6px;
+    }
+    h1{
+      margin:0;
+      font-size:40px;
+      line-height:1.04;
+      letter-spacing:-.05em;
+      text-transform:uppercase;
+      max-width:880px;
+      color:#0f172a;
+    }
+    .accent{color:#b91c1c}
+    .subtitle{
+      margin-top:10px;
+      font-size:15px;
+      line-height:1.7;
+      color:#4b5563;
+      max-width:980px;
+    }
+
+    .hero-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(260px,.9fr);
+      gap:18px;
+      margin-top:18px;
+      align-items:stretch;
+    }
+    @media (max-width:980px){
+      .hero-layout{grid-template-columns:1fr}
+    }
+
+    .hero-main{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .hero-panel{
+      position:relative;
+      border:1px solid rgba(148,163,184,.32);
+      border-radius:22px;
+      padding:16px 16px 14px;
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+      background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,250,252,.96));
+    }
+    .hero-panel-label{
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.20em;
+      color:#6b7280;
+      margin-bottom:8px;
+    }
+    .hero-list{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+    .hero-list li{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:9px 11px;border-radius:16px;
+      background:rgba(248,250,252,.96);
+      border:1px solid rgba(148,163,184,.28);
+    }
+    .hero-list .dot{
+      width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;
+      background:var(--line);box-shadow:0 0 0 4px rgba(248,113,113,.18);
+    }
+    .hero-list strong{display:block;font-size:14px;margin-bottom:1px;color:#111827}
+    .hero-list span{display:block;font-size:13px;line-height:1.5;color:#4b5563}
+
+    .hero-visual-card{
+      position:relative;
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,.32);
+      background:linear-gradient(145deg,#0f172a,#111827 60%,#1f2937);
+      box-shadow:0 18px 40px rgba(15,23,42,.40);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .hero-visual-image{
+      position:relative;
+      padding:10px;
+      flex:1;
+      min-height:180px;
+    }
+    .hero-visual-image-inner{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background:#020617;
+    }
+    .hero-visual-image-inner img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      opacity:0.98;
+    }
+    .hero-visual-caption{
+      padding:0 0 6px;
+      min-height:6px;
+    }
+
+    .content{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.98)),
+        radial-gradient(circle at 0% 0%, rgba(249,115,22,.06), transparent 18%),
+        radial-gradient(circle at 100% 0%, rgba(59,130,246,.06), transparent 18%);
+      border:1px solid rgba(148,163,184,.26);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .section-head{
+      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap
+    }
+    .section-title{
+      font-family:"IBM Plex Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.24em;color:#64748b;margin:0 0 8px
+    }
+    .section-head h2{margin:0;font-size:24px;letter-spacing:-.03em;line-height:1.1;color:#0f172a}
+    .section-head p{margin:0;color:#475569;max-width:760px;line-height:1.6;font-size:14px}
+
+    .section-list{display:grid;gap:14px}
+
+    .section-card{
+      position:relative;
+      border-radius:24px;
+      border:1px solid rgba(148,163,184,.26);
+      box-shadow:var(--shadow-card);
+      overflow:hidden;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+      background:linear-gradient(180deg,#ffffff,#f9fafb);
+    }
+    .section-card::before{
+      content:"";
+      position:absolute;inset:0 auto 0 0;width:6px;
+      background:var(--accent);
+      opacity:.92;
+    }
+    .section-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 46px rgba(15,23,42,.10);
+      border-color:rgba(148,163,184,.5);
+    }
+    .section-card.active{
+      border-color:rgba(185,28,28,.4);
+      box-shadow:0 26px 58px rgba(185,28,28,.10);
+    }
+    .section-card .inner{padding:18px 18px 17px 20px;position:relative;z-index:1}
+
+    .badge{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#dc2626;
+      color:#f9fafb;
+      border:1px solid rgba(127,29,29,.85);
+      font-size:13px;
+      font-weight:800;
+      box-shadow:0 10px 24px rgba(127,29,29,.35);
+      flex:none;
+    }
+    .section-kicker{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      font-family:"IBM Plex Mono",monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.20em;
+      color:#64748b;
+    }
+    .section-title-main{
+      margin:8px 0 0;
+      padding-top:4px;
+      font-size:20px;
+      line-height:1.2;
+      letter-spacing:-.02em;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .section-sub{margin-top:4px;font-size:13px;color:#64748b;line-height:1.5}
+    .section-pill{
+      display:inline-flex;align-items:center;gap:8px;border-radius:999px;border:1px solid rgba(148,163,184,.40);
+      background:#f9fafb;padding:7px 10px;font-size:11px;color:#475569;margin:10px 0 12px
+    }
+    .section-pill-dot{
+      width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent)
+    }
+    .section-body{font-size:14px;line-height:1.75;color:#334155}
+    .section-body p{margin:0 0 10px}
+
+    .section-card[data-section="1"]::before,.section-card[data-section="1"] .section-pill-dot{background:var(--s1)}
+    .section-card[data-section="2"]::before,.section-card[data-section="2"] .section-pill-dot{background:var(--s2)}
+    .section-card[data-section="3"]::before,.section-card[data-section="3"] .section-pill-dot{background:var(--s3)}
+    .section-card[data-section="4"]::before,.section-card[data-section="4"] .section-pill-dot{background:var(--s4)}
+    .section-card[data-section="5"]::before,.section-card[data-section="5"] .section-pill-dot{background:var(--s5)}
+    .section-card[data-section="6"]::before,.section-card[data-section="6"] .section-pill-dot{background:var(--s6)}
+    .section-card[data-section="7"]::before,.section-card[data-section="7"] .section-pill-dot{background:var(--s7)}
+
+    .section-card.active[data-section="1"]{ background:var(--g1); }
+    .section-card.active[data-section="2"]{ background:var(--g2); }
+    .section-card.active[data-section="3"]{ background:var(--g3); }
+    .section-card.active[data-section="4"]{ background:var(--g4); }
+    .section-card.active[data-section="5"]{ background:var(--g5); }
+    .section-card.active[data-section="6"]{ background:var(--g6); }
+    .section-card.active[data-section="7"]{ background:var(--g7); }
+
+    .section-card.active .section-title-main{color:#0f172a}
+
+    .sidebar{
+      position:sticky;top:18px;display:flex;flex-direction:column;gap:12px
+    }
+    .side-panel{
+      position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.32);border-radius:24px;
+      box-shadow:var(--shadow-soft);padding:16px 15px 14px;
+      background:var(--panel-bg, linear-gradient(145deg,#ffffff,#f9fafb));
+      transition:background .22s ease, transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .side-panel::before{
+      content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--panel-accent, var(--s1))
+    }
+    .side-title{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.20em;color:#64748b;margin:4px 0 8px}
+    .side-main{font-size:19px;font-weight:900;line-height:1.15;letter-spacing:-.02em;color:#0f172a;margin-bottom:8px}
+    .side-body{color:#334155;font-size:13px;line-height:1.65}
+    .side-body a{color:#b91c1c;text-decoration:none}
+    .side-body a:hover{text-decoration:underline}
+    .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .pill{
+      display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(148,163,184,.45);border-radius:999px;padding:7px 10px;
+      background:#f9fafb;font-size:11px;color:#334155
+    }
+    .pill-dot{width:8px;height:8px;border-radius:50%;background:var(--panel-accent, var(--s1))}
+
+    .side-panel[data-active="1"]{--panel-accent:var(--s1);--panel-bg:linear-gradient(135deg, rgba(248,113,113,.16), #ffffff)}
+    .side-panel[data-active="2"]{--panel-accent:var(--s2);--panel-bg:linear-gradient(135deg, rgba(245,158,11,.16), #ffffff)}
+    .side-panel[data-active="3"]{--panel-accent:var(--s3);--panel-bg:linear-gradient(135deg, rgba(59,130,246,.16), #ffffff)}
+    .side-panel[data-active="4"]{--panel-accent:var(--s4);--panel-bg:linear-gradient(135deg, rgba(34,197,94,.16), #ffffff)}
+    .side-panel[data-active="5"]{--panel-accent:var(--s5);--panel-bg:linear-gradient(135deg, rgba(236,72,153,.16), #ffffff)}
+    .side-panel[data-active="6"]{--panel-accent:var(--s6);--panel-bg:linear-gradient(135deg, rgba(99,102,241,.16), #ffffff)}
+    .side-panel[data-active="7"]{--panel-accent:var(--s7);--panel-bg:linear-gradient(135deg, rgba(14,165,233,.16), #ffffff)}
+
+    .nav-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    @media (max-width:980px){.nav-grid{grid-template-columns:1fr}}
+
+    .nav-card{
+      position:relative;border-radius:22px;border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 18px 40px rgba(15,23,42,.55);
+      padding:16px 16px 15px;overflow:hidden;text-decoration:none;color:#f8fafc;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease, color .18s ease;
+      background:
+        linear-gradient(145deg, rgba(2,6,23,.96), rgba(15,23,42,.98)),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.06), transparent 32%);
+    }
+    .nav-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 24px 50px rgba(15,23,42,.78);
+      border-color:rgba(255,255,255,.25);
+      background:
+        linear-gradient(145deg, rgba(15,23,42,.98), rgba(31,41,55,.98)),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 32%);
+    }
+    .nav-card::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--nav-color)}
+    .nav-kicker{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:#cbd5e1;margin-bottom:8px}
+    .nav-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1.15;
+      letter-spacing:-.02em;
+      margin-bottom:8px;
+      color:#dc2626;
+    }
+    .nav-text{font-size:13px;line-height:1.6;color:#dbe4ee;margin-bottom:12px}
+    .nav-meta{display:flex;flex-wrap:wrap;gap:8px}
+    .nav-tag{
+      display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;font-size:11px;
+      border:1px solid rgba(148,163,184,.24);background:rgba(15,23,42,.72);color:#e2e8f0
+    }
+    .nav-tag i{width:8px;height:8px;border-radius:50%;background:var(--nav-color);display:inline-block}
+    .nav-card:nth-child(1){--nav-color:var(--s3)}
+    .nav-card:nth-child(2){--nav-color:var(--s4)}
+    .nav-card:nth-child(3){--nav-color:var(--s6)}
+
+    .footer-note{
+      margin-top:16px;font-size:12px;color:#475569;line-height:1.65;padding:14px 16px;border-radius:18px;
+      border:1px dashed rgba(148,163,184,.55);background:rgba(255,255,255,.9)
+    }
+
+    @media (max-width:760px){
+      .page{width:min(100vw - 18px, 100vw);margin:10px auto 20px}
+      .hero,.content,.side-panel{border-radius:20px}
+      .hero{padding:18px 16px 16px}
+      h1{font-size:30px}
+      .subtitle{font-size:14px}
+      .section-head h2{font-size:20px}
+      .section-card .inner{padding:16px 14px 14px 16px}
+      .nav-title{font-size:16px}
+      .side-main{font-size:17px}
+      .brand{margin-bottom:24px}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">Bioenergía del Perú</span>
+            <span class="brand-tag">Pitahaya · Perú → Suiza</span>
+          </div>
+        </div>
+
+        <div class="kicker">Cadena · Exportación · Piloto</div>
+        <h1>Cadena de suministro <span class="accent">propuesta</span></h1>
+        <div class="subtitle">
+          Gralsen busca diversificar su abastecimiento incorporando origen Perú, y Huaral ofrece una base productiva y operativa con potencial real para ordenar la cadena desde el origen hasta el comprador final.
+        </div>
+
+        <div class="hero-layout">
+          <div class="hero-main">
+            <div class="hero-panel">
+              <div class="hero-panel-label">Lectura inicial</div>
+              <ul class="hero-list">
+                <li><span class="dot"></span><div><strong>Contexto comercial.</strong><span>Gralsen, actual importador de pitahaya desde Ecuador, evalúa Perú como origen complementario para una cadena más organizada.</span></div></li>
+                <li><span class="dot"></span><div><strong>Oportunidad detectada.</strong><span>La visita a Huaral confirmó productores con experiencia, capacidad de expansión y un packing con escala real.</span></div></li>
+                <li><span class="dot"></span><div><strong>Objetivo del modelo.</strong><span>Construir un flujo trazable, controlado y alineado al comprador suizo desde el origen hasta el FOB.</span></div></li>
+              </ul>
+            </div>
+          </div>
+
+          <aside class="hero-visual-card">
+            <div class="hero-visual-image">
+              <div class="hero-visual-image-inner">
+                <img src="https://64.media.tumblr.com/4cac5074a21c9e9d6c53ec2b06c43623/4bdd1267db0993df-c1/s2048x3072/74049ff23fdd64a0ee5f6b9669661ab5c50212dc.jpg" alt="Ilustración pitahaya" />
+              </div>
+            </div>
+            <div class="hero-visual-caption"></div>
+          </aside>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Marco operativo</div>
+          <h2>Del contexto a la propuesta, con una historia clara</h2>
+        </div>
+        <p>
+          El recorrido empieza con la necesidad de Gralsen, sigue con la oportunidad en Huaral y luego aterriza en la propuesta concreta del piloto.
+        </p>
+      </div>
+
+      <div class="section-list" id="sections">
+        <article class="section-card" data-section="1">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">01</span>CONTEXTO Y OPORTUNIDAD</div>
+            <h3 class="section-title-main">Gralsen quiere diversificar su origen</h3>
+            <div class="section-sub">Perú aparece como una alternativa para construir una cadena más organizada que la actual.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>De la dependencia actual a una nueva opción</div>
+            <div class="section-body">
+              <p>Gralsen, actual importador de pitahaya desde Ecuador, ha mostrado interés en diversificar su abastecimiento incorporando origen Perú.</p>
+              <p>El entusiasmo inicial por el mercado peruano se debilitó por la falta de compradores estructurados y una cadena todavía poco organizada.</p>
+              <p>Eso abre una oportunidad real para diseñar un modelo más eficiente, transparente y alineado al comprador suizo desde el inicio.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="2">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">02</span>DESCUBRIMIENTO EN HUARAL</div>
+            <h3 class="section-title-main">La visita cambió la lectura del proyecto</h3>
+            <div class="section-sub">Hay productores, experiencia y un packing que puede convertirse en nodo de consolidación.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Condiciones productivas favorables</div>
+            <div class="section-body">
+              <p>La visita reciente a la zona de Huaral confirmó condiciones productivas favorables, agricultores con experiencia y una infraestructura de packing ya existente.</p>
+              <p>En Huaral existen cerca de 80 hectáreas de pitahaya y una proyección de alrededor de 2,000 toneladas hacia 2025, con una capacidad estimada cercana a 15–20 toneladas por hectárea por campaña.</p>
+              <p>Ese hallazgo cambia el tono de la propuesta: ya no se trata de “buscar fruta”, sino de ordenar una base que ya existe.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="3">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">03</span>MODELO OPERATIVO</div>
+            <h3 class="section-title-main">Torre Blanca como centro de acopio y estandarización</h3>
+            <div class="section-sub">La oferta fragmentada se convierte en un flujo único, controlado y trazable.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Acopio, selección y acondicionamiento</div>
+            <div class="section-body">
+              <p>Se propone implementar un modelo de acopio y estandarización en origen, utilizando el packing Torre Blanca como centro logístico y de acondicionamiento.</p>
+              <p>Torre Blanca pertenece a uno de los principales grupos agroexportadores del Perú, opera desde 2007 y es el mayor de los nueve procesadores del valle de Huaral, con capacidad para alcanzar hasta 90,000 toneladas de fruta fresca refrigerada destinada a exportación.</p>
+              <p>La secuencia es clara: productores entregan fruta, Torre Blanca selecciona, clasifica, enfría y acondiciona según las especificaciones de Gralsen, y luego despacha en camión refrigerado hacia Callao o Jorge Chávez.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="4">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">04</span>INFRAESTRUCTURA Y ACTORES</div>
+            <h3 class="section-title-main">Torre Blanca y los productores del valle</h3>
+            <div class="section-sub">La cadena se apoya en infraestructura real y en un ecosistema agrícola con potencial de crecimiento.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Hub logístico con escala real</div>
+            <div class="section-body">
+              <p>Torre Blanca funciona como planta de procesamiento primario encargada de recepción, selección, desinfección y enfriamiento de fruta, sin realizar transformación industrial.</p>
+              <p>Se complementa con productores con capacidad de expansión de hasta +5 a 8 hectáreas adicionales por productor en algunos casos, con cultivo adaptable a suelos arenosos y laderas y baja demanda hídrica.</p>
+              <p>La productividad estimada en el valle se ubica entre 15 y 25 toneladas por hectárea al año, con disposición del ecosistema local a integrarse en una cadena formal de exportación.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="5">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">05</span>MODELO COMERCIAL Y CONTROL</div>
+            <h3 class="section-title-main">Open-book, con Bioenergía representando al comprador</h3>
+            <div class="section-sub">Aquí se define la transparencia del negocio y quién coordina el proceso en Perú.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Visibilidad total de costos y rendimientos</div>
+            <div class="section-body">
+              <p>Se propone un esquema open-book donde el comprador tenga visibilidad completa del precio pagado al agricultor, mermas, rendimientos reales, costos logísticos y operativos hasta FOB.</p>
+              <p>La facturación FOB queda a nombre de Gralsen, mientras que Bioenergía actúa en el Perú como representante del comprador suizo, coordinando a todos los actores involucrados en el proceso hasta el FOB.</p>
+              <p>El objetivo es construir una relación directa, transparente y técnicamente controlada entre productores, packing y comprador final.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="6">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">06</span>FASE PILOTO Y ESCALAMIENTO</div>
+            <h3 class="section-title-main">Primero validar, luego crecer</h3>
+            <div class="section-sub">El piloto es pequeño a propósito: sirve para aprender sin sobredimensionar.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Pallet aéreo de aproximadamente 500 kg</div>
+            <div class="section-body">
+              <p>Se recomienda iniciar con un embarque piloto aéreo de bajo volumen, equivalente a un pallet de aproximadamente 500 kg, para validar en condiciones reales todo el flujo operativo y comercial.</p>
+              <p>Ese piloto permitirá evaluar cumplimiento de estándares de calidad, homogeneidad de calibres, presentación, cadena de frío, tiempos logísticos, coordinación entre productores, packing y transporte, y desempeño del producto en el mercado de destino.</p>
+              <p>Si la respuesta es positiva, el siguiente paso es ampliar volúmenes e ir hacia exportación marítima para optimizar costos y consolidar oferta.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="section-card" data-section="7">
+          <div class="inner">
+            <div class="section-kicker"><span class="badge">07</span>PRÓXIMO OBJETIVO</div>
+            <h3 class="section-title-main">Costeo completo y validación de oferta disponible</h3>
+            <div class="section-sub">La semana del 15 de junio se reserva solo para cerrar la estructura de costos.</div>
+            <div class="section-pill"><span class="section-pill-dot"></span>Costos + disponibilidad real de fruta</div>
+            <div class="section-body">
+              <p>Durante la semana del 15 de junio, el trabajo se concentra exclusivamente en completar la estructura de costos del piloto.</p>
+              <p>En las semanas siguientes, se requiere una exploración de campo con movilidad para estimar cuántas hectáreas de pitahaya siguen sembradas en Huaral, Huaura, Chancay y Sayán, y cuánto volumen real queda por cosechar.</p>
+              <p>Con esa información se podrá determinar si el piloto existe solo en papel o si realmente puede ejecutarse con fruta disponible.</p>
+              <p>También se debe definir un acuerdo entre Gralsen y Bioenergía del Perú como agente, con un honorario fijo en esta primera etapa del 01 al 07 y una parte variable a partir de la exportación.</p>
+              <p>Además, se contempla la visita de JJ para acompañar la llegada del piloto, con el objetivo de aprender cómo debe arribar la fruta y ajustar el proceso operativo.</p>
+              <p><strong>Finalmente, se debe programar la visita del inspector suizo de Gralsen a Huaral.</strong></p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="nav-grid">
+        <a class="nav-card" href="huaral.html">
+          <div class="nav-kicker">Página 1</div>
+          <div class="nav-title">Mapa Lima-Norte</div>
+          <div class="nav-text">Visualiza el flujo territorial y operativo desde Huaral hacia el nodo de exportación.</div>
+          <div class="nav-meta"><span class="nav-tag"><i></i>Mapa</span><span class="nav-tag"><i></i>Ruta</span></div>
+        </a>
+
+        <a class="nav-card" href="pilotoPitahaya.html">
+          <div class="nav-kicker">Página 2</div>
+          <div class="nav-title">Piloto</div>
+          <div class="nav-text">Presenta la prueba aérea de 500 kg como validación operativa y comercial.</div>
+          <div class="nav-meta"><span class="nav-tag"><i></i>500 kg</span><span class="nav-tag"><i></i>Validación</span></div>
+        </a>
+
+        <a class="nav-card" href="flujo.html">
+          <div class="nav-kicker">Página 3</div>
+          <div class="nav-title">Flujo</div>
+          <div class="nav-text">Describe el proceso paso a paso desde productores hasta la recepción del comprador.</div>
+          <div class="nav-meta"><span class="nav-tag"><i></i>Proceso</span><span class="nav-tag"><i></i>Etapas</span></div>
+        </a>
+      </div>
+
+      <div class="footer-note">
+        El orden narrativo está pensado para que primero se entienda el problema, luego la oportunidad y solo después la solución operativa.
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <section class="side-panel" id="side-context" data-active="1">
+        <div class="side-title">Bloque activo</div>
+        <div class="side-main" id="side-main">01 · Contexto y oportunidad</div>
+        <div class="side-body" id="side-body">
+          Gralsen busca diversificar origen y el interés en Perú aparece como una respuesta a una cadena aún poco organizada. <a href="https://gestion.pe/economia/empresas/pitahaya-el-rentable-fruto-que-crece-en-huaral-y-que-ya-se-proyecta-exportar-en-el-2025-noticia/" target="_blank" rel="noopener">Ver referencia de Huaral</a>.
+        </div>
+        <div class="chip-row" id="side-chips">
+          <span class="pill"><span class="pill-dot"></span>Gralsen</span>
+          <span class="pill"><span class="pill-dot"></span>Perú</span>
+          <span class="pill"><span class="pill-dot"></span>Huaral</span>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <script>
+    const sideMain  = document.getElementById('side-main');
+    const sideBody  = document.getElementById('side-body');
+    const sideChips = document.getElementById('side-chips');
+    const sideContext = document.getElementById('side-context');
+
+    const sideContent = {
+      1: { title:'01 · Contexto y oportunidad', body:'Gralsen busca diversificar origen y el interés en Perú aparece como una respuesta a una cadena aún poco organizada. <a href="https://gestion.pe/economia/empresas/pitahaya-el-rentable-fruto-que-crece-en-huaral-y-que-ya-se-proyecta-exportar-en-el-2025-noticia/" target="_blank" rel="noopener">Ver referencia de Huaral</a>.', chips:['Gralsen','Origen Perú','Ecuador'] },
+      2: { title:'02 · Descubrimiento en Huaral', body:'La visita mostró productores con experiencia, potencial de expansión y un packing que puede ordenar la oferta. <a href="https://gestion.pe/economia/empresas/pitahaya-el-rentable-fruto-que-crece-en-huaral-y-que-ya-se-proyecta-exportar-en-el-2025-noticia/" target="_blank" rel="noopener">Ver interés empresarial</a>.', chips:['Huaral','Productores','Packing'] },
+      3: { title:'03 · Modelo operativo', body:'Torre Blanca funciona como hub de recepción, selección, enfriamiento y acondicionamiento bajo estándares del comprador. <a href="https://andina.pe/agencia/noticia-torre-blanca-invierte-s-24-millones-para-ampliar-planta-frutas-y-hortalizas-huaral-351409.aspx" target="_blank" rel="noopener">Torre Blanca</a>.', chips:['Torre Blanca','Acopio','Cadena de frío'] },
+      4: { title:'04 · Infraestructura y actores', body:'La propuesta se apoya en infraestructura real y en un ecosistema agrícola con espacio para crecer. <a href="https://zoomempresarial.pe/2021/06/28/procesadora-peruana-torre-blanca-impulsa-exportacion-de-fruta-a-paises-asiaticos/" target="_blank" rel="noopener">Ver capacidad exportadora</a>.', chips:['Torre Blanca','Productores','Valle'] },
+      5: { title:'05 · Modelo comercial', body:'El esquema open-book da visibilidad completa sobre precios, mermas, costos y FOB. <a href="https://www.torre-blanca.net/" target="_blank" rel="noopener">Torre Blanca</a>.', chips:['Open-book','FOB','Bioenergía'] },
+      6: { title:'06 · Fase piloto', body:'El embarque de 500 kg sirve para validar calidad, coordinación y desempeño en destino antes de escalar. <a href="https://www.inia.gob.pe/wp-content/uploads/2020/01/Pitahaya.pdf" target="_blank" rel="noopener">Ver ficha técnica pitahaya</a>.', chips:['Piloto','500 kg','Validación'] },
+      7: { title:'07 · Próximo objetivo', body:'Durante la semana del 15 de junio solo se cierra la estructura de costos; luego se validará la oferta real en campo en Huaral, Huaura, Chancay y Sayán. <a href="https://gestion.pe/economia/empresas/pitahaya-el-rentable-fruto-que-crece-en-huaral-y-que-ya-se-proyecta-exportar-en-el-2025-noticia/" target="_blank" rel="noopener">Ver proyección de volumen</a>.', chips:['Costeo FOB','Campo','Oferta real'] }
+    };
+
+    function updateSidebar(id){
+      const data = sideContent[id];
+      if(!data) return;
+      sideMain.textContent = data.title;
+      sideBody.innerHTML = data.body;
+      sideChips.innerHTML = '';
+      data.chips.forEach(label => {
+        const span = document.createElement('span');
+        span.className = 'pill';
+        span.innerHTML = `<span class="pill-dot"></span>${label}`;
+        sideChips.appendChild(span);
+      });
+      sideContext.setAttribute('data-active', String(id));
+    }
+
+    function setActiveCard(id){
+      document.querySelectorAll('.section-card').forEach(card => {
+        card.classList.toggle('active', card.dataset.section === String(id));
+      });
+    }
+
+    document.querySelectorAll('.section-card').forEach(card => {
+      const id = card.dataset.section;
+      card.addEventListener('mouseenter', () => { setActiveCard(id); updateSidebar(id); });
+      card.addEventListener('click', () => { setActiveCard(id); updateSidebar(id); card.scrollIntoView({ behavior:'smooth', block:'center' }); });
+    });
+
+    setActiveCard(1);
+    updateSidebar(1);
+  </script>
+</body>
+</html>

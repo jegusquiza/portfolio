@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bioenergía del Perú</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <style>
+    :root{
+      --bg:#eef4ec;
+      --bg2:#e5efe0;
+      --ink:#0f172a;
+      --muted:#5c6b5e;
+      --line:rgba(15,23,42,.10);
+      --white:#ffffff;
+      --green-1:#0f6b45;
+      --green-2:#2b8a57;
+      --green-3:#58b06a;
+      --green-4:#b9df9f;
+      --green-5:#e4f4d7;
+      --olive:#7a8b48;
+      --earth:#b86a3b;
+      --orange:#d8782c;
+      --red:#a61d24;
+      --blue:#345b93;
+      --shadow:0 28px 80px rgba(10,30,20,.14);
+      --shadow-soft:0 12px 28px rgba(10,30,20,.08);
+      --radius:32px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:98px}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(88,176,106,.18), transparent 18%),
+        radial-gradient(circle at 92% 2%, rgba(216,120,44,.10), transparent 16%),
+        linear-gradient(180deg,#f8fbf7 0%, var(--bg) 40%, var(--bg2) 100%);
+      overflow-x:hidden;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    .page{width:100%;margin:0;min-height:100vh}
+
+    .nav{
+      position:fixed;top:14px;left:50%;transform:translateX(-50%);
+      width:min(98%, calc(100vw - 26px));z-index:60;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 14px;border-radius:999px;background:rgba(15,23,42,.50);
+      border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(18px);
+      box-shadow:0 18px 36px rgba(10,20,15,.22);
+      transition:transform .3s ease, opacity .3s ease, background .3s ease;
+    }
+    .nav-left{display:flex;align-items:center;gap:12px;min-width:0}
+    .nav-mark{
+      width:110px;height:44px;border-radius:12px;overflow:hidden;background:#fff;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 24px rgba(0,0,0,.16);flex:none;
+    }
+    .nav-mark img{max-width:110%;max-height:110%;object-fit:contain}
+    .nav-copy{display:flex;flex-direction:column;gap:1px;min-width:0}
+    .nav-name{
+      font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;
+      text-transform:uppercase;color:#fff;font-weight:700;white-space:nowrap;
+    }
+    .nav-tag{
+      font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;
+      text-transform:uppercase;color:rgba(255,255,255,.68);white-space:nowrap;
+    }
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav-links a{
+      font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
+      text-transform:uppercase;color:#fff;padding:9px 11px;border-radius:999px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);
+      transition:background .18s ease, transform .18s ease, border-color .18s ease;
+    }
+    .nav-links a:hover{background:rgba(255,255,255,.14);transform:translateY(-1px);border-color:rgba(255,255,255,.18)}
+
+    .particles-container{
+      position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
+      opacity:.45;mix-blend-mode:screen;
+    }
+
+    .hero{
+      position:relative;min-height:100vh;width:100%;overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(10,30,20,.06), rgba(10,30,20,.20)),
+        url('https://64.media.tumblr.com/4b2f7cd262bec84b76498cf2e1a870b5/a01bd0ac5ae6cd7b-ea/s2048x3072/4a4153944ea095693d64a2ce2c9a5bd3def22d81.jpg') center/cover no-repeat;
+      box-shadow:var(--shadow);
+    }
+    .hero::before{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 25% 18%, rgba(255,255,255,.14), transparent 22%),
+        linear-gradient(90deg, rgba(8,20,12,.42) 0%, rgba(8,20,12,.18) 45%, rgba(8,20,12,.06) 100%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      position:relative;z-index:1;min-height:100vh;padding:110px 24px 24px;
+      display:flex;flex-direction:column;justify-content:space-between;width:100%;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,1fr);
+      gap:18px;align-items:stretch;width:100%;
+    }
+    .hero-copy{max-width:900px;padding-top:10px}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+      font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.24em;
+      text-transform:uppercase;color:rgba(255,255,255,.84);
+      opacity:0;transform:translateY(-10px);animation:fadeInUp .8s ease forwards;
+    }
+    .eyebrow::before{content:"";width:36px;height:1px;background:rgba(255,255,255,.58)}
+    h1{
+      margin:0;font-size:clamp(50px, 7.2vw, 98px);line-height:.92;letter-spacing:-.065em;color:#fff;
+      max-width:11ch;text-wrap:balance;text-shadow:0 16px 40px rgba(0,0,0,.22);
+      opacity:0;transform:translateY(20px);animation:fadeInUp 1s ease .2s forwards;
+    }
+    .hero-copy p{
+      margin:18px 0 0;max-width:760px;font-size:18px;line-height:1.86;color:rgba(255,255,255,.84);
+      opacity:0;transform:translateY(20px);animation:fadeInUp 1s ease .4s forwards;
+    }
+    .hero-actions{
+      display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;opacity:0;transform:translateY(20px);
+      animation:fadeInUp 1s ease .6s forwards;
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:999px;
+      font-size:13px;font-weight:700;transition:transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+    }
+    .btn:hover{transform:translateY(-3px) scale(1.02)}
+    .btn-primary{background:#fff;color:#0f172a;border:1px solid rgba(255,255,255,.92);box-shadow:0 8px 24px rgba(255,255,255,.2)}
+    .btn-secondary{color:#fff;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);backdrop-filter:blur(12px)}
+
+    .hero-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:26px;max-width:980px}
+    .strip-card{
+      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);
+      border-radius:24px;padding:16px 16px 15px;color:#fff;transition:transform .3s ease, box-shadow .3s ease;
+      opacity:0;transform:translateY(30px);
+    }
+    .strip-card:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 20px 40px rgba(0,0,0,.18)}
+    .strip-card.animate{animation:fadeInUp .6s ease forwards}
+    .strip-card:nth-child(1){animation-delay:.8s}
+    .strip-card:nth-child(2){animation-delay:1s}
+    .strip-card:nth-child(3){animation-delay:1.2s}
+    .strip-num{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-bottom:8px}
+    .strip-title{font-size:17px;font-weight:800;line-height:1.2;margin-bottom:8px;letter-spacing:-.03em}
+    .strip-text{font-size:13px;line-height:1.65;color:rgba(255,255,255,.78)}
+
+    .hero-panel{
+      align-self:stretch;min-height:100%;
+      border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.14);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08)),
+        radial-gradient(circle at 20% 20%, rgba(88,176,106,.16), transparent 30%),
+        rgba(14,20,16,.18);
+      backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.16);
+      padding:14px;display:flex;flex-direction:column;align-items:center;gap:12px;height:100%;
+      opacity:0;transform:translateX(30px);animation:fadeInLeft 1s ease .6s forwards;
+    }
+    .hero-panel-logo{
+      width:100%;height:180px;
+      background:
+        linear-gradient(180deg, rgba(10,30,20,.04), rgba(10,30,20,.10)),
+        url('https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj') center/contain no-repeat;
+      background-color:rgba(255,255,255,.92);border-radius:22px;border:1px solid rgba(255,255,255,.12);flex:none;
+    }
+    .hero-panel-text{
+      width:100%;color:#fff;background:rgba(15,23,42,.26);border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);border-radius:18px;padding:14px 14px 13px;flex:none;
+    }
+    .hero-panel-text .small{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:6px}
+    .hero-panel-text .big{font-size:16px;font-weight:800;line-height:1.25;letter-spacing:-.03em}
+    .hero-pills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;flex:none}
+    .pill-box{
+      border-radius:20px;padding:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);
+      color:#fff;transition:transform .2s ease, background .2s ease;
+    }
+    .pill-box:hover{transform:translateY(-3px);background:rgba(255,255,255,.16)}
+    .pill-k{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.66);margin-bottom:6px}
+    .pill-v{font-size:14px;line-height:1.45;font-weight:700}
+    .hero-panel-img{
+      width:100%;flex:1 1 auto;min-height:0;border-radius:20px;overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.08)),
+        url('https://64.media.tumblr.com/95742ada4ded7150971f001eed746b49/a01bd0ac5ae6cd7b-f2/s2048x3072/6427836b19906dcff046510f0cfa5a561316adf2.jpg') center/cover no-repeat;
+      border:1px solid rgba(255,255,255,.12);transition:transform .6s ease;position:relative;
+    }
+    .hero-panel-img:hover{transform:scale(1.01)}
+    .hero-panel-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.12))}
+
+    .section{
+      margin:0;width:100%;overflow:hidden;box-shadow:var(--shadow);border:none;
+      background:rgba(255,255,255,.82);opacity:0;transform:translateY(50px);
+    }
+    .section.animate{animation:fadeInUp 1s ease forwards}
+    .section-wide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:14px}
+    .section-wide-img{
+      border-radius:24px;overflow:hidden;min-height:320px;background:#ddd center/cover no-repeat;
+      transition:transform .6s ease;position:relative;
+    }
+    .section-wide-img:hover{transform:scale(1.03)}
+    .section-wide-img::after{
+      content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.10));
+    }
+    .section-wide-label{
+      position:absolute;bottom:12px;left:14px;font-family:"IBM Plex Mono",monospace;font-size:10px;
+      letter-spacing:.18em;text-transform:uppercase;color:#fff;background:rgba(15,23,42,.6);
+      padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
+    }
+
+    .section-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);align-items:stretch;width:100%}
+    .section-reverse .section-inner{grid-template-columns:minmax(320px,.9fr) minmax(0,1.1fr)}
+    .section-media{
+      position:relative;min-height:520px;background:#ddd center/cover no-repeat;transition:transform .6s ease;
+    }
+    .section-media:hover{transform:scale(1.02)}
+    .section-media::after{
+      content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,30,20,.03), rgba(10,30,20,.14));pointer-events:none;
+    }
+    .section-content{
+      padding:44px 42px 42px;display:flex;flex-direction:column;justify-content:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(244,242,236,.98));
+    }
+    .section-kicker{
+      font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#6b7280;margin-bottom:12px;
+    }
+    .section h2{
+      margin:0;font-size:clamp(28px, 3.4vw, 56px);line-height:1.02;letter-spacing:-.05em;color:#0f172a;text-wrap:balance;
+    }
+    .section p{
+      margin:16px 0 0;font-size:15px;line-height:1.9;color:#475569;max-width:720px;
+    }
+    .fact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
+    .fact{
+      position:relative;padding:16px 16px 15px;border-radius:22px;background:#fff;border:1px solid rgba(148,163,184,.18);
+      box-shadow:var(--shadow-soft);overflow:hidden;transition:transform .3s ease, box-shadow .3s ease;
+    }
+    .fact:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 20px 40px rgba(0,0,0,.15)}
+    .fact::before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--fact-color);transition:width .3s ease;
+    }
+    .fact:hover::before{width:8px}
+    .fact-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b7280;margin-left:8px;margin-bottom:8px}
+    .fact-value{font-size:16px;line-height:1.35;font-weight:800;color:#0f172a;margin-left:8px}
+    .fact-text{margin-top:8px;margin-left:8px;font-size:13px;line-height:1.65;color:#64748b}
+    .fact.f1{--fact-color:var(--green-2)}
+    .fact.f2{--fact-color:var(--green-3)}
+    .fact.f3{--fact-color:var(--blue)}
+    .fact.f4{--fact-color:var(--orange)}
+    .quote-band{
+      padding:20px 22px;margin:18px 0 0;border-radius:26px;
+      background:linear-gradient(135deg, rgba(43,138,87,.14), rgba(184,106,59,.08), rgba(53,91,147,.06));
+      border:1px solid rgba(148,163,184,.18);color:#0f172a;font-size:15px;line-height:1.8;
+      transition:transform .3s ease;
+    }
+    .quote-band:hover{transform:scale(1.01)}
+    .stats-band{margin-top:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .stat{
+      border-radius:24px;padding:18px;background:linear-gradient(180deg,#fff,#f8faf6);
+      border:1px solid rgba(148,163,184,.18);box-shadow:var(--shadow-soft);transition:transform .3s ease, box-shadow .3s ease;
+    }
+    .stat:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 20px 40px rgba(0,0,0,.15)}
+    .stat-num{font-size:28px;font-weight:900;letter-spacing:-.04em;color:var(--green-1);line-height:1}
+    .stat-label{margin-top:8px;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#6b7280}
+    .stat-text{margin-top:8px;font-size:13px;line-height:1.65;color:#53605a}
+
+    .closing{
+      margin:0;width:100%;overflow:hidden;
+      background:linear-gradient(180deg, rgba(9,30,18,.94), rgba(8,20,12,.98)), radial-gradient(circle at 20% 20%, rgba(88,176,106,.12), transparent 22%);
+      color:#fff;box-shadow:var(--shadow);border:none;opacity:0;transform:translateY(50px);
+    }
+    .closing.animate{animation:fadeInUp 1s ease forwards}
+    .closing-inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);align-items:stretch;width:100%}
+    .closing-copy{padding:42px;display:flex;flex-direction:column;justify-content:center}
+    .closing-copy .section-kicker{color:rgba(255,255,255,.68)}
+    .closing-copy h2{color:#fff}
+    .closing-copy p{color:rgba(255,255,255,.80)}
+    .closing-card{
+      padding:42px;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 34%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:center;gap:14px;
+    }
+    .closing-stat{
+      padding:18px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+      transition:transform .3s ease, background .3s ease;
+    }
+    .closing-stat:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
+    .closing-stat strong{display:block;font-size:18px;line-height:1.2;margin-bottom:5px}
+    .closing-stat span{display:block;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65}
+
+    .contacto{
+      margin:0;width:100%;overflow:hidden;
+      background:linear-gradient(180deg, rgba(15,23,42,.96), rgba(8,20,12,.98)), radial-gradient(circle at 80% 30%, rgba(88,176,106,.14), transparent 25%);
+      color:#fff;box-shadow:var(--shadow);border:none;opacity:0;transform:translateY(50px);
+    }
+    .contacto.animate{animation:fadeInUp 1s ease forwards}
+    .contacto-inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,1fr);align-items:stretch;width:100%}
+    .contacto-copy{padding:42px;display:flex;flex-direction:column;justify-content:center}
+    .contacto-copy .section-kicker{color:rgba(255,255,255,.68)}
+    .contacto-copy h2{color:#fff}
+    .contacto-copy p{color:rgba(255,255,255,.80)}
+    .contacto-oficinas{
+      padding:42px;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.06), transparent 28%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:center;gap:18px;
+    }
+    .contacto-oficina{
+      padding:20px;border-radius:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+      transition:transform .3s ease, background .3s ease;display:flex;align-items:flex-start;gap:14px;
+    }
+    .contacto-oficina:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
+    .contacto-icon{
+      width:40px;height:40px;min-width:40px;border-radius:10px;background:rgba(88,176,106,.16);border:1px solid rgba(88,176,106,.24);
+      display:flex;align-items:center;justify-content:center;font-size:18px;color:#58b06a;
+    }
+    .contacto-oficina-info strong{display:block;font-size:16px;line-height:1.3;margin-bottom:6px;color:#fff}
+    .contacto-oficina-info span{display:block;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65}
+    .footer{margin:0;padding:16px 18px 18px;color:#607063;font-size:12px;line-height:1.7;text-align:center;width:100%}
+
+    .media-a{background:linear-gradient(180deg, rgba(10,30,20,.04), rgba(10,30,20,.14)),url('https://64.media.tumblr.com/09642103ed7a0e913ae525a6e4c5eb67/a01bd0ac5ae6cd7b-f2/s2048x3072/6b0e1ccfd83cb4bd79b76a66dee740512aa1174e.jpg') center/cover no-repeat}
+    .media-b{background:linear-gradient(180deg, rgba(10,30,20,.03), rgba(10,30,20,.10)),url('https://64.media.tumblr.com/713be91e1b82917210232372dd68747a/2c9c1176eb310dd1-1e/s2048x3072/1d45aa565fe83d8fa80054dde628853e7dcb3bbd.jpg') center/cover no-repeat !important;background-color:#edf5e8 !important}
+    .media-c{background:linear-gradient(180deg, rgba(10,30,20,.03), rgba(10,30,20,.12)),url('https://64.media.tumblr.com/8cda7a968873671eafa3b5e93e14e178/2c9c1176eb310dd1-9a/s2048x3072/3e4342fc17ee9ba09d54223c3e154c4d5e418299.jpg') center/cover no-repeat}
+    .media-desierto{background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.08)),url('https://64.media.tumblr.com/759925d089f0283fc95d4e59dc5d9b6f/941b0d395f181784-17/s2048x3072/6e0ccdd8c4961784cd73902e80196c558e70505f.jpg') center/cover no-repeat}
+    .media-trabajo{background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.08)),url('https://64.media.tumblr.com/8ae1b640fc41b0be1e7f5c8c8e7172d3/2c9c1176eb310dd1-18/s2048x3072/bc62524b82eeb1d69f88294e3f72f01fc4d2e16b.jpg') center/cover no-repeat}
+    .media-verde{background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.08)),url('https://64.media.tumblr.com/d65d20e3cc454dfc733e2cf7c7e9a188/da39c270a3397938-29/s2048x3072/daf735fce5345d5db3932be2c88e481ea7af5f0c.jpg') center/cover no-repeat}
+    .media-frutas{background:linear-gradient(180deg, rgba(10,30,20,.02), rgba(10,30,20,.08)),url('https://64.media.tumblr.com/bc1dce2b8b112522254316bbf8c650c9/4ac1e1febc36530f-e2/s2048x3072/7b55f5d36ed0bb29c4ffd890f7f9b2409fef5a30.jpg') center/cover no-repeat}
+
+    .media-float{
+      position:absolute;right:20px;bottom:20px;width:min(240px, 40vw);padding:14px;border-radius:22px;
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px);
+      color:#fff;z-index:2;transition:transform .3s ease;
+    }
+    .media-float:hover{transform:translateY(-3px)}
+    .media-float .small{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:6px}
+    .media-float .big{font-size:16px;font-weight:800;line-height:1.25;letter-spacing:-.03em}
+
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeInLeft{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+    @media (max-width:980px){
+      .nav{top:10px;border-radius:24px;align-items:flex-start;flex-direction:column}
+      .nav-links{justify-content:flex-start}
+      .hero{min-height:auto}
+      .hero-inner{min-height:auto;padding-top:120px}
+      .hero-grid,.section-inner,.section-reverse .section-inner,.closing-inner,.contacto-inner{grid-template-columns:1fr}
+      .hero-panel{height:auto}
+      .hero-strip{grid-template-columns:1fr}
+      .stats-band{grid-template-columns:1fr}
+      .section-wide{grid-template-columns:1fr}
+      .section-media{min-height:300px}
+      .section-content,.closing-copy,.closing-card,.contacto-copy,.contacto-oficinas{padding:28px 22px}
+      .fact-grid{grid-template-columns:1fr}
+      .hero-panel-img{min-height:180px}
+    }
+
+    @media (max-width:720px){
+      .page{width:100vw}
+      .hero,.section,.closing,.contacto{border-radius:0}
+      .hero-inner{padding:104px 16px 16px}
+      h1{font-size:42px}
+      .hero-copy p{font-size:16px}
+      .nav-mark{width:96px;height:40px}
+      .nav-links a{padding:8px 10px}
+      .section h2{font-size:34px}
+      .hero-panel-img{min-height:160px}
+    }
+  </style>
+</head>
+<body>
+  <div class="particles-container" id="particles"></div>
+
+  <div class="nav">
+    <div class="nav-left">
+      <div class="nav-mark">
+        <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+      </div>
+      <div class="nav-copy">
+        <div class="nav-name">Bioenergía del Perú</div>
+        <div class="nav-tag">Learn · Share · Act </div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#historia">Historia</a>
+      <a href="#territorio">Territorio</a>
+      <a href="#frutas">Frutas</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </div>
+
+  <div class="page">
+    <header class="hero">
+      <div class="hero-inner">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="eyebrow">Perú · origen · sostenibilidad</div>
+            <h1>Conectamos el potencial del Perú con los mercados del mundo</h1>
+            <p>
+              Nacimos en energía renovable y hoy abrimos una nueva etapa en frutas procesadas.
+              Bioenergía del Perú une territorio, experiencia exportadora y visión internacional para llevar productos peruanos de calidad a mercados exigentes.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#historia">Explorar la historia</a>
+              <a class="btn btn-secondary" href="#frutas">Ver la nueva etapa</a>
+            </div>
+
+            <div class="hero-strip">
+              <div class="strip-card">
+                <div class="strip-num">25+ años</div>
+                <div class="strip-title">Trayectoria en el territorio</div>
+                <div class="strip-text">Más de dos décadas trabajando sobre la costa peruana y su potencial productivo.</div>
+              </div>
+              <div class="strip-card">
+                <div class="strip-num">2001</div>
+                <div class="strip-title">Inicio de operaciones</div>
+                <div class="strip-text">Acompañamos la transformación de tierras áridas en campos productivos.</div>
+              </div>
+              <div class="strip-card">
+                <div class="strip-num">Hoy</div>
+                <div class="strip-title">Nueva etapa agroexportadora</div>
+                <div class="strip-text">Frutas frescas, congeladas y deshidratadas con raíz peruana y destino global.</div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <div class="hero-panel-logo"></div>
+            <div class="hero-panel-text">
+              <div class="small">Bioenergía del Perú</div>
+              <div class="big">Territorio, sostenibilidad y una nueva economía exportadora</div>
+            </div>
+
+            <div class="hero-pills">
+              <div class="pill-box"><div class="pill-k">Base</div><div class="pill-v">Gestión, comercialización y operación durante todo el año</div></div>
+              <div class="pill-box"><div class="pill-k">Enfoque</div><div class="pill-v">Productos peruanos de calidad con trazabilidad</div></div>
+              <div class="pill-box"><div class="pill-k">Mercado</div><div class="pill-v">Destinos internacionales exigentes</div></div>
+              <div class="pill-box"><div class="pill-k">Evolución</div><div class="pill-v">Frutas frescas, congeladas y deshidratadas</div></div>
+            </div>
+
+            <div class="hero-panel-img"></div>
+          </aside>
+        </div>
+      </div>
+    </header>
+
+    <section class="section" id="historia">
+      <div class="section-inner">
+        <div class="section-content">
+          <div class="section-kicker">Nuestra historia</div>
+          <h2>Energías renovables: transformar el desierto para la agricultura global</h2>
+          <p>En Bioenergía del Perú llevamos más de 25 años impulsando el desarrollo de energías renovables en el país. Desde 2001 hemos acompañado la transformación de tierras áridas de la costa peruana en áreas agrícolas productivas, incorporando tecnología internacional y conectando esta producción con la industria global de biocombustibles.</p>
+          <p style="margin-top:12px">Nos especializamos en la gestión y comercialización de bioetanol, operando durante todo el año bajo estándares y certificaciones que respaldan la reducción real de emisiones de gases de efecto invernadero.</p>
+          <p style="margin-top:12px">Trabajamos para conectar la producción sostenible con los mercados que demandan energías renovables, garantizando trazabilidad, eficiencia y cumplimiento ambiental en cada etapa de la cadena.</p>
+          <div class="fact-grid">
+            <div class="fact f1"><div class="fact-label">Transformación</div><div class="fact-value">Desierto → Campos</div><div class="fact-text">Tierras áridas convertidas en áreas productivas para agricultura y etanol.</div></div>
+            <div class="fact f2"><div class="fact-label">Mercado</div><div class="fact-value">Europa</div><div class="fact-text">Exportamos bioetanol a Europa cumpliendo estándares ambientales exigentes.</div></div>
+            <div class="fact f3"><div class="fact-label">Operación</div><div class="fact-value">Todo el año</div><div class="fact-text">Gestión y comercialización continua con certificaciones de emisiones.</div></div>
+            <div class="fact f4"><div class="fact-label">Desde</div><div class="fact-value">2009</div><div class="fact-text">Perú exporta bioetanol con estándares ambientales verificables.</div></div>
+          </div>
+        </div>
+        <div class="section-media media-a"></div>
+      </div>
+    </section>
+
+    <section class="section section-reverse" id="territorio">
+      <div class="section-inner">
+        <div class="section-media media-desierto"></div>
+        <div class="section-content">
+          <div class="section-kicker">Territorio Perú</div>
+          <h2>Un desierto único: invernadero natural de Sudamérica</h2>
+          <p>El Perú, ubicado en la costa occidental de Sudamérica, posee una de las costas más extraordinarias del mundo: un desierto único moldeado por la corriente de Humboldt, la cordillera de los Andes y un clima excepcional que lo convierte en un verdadero invernadero natural.</p>
+          <p style="margin-top:12px">Más horas de luz, temperaturas estables y condiciones ideales permiten una agricultura altamente eficiente durante gran parte del año.</p>
+          <div class="quote-band">De esa costa salió nuestra historia. Ese desierto es el origen de Bioenergía del Perú.</div>
+          <div class="stats-band">
+            <div class="stat"><div class="stat-num">Humboldt</div><div class="stat-label">corriente</div><div class="stat-text">Moldea el clima del desierto costero peruano.</div></div>
+            <div class="stat"><div class="stat-num">Andes</div><div class="stat-label">cordillera</div><div class="stat-text">Crea condiciones excepcionales para agricultura.</div></div>
+            <div class="stat"><div class="stat-num">365</div><div class="stat-label">días</div><div class="stat-text">Agricultura eficiente durante gran parte del año.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:rgba(244,242,236,.98)">
+      <div class="section-inner">
+        <div class="section-content">
+          <div class="section-kicker">Paisaje productivo</div>
+          <h2>Del terreno árido al campo verde</h2>
+          <p>Lo que alguna vez fue desierto hoy es tierra productiva.
+
+Gracias a la tecnología, el riego por goteo y una gestión eficiente de los recursos hídricos, extensas áreas áridas de la costa peruana se han transformado en campos de alto rendimiento. Una transformación que impulsa la agricultura, genera oportunidades y demuestra el extraordinario potencial de este territorio.</p>
+        </div>
+        <div class="section-media media-c"></div>
+      </div>
+    </section>
+
+    <section class="section" style="background:rgba(244,242,236,.98)">
+      <div class="section-wide">
+        <div class="section-wide-img media-b">
+          <div class="section-wide-label">Riego por goteo</div>
+        </div>
+        <div class="section-wide-img media-trabajo">
+          <div class="section-wide-label">Tierra siendo trabajada</div>
+        </div>
+        <div class="section-wide-img media-verde">
+          <div class="section-wide-label">Campo verde productivo</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="frutas">
+      <div class="section-inner">
+        <div class="section-media media-frutas">
+          <div class="media-float">
+            <div class="small">Nueva etapa</div>
+            <div class="big">Frutas peruanas con raíz local y destino global</div>
+          </div>
+        </div>
+        <div class="section-content">
+          <div class="section-kicker">Nueva etapa</div>
+          <h2>Frutas peruanas con raíz local y destino global</h2>
+          <p>Nuestro equipo trae décadas de trabajo en sectores exportadores como pesca y agroindustria, incluyendo harina de pescado, productos del mar congelados y mango IQF. Ese recorrido nos enseñó a manejar calidad, logística y mercados muy específicos.</p>
+          <div class="fact-grid">
+            <div class="fact f2"><div class="fact-label">Productos</div><div class="fact-value">Frescos, congelados y deshidratados</div><div class="fact-text">Una oferta diversificada para distintos canales y mercados.</div></div>
+            <div class="fact f1"><div class="fact-label">Origen</div><div class="fact-value">Raíz peruana</div><div class="fact-text">Historia, territorio y productividad convertidos en propuesta comercial.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" id="visión">
+      <div class="closing-inner">
+        <div class="closing-copy">
+          <div class="section-kicker">Visión</div>
+          <h2>Conectamos el potencial del Perú con los mercados del mundo</h2>
+          <p>Bioenergía del Perú evoluciona sin perder su esencia: rigor operativo, visión internacional y compromiso con el origen. Hoy esa base impulsa una nueva etapa en alimentos peruanos de calidad.</p>
+        </div>
+        <div class="closing-card">
+          <div class="closing-stat"><strong>Energía renovable</strong><span>Una historia construida sobre sostenibilidad, gestión y operación.</span></div>
+          <div class="closing-stat"><strong>Agroexportación</strong><span>Una nueva etapa enfocada en frutas peruanas con trazabilidad y valor agregado.</span></div>
+          <div class="closing-stat"><strong>Mercado global</strong><span>Un puente entre el potencial del Perú y compradores internacionales.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+      <div class="contacto-inner">
+        <div class="contacto-copy">
+          <div class="section-kicker">Contacto</div>
+          <h2>Estamos en dos continentes</h2>
+          <p>Bioenergía del Perú conecta América y Europa con oficinas estratégicas en Lima y Barcelona. Estamos cerca de nuestros mercados para gestionar operaciones de forma trazable y sostenible.</p>
+        </div>
+        <div class="contacto-oficinas">
+          <div class="contacto-oficina">
+            <div class="contacto-icon">🇵🇪</div>
+            <div class="contacto-oficina-info">
+              <strong>Lima, Perú</strong>
+              <span>Alcanfores 1245, Miraflores</span>
+              <span style="margin-top:4px">Telf: +51998256656</span>
+            </div>
+          </div>
+          <div class="contacto-oficina">
+            <div class="contacto-icon">🇪🇸</div>
+            <div class="contacto-oficina-info">
+              <strong>Barcelona, España</strong>
+              <span>Ramon Turró 294, Sant Martí</span>
+              <span style="margin-top:4px">+34637612624</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">Bioenergía del Perú · Energía renovable · Agroexportación · Perú</div>
+  </div>
+
+  <script>
+    const width = window.innerWidth, height = window.innerHeight;
+    const svg = d3.select('#particles').append('svg').attr('width', width).attr('height', height);
+    const colors = ['#58b06a', '#b9df9f', '#d8782c', '#7a8b48', '#e4f4d7'];
+    const particles = d3.range(50).map(() => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 3 + 1,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedY: Math.random() * 0.3 + 0.1,
+      speedX: Math.random() * 0.2 - 0.1,
+      opacity: Math.random() * 0.4 + 0.18
+    }));
+    const circles = svg.selectAll('circle').data(particles).enter().append('circle')
+      .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', d => d.r).attr('fill', d => d.color).attr('opacity', d => d.opacity);
+
+    d3.timer(() => {
+      particles.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        if (p.y > height) { p.y = 0; p.x = Math.random() * width; }
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+      });
+      circles.attr('cx', d => d.x).attr('cy', d => d.y);
+    });
+
+    function animateOnScroll() {
+      const sections = document.querySelectorAll('.section, .closing, .contacto');
+      const triggerPoint = window.innerHeight * 0.8;
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < triggerPoint && !section.classList.contains('animate')) section.classList.add('animate');
+      });
+      document.querySelectorAll('.strip-card').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < triggerPoint && !card.classList.contains('animate')) card.classList.add('animate');
+      });
+    }
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll();
+
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        nav.style.background = 'rgba(15,23,42,.75)';
+        nav.style.transform = 'translateX(-50%) scale(0.98)';
+      } else {
+        nav.style.background = 'rgba(15,23,42,.50)';
+        nav.style.transform = 'translateX(-50%) scale(1)';
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>

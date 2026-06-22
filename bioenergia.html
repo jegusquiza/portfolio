@@ -291,10 +291,12 @@
     }
     .closing.animate{animation:fadeInUp 1s ease forwards}
     .closing-inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);align-items:stretch;width:100%}
-    .closing-copy{padding:42px;display:flex;flex-direction:column;justify-content:center}
-    .closing-copy .section-kicker{color:rgba(255,255,255,.68)}
-    .closing-copy h2{color:#fff;max-width:12ch}
-    .closing-copy p{color:rgba(255,255,255,.80)}
+    .closing-left{
+      padding:42px;display:flex;flex-direction:column;justify-content:center;
+    }
+    .closing-left .section-kicker{color:rgba(255,255,255,.68)}
+    .closing-left h2{color:#fff;max-width:12ch}
+    .closing-left p{color:rgba(255,255,255,.80)}
     .vision-tags{
       display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;
     }
@@ -328,6 +330,25 @@
       border:0;
       display:block;
     }
+
+    .closing-card{
+      padding:42px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.10), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border-left:1px solid rgba(255,255,255,.08);
+      display:flex;flex-direction:column;justify-content:center;gap:14px;
+    }
+    .closing-stat{
+      padding:18px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
+      transition:transform .3s ease, background .3s ease;
+    }
+    .closing-stat:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
+    .closing-stat strong{display:block;font-size:18px;line-height:1.2;margin-bottom:5px}
+    .closing-stat span{display:block;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65}
+    .closing-stat.accent-green{border-left:4px solid #58b06a}
+    .closing-stat.accent-orange{border-left:4px solid #d8782c}
+    .closing-stat.accent-blue{border-left:4px solid #345b93}
 
     .contacto{
       margin:0;width:100%;overflow:hidden;
@@ -422,7 +443,7 @@
       .stats-band{grid-template-columns:1fr}
       .section-wide{grid-template-columns:1fr}
       .section-media{min-height:300px}
-      .section-content,.closing-copy,.closing-card,.contacto-copy,.contacto-oficinas{padding:28px 22px}
+      .section-content,.closing-left,.closing-card,.contacto-copy,.contacto-oficinas{padding:28px 22px}
       .fact-grid{grid-template-columns:1fr}
       .hero-panel-img{min-height:180px}
     }
@@ -599,7 +620,7 @@
 
     <section class="closing" id="visión">
       <div class="closing-inner">
-        <div class="closing-copy">
+        <div class="closing-left">
           <div class="section-kicker" data-i18n="visionKicker">Visión</div>
           <h2 data-i18n="visionTitle">Conectamos el potencial del Perú con los mercados del mundo</h2>
           <p data-i18n="visionP">Bioenergía del Perú evoluciona sin perder su esencia: rigor operativo, visión internacional y compromiso con el origen. Hoy esa base impulsa una nueva etapa en alimentos peruanos de calidad.</p>
@@ -921,8 +942,7 @@
       });
     });
 
-    const savedLang = localStorage.getItem('siteLang') || 'es';
-    applyLanguage(savedLang);
+    applyLanguage(localStorage.getItem('siteLang') || 'es');
 
     const width = window.innerWidth, height = window.innerHeight;
     const svg = d3.select('#particles').append('svg').attr('width', width).attr('height', height);

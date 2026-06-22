@@ -71,7 +71,7 @@
       font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;
       text-transform:uppercase;color:rgba(255,255,255,.68);white-space:nowrap;
     }
-    .nav-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
     .nav-links a{
       font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;
       text-transform:uppercase;color:#fff;padding:9px 11px;border-radius:999px;
@@ -79,6 +79,17 @@
       transition:background .18s ease, transform .18s ease, border-color .18s ease;
     }
     .nav-links a:hover{background:rgba(255,255,255,.14);transform:translateY(-1px);border-color:rgba(255,255,255,.18)}
+    .lang-switch{
+      display:flex;align-items:center;gap:6px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);
+      font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#fff;
+    }
+    .lang-switch a{
+      color:#fff;opacity:.7;padding:0;background:none;border:none;font-size:10px;
+    }
+    .lang-switch a.active{opacity:1;font-weight:700}
+    .lang-switch span{opacity:.4}
 
     .particles-container{
       position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;
@@ -272,53 +283,112 @@
 
     .closing{
       margin:0;width:100%;overflow:hidden;
-      background:linear-gradient(180deg, rgba(9,30,18,.94), rgba(8,20,12,.98)), radial-gradient(circle at 20% 20%, rgba(88,176,106,.12), transparent 22%);
+      background:
+        linear-gradient(135deg, rgba(6,24,16,.97), rgba(12,44,28,.96) 45%, rgba(18,33,72,.94)),
+        radial-gradient(circle at 15% 20%, rgba(88,176,106,.18), transparent 22%),
+        radial-gradient(circle at 85% 20%, rgba(53,91,147,.16), transparent 24%);
       color:#fff;box-shadow:var(--shadow);border:none;opacity:0;transform:translateY(50px);
     }
     .closing.animate{animation:fadeInUp 1s ease forwards}
     .closing-inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);align-items:stretch;width:100%}
     .closing-copy{padding:42px;display:flex;flex-direction:column;justify-content:center}
     .closing-copy .section-kicker{color:rgba(255,255,255,.68)}
-    .closing-copy h2{color:#fff}
+    .closing-copy h2{color:#fff;max-width:12ch}
     .closing-copy p{color:rgba(255,255,255,.80)}
-    .closing-card{
-      padding:42px;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 34%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:center;gap:14px;
+    .vision-tags{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;
     }
-    .closing-stat{
-      padding:18px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
-      transition:transform .3s ease, background .3s ease;
+    .vision-tags span{
+      display:inline-flex;align-items:center;padding:9px 13px;border-radius:999px;
+      font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;
+      text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(135deg, rgba(88,176,106,.18), rgba(53,91,147,.14));
+      backdrop-filter:blur(10px);
     }
-    .closing-stat:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
-    .closing-stat strong{display:block;font-size:18px;line-height:1.2;margin-bottom:5px}
-    .closing-stat span{display:block;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65}
+    .vision-video{
+      margin-top:26px;
+      border-radius:26px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      box-shadow:0 20px 40px rgba(0,0,0,.18);
+    }
+    .video-frame{
+      position:relative;
+      width:100%;
+      padding-bottom:56.25%;
+      height:0;
+    }
+    .video-frame iframe,
+    .video-frame video{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
 
     .contacto{
       margin:0;width:100%;overflow:hidden;
-      background:linear-gradient(180deg, rgba(15,23,42,.96), rgba(8,20,12,.98)), radial-gradient(circle at 80% 30%, rgba(88,176,106,.14), transparent 25%);
-      color:#fff;box-shadow:var(--shadow);border:none;opacity:0;transform:translateY(50px);
+      background:#fff;
+      color:var(--ink);
+      box-shadow:var(--shadow);border:none;opacity:0;transform:translateY(50px);
     }
     .contacto.animate{animation:fadeInUp 1s ease forwards}
-    .contacto-inner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,1fr);align-items:stretch;width:100%}
-    .contacto-copy{padding:42px;display:flex;flex-direction:column;justify-content:center}
-    .contacto-copy .section-kicker{color:rgba(255,255,255,.68)}
-    .contacto-copy h2{color:#fff}
-    .contacto-copy p{color:rgba(255,255,255,.80)}
+    .contacto-inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);align-items:stretch;width:100%}
+    .contacto-copy{
+      padding:42px;
+      display:flex;flex-direction:column;justify-content:center;
+      background:linear-gradient(180deg,#ffffff,#f8fbf7);
+    }
+    .contacto-copy .section-kicker{color:#6b7280}
+    .contacto-copy h2{color:#0f172a;max-width:12ch}
+    .contacto-copy p{color:#475569}
+    .contact-chips{
+      display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;
+    }
+    .contact-chip{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:11px 14px;border-radius:999px;
+      font-size:13px;font-weight:700;color:#0f172a;
+      background:linear-gradient(180deg,#ffffff,#f3f8f1);
+      border:1px solid rgba(148,163,184,.22);
+      box-shadow:0 10px 24px rgba(10,20,15,.06);
+      transition:transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .contact-chip:hover{
+      transform:translateY(-3px);
+      background:linear-gradient(180deg,#ffffff,#eef7ea);
+      border-color:rgba(88,176,106,.25);
+    }
     .contacto-oficinas{
-      padding:42px;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.06), transparent 28%), linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border-left:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;justify-content:center;gap:18px;
+      padding:42px;
+      background:#fff;
+      border-left:1px solid rgba(15,23,42,.08);
+      display:flex;flex-direction:column;justify-content:center;gap:18px;
     }
     .contacto-oficina{
-      padding:20px;border-radius:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);
-      transition:transform .3s ease, background .3s ease;display:flex;align-items:flex-start;gap:14px;
+      padding:20px;border-radius:24px;background:#fff;border:1px solid rgba(148,163,184,.18);
+      box-shadow:var(--shadow-soft);
+      transition:transform .3s ease, background .3s ease, border-color .3s ease;display:flex;align-items:flex-start;gap:14px;
     }
-    .contacto-oficina:hover{transform:translateY(-3px);background:rgba(255,255,255,.1)}
+    .contacto-oficina:hover{transform:translateY(-3px);background:#fbfdf8;border-color:rgba(88,176,106,.22)}
     .contacto-icon{
-      width:40px;height:40px;min-width:40px;border-radius:10px;background:rgba(88,176,106,.16);border:1px solid rgba(88,176,106,.24);
-      display:flex;align-items:center;justify-content:center;font-size:18px;color:#58b06a;
+      width:40px;height:40px;min-width:40px;border-radius:10px;background:rgba(88,176,106,.12);border:1px solid rgba(88,176,106,.20);
+      display:flex;align-items:center;justify-content:center;font-size:18px;color:#2b8a57;
     }
-    .contacto-oficina-info strong{display:block;font-size:16px;line-height:1.3;margin-bottom:6px;color:#fff}
-    .contacto-oficina-info span{display:block;font-size:13px;color:rgba(255,255,255,.72);line-height:1.65}
+    .contacto-oficina-info strong{display:block;font-size:16px;line-height:1.3;margin-bottom:6px;color:#0f172a}
+    .contacto-oficina-info span{display:block;font-size:13px;color:#64748b;line-height:1.65}
+    .contact-email-box{
+      background:linear-gradient(180deg,#ffffff,#f9fcf6);
+    }
+    .contact-email-box .contacto-icon{
+      background:rgba(216,120,44,.12);
+      border-color:rgba(216,120,44,.20);
+      color:#d8782c;
+    }
+
     .footer{margin:0;padding:16px 18px 18px;color:#607063;font-size:12px;line-height:1.7;text-align:center;width:100%}
 
     .media-a{background:linear-gradient(180deg, rgba(10,30,20,.04), rgba(10,30,20,.14)),url('https://64.media.tumblr.com/09642103ed7a0e913ae525a6e4c5eb67/a01bd0ac5ae6cd7b-f2/s2048x3072/6b0e1ccfd83cb4bd79b76a66dee740512aa1174e.jpg') center/cover no-repeat}
@@ -367,6 +437,7 @@
       .nav-links a{padding:8px 10px}
       .section h2{font-size:34px}
       .hero-panel-img{min-height:160px}
+      .contact-chip{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -379,15 +450,21 @@
         <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
       </div>
       <div class="nav-copy">
-        <div class="nav-name">Bioenergía del Perú</div>
-        <div class="nav-tag">Learn · Share · Act </div>
+        <div class="nav-name" data-i18n="brand">Bioenergía del Perú</div>
+        <div class="nav-tag" data-i18n="navTag">Learn · Share · Act</div>
       </div>
     </div>
+
     <div class="nav-links">
-      <a href="#historia">Historia</a>
-      <a href="#territorio">Territorio</a>
-      <a href="#frutas">Frutas</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#historia" data-i18n="navHistory">Historia</a>
+      <a href="#territorio" data-i18n="navTerritory">Territorio</a>
+      <a href="#frutas" data-i18n="navFruits">Frutas</a>
+      <a href="#contacto" data-i18n="navContact">Contacto</a>
+      <div class="lang-switch">
+        <a href="#" class="active" data-lang="es">ES</a>
+        <span>|</span>
+        <a href="#" data-lang="en">EN</a>
+      </div>
     </div>
   </div>
 
@@ -396,30 +473,30 @@
       <div class="hero-inner">
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="eyebrow">Perú · origen · sostenibilidad</div>
-            <h1>Conectamos el potencial del Perú con los mercados del mundo</h1>
-             <p>Somos desarrolladores de proyectos de inversión en biocombustibles, energía renovable, agricultura y valorización sostenible de residuos agrícolas e industriales.</p>
-              <p>Bioenergía del Perú une territorio, experiencia exportadora y visión internacional para conectar el potencial productivo del Perú con mercados globales exigentes. Nacimos en energía renovable y hoy ampliamos nuestra visión hacia nuevas cadenas agroindustriales.</p>
+            <div class="eyebrow" data-i18n="heroEyebrow">Perú · origen · sostenibilidad</div>
+            <h1 data-i18n="heroTitle">Conectamos el potencial del Perú con los mercados del mundo</h1>
+            <p data-i18n="heroP1">Somos desarrolladores de proyectos de inversión en biocombustibles, energía renovable, agricultura y valorización sostenible de residuos agrícolas e industriales.</p>
+            <p data-i18n="heroP2">Bioenergía del Perú une territorio, experiencia exportadora y visión internacional para conectar el potencial productivo del Perú con mercados globales exigentes. Nacimos en energía renovable y hoy ampliamos nuestra visión hacia nuevas cadenas agroindustriales.</p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="#historia">Explorar la historia</a>
-              <a class="btn btn-secondary" href="#frutas">Ver la nueva etapa</a>
+              <a class="btn btn-primary" href="#historia" data-i18n="heroBtn1">Explorar la historia</a>
+              <a class="btn btn-secondary" href="#frutas" data-i18n="heroBtn2">Ver la nueva etapa</a>
             </div>
 
             <div class="hero-strip">
               <div class="strip-card">
-                <div class="strip-num">25+ años</div>
-                <div class="strip-title">Trayectoria en el territorio</div>
-                <div class="strip-text">Más de dos décadas trabajando sobre la costa peruana y su potencial productivo.</div>
+                <div class="strip-num" data-i18n="strip1Num">25+ años</div>
+                <div class="strip-title" data-i18n="strip1Title">Trayectoria en el territorio</div>
+                <div class="strip-text" data-i18n="strip1Text">Más de dos décadas trabajando sobre la costa peruana y su potencial productivo.</div>
               </div>
               <div class="strip-card">
-                <div class="strip-num">2001</div>
-                <div class="strip-title">Inicio de operaciones</div>
-                <div class="strip-text">Acompañamos la transformación de tierras áridas en campos productivos.</div>
+                <div class="strip-num" data-i18n="strip2Num">2001</div>
+                <div class="strip-title" data-i18n="strip2Title">Inicio de operaciones</div>
+                <div class="strip-text" data-i18n="strip2Text">Acompañamos la transformación de tierras áridas en campos productivos.</div>
               </div>
               <div class="strip-card">
-                <div class="strip-num">Hoy</div>
-                <div class="strip-title">Nueva etapa agroexportadora</div>
-                <div class="strip-text">Frutas frescas, congeladas y deshidratadas con raíz peruana y destino global.</div>
+                <div class="strip-num" data-i18n="strip3Num">Hoy</div>
+                <div class="strip-title" data-i18n="strip3Title">Nueva etapa agroexportadora</div>
+                <div class="strip-text" data-i18n="strip3Text">Frutas frescas, congeladas y deshidratadas con raíz peruana y destino global.</div>
               </div>
             </div>
           </div>
@@ -427,15 +504,15 @@
           <aside class="hero-panel">
             <div class="hero-panel-logo"></div>
             <div class="hero-panel-text">
-              <div class="small">Bioenergía del Perú</div>
-              <div class="big">Territorio, sostenibilidad y una nueva economía exportadora</div>
+              <div class="small" data-i18n="panelSmall">Bioenergía del Perú</div>
+              <div class="big" data-i18n="panelBig">Territorio, sostenibilidad y una nueva economía exportadora</div>
             </div>
 
             <div class="hero-pills">
-              <div class="pill-box"><div class="pill-k">Base</div><div class="pill-v">Gestión, comercialización y operación durante todo el año</div></div>
-              <div class="pill-box"><div class="pill-k">Enfoque</div><div class="pill-v">Productos peruanos de calidad con trazabilidad</div></div>
-              <div class="pill-box"><div class="pill-k">Mercado</div><div class="pill-v">Destinos internacionales exigentes</div></div>
-              <div class="pill-box"><div class="pill-k">Evolución</div><div class="pill-v">Frutas frescas, congeladas y deshidratadas</div></div>
+              <div class="pill-box"><div class="pill-k" data-i18n="pill1K">Base</div><div class="pill-v" data-i18n="pill1V">Gestión, comercialización y operación durante todo el año</div></div>
+              <div class="pill-box"><div class="pill-k" data-i18n="pill2K">Enfoque</div><div class="pill-v" data-i18n="pill2V">Productos peruanos de calidad con trazabilidad</div></div>
+              <div class="pill-box"><div class="pill-k" data-i18n="pill3K">Mercado</div><div class="pill-v" data-i18n="pill3V">Destinos internacionales exigentes</div></div>
+              <div class="pill-box"><div class="pill-k" data-i18n="pill4K">Evolución</div><div class="pill-v" data-i18n="pill4V">Frutas frescas, congeladas y deshidratadas</div></div>
             </div>
 
             <div class="hero-panel-img"></div>
@@ -447,16 +524,16 @@
     <section class="section" id="historia">
       <div class="section-inner">
         <div class="section-content">
-          <div class="section-kicker">Nuestra historia</div>
-          <h2>Energías renovables: transformar el desierto para la agricultura global</h2>
-          <p>En Bioenergía del Perú llevamos más de 25 años impulsando el desarrollo de energías renovables en el país. Desde 2001 hemos acompañado la transformación de tierras áridas de la costa peruana en áreas agrícolas productivas, incorporando tecnología internacional y conectando esta producción con la industria global de biocombustibles.</p>
-          <p style="margin-top:12px">Nos especializamos en la gestión y comercialización de bioetanol, operando durante todo el año bajo estándares y certificaciones que respaldan la reducción real de emisiones de gases de efecto invernadero.</p>
-          <p style="margin-top:12px">Trabajamos para conectar la producción sostenible con los mercados que demandan energías renovables, garantizando trazabilidad, eficiencia y cumplimiento ambiental en cada etapa de la cadena.</p>
+          <div class="section-kicker" data-i18n="historyKicker">Nuestra historia</div>
+          <h2 data-i18n="historyTitle">Energías renovables: transformar el desierto para la agricultura global</h2>
+          <p data-i18n="historyP1">En Bioenergía del Perú llevamos más de 25 años impulsando el desarrollo de energías renovables en el país. Desde 2001 hemos acompañado la transformación de tierras áridas de la costa peruana en áreas agrícolas productivas, incorporando tecnología internacional y conectando esta producción con la industria global de biocombustibles.</p>
+          <p style="margin-top:12px" data-i18n="historyP2">Nos especializamos en la gestión y comercialización de bioetanol, operando durante todo el año bajo estándares y certificaciones que respaldan la reducción real de emisiones de gases de efecto invernadero.</p>
+          <p style="margin-top:12px" data-i18n="historyP3">Trabajamos para conectar la producción sostenible con los mercados que demandan energías renovables, garantizando trazabilidad, eficiencia y cumplimiento ambiental en cada etapa de la cadena.</p>
           <div class="fact-grid">
-            <div class="fact f1"><div class="fact-label">Transformación</div><div class="fact-value">Desierto → Campos</div><div class="fact-text">Tierras áridas convertidas en áreas productivas para agricultura y etanol.</div></div>
-            <div class="fact f2"><div class="fact-label">Mercado</div><div class="fact-value">Europa</div><div class="fact-text">Exportamos bioetanol a Europa cumpliendo estándares ambientales exigentes.</div></div>
-            <div class="fact f3"><div class="fact-label">Operación</div><div class="fact-value">Todo el año</div><div class="fact-text">Gestión y comercialización continua con certificaciones de emisiones.</div></div>
-            <div class="fact f4"><div class="fact-label">Desde</div><div class="fact-value">2009</div><div class="fact-text">Perú exporta bioetanol con estándares ambientales verificables.</div></div>
+            <div class="fact f1"><div class="fact-label" data-i18n="fact1Label">Transformación</div><div class="fact-value" data-i18n="fact1Value">Desierto → Campos</div><div class="fact-text" data-i18n="fact1Text">Tierras áridas convertidas en áreas productivas para agricultura y etanol.</div></div>
+            <div class="fact f2"><div class="fact-label" data-i18n="fact2Label">Mercado</div><div class="fact-value" data-i18n="fact2Value">Europa</div><div class="fact-text" data-i18n="fact2Text">Exportamos bioetanol a Europa cumpliendo estándares ambientales exigentes.</div></div>
+            <div class="fact f3"><div class="fact-label" data-i18n="fact3Label">Operación</div><div class="fact-value" data-i18n="fact3Value">Todo el año</div><div class="fact-text" data-i18n="fact3Text">Gestión y comercialización continua con certificaciones de emisiones.</div></div>
+            <div class="fact f4"><div class="fact-label" data-i18n="fact4Label">Desde</div><div class="fact-value" data-i18n="fact4Value">2009</div><div class="fact-text" data-i18n="fact4Text">Perú exporta bioetanol con estándares ambientales verificables.</div></div>
           </div>
         </div>
         <div class="section-media media-a"></div>
@@ -467,15 +544,15 @@
       <div class="section-inner">
         <div class="section-media media-desierto"></div>
         <div class="section-content">
-          <div class="section-kicker">Territorio Perú</div>
-          <h2>Un desierto único: invernadero natural de Sudamérica</h2>
-          <p>El Perú, ubicado en la costa occidental de Sudamérica, posee una de las costas más extraordinarias del mundo: un desierto único moldeado por la corriente de Humboldt, la cordillera de los Andes y un clima excepcional que lo convierte en un verdadero invernadero natural.</p>
-          <p style="margin-top:12px">Más horas de luz, temperaturas estables y condiciones ideales permiten una agricultura altamente eficiente durante gran parte del año.</p>
-          <div class="quote-band">De esa costa salió nuestra historia. Ese desierto es el origen de Bioenergía del Perú.</div>
+          <div class="section-kicker" data-i18n="territoryKicker">Territorio Perú</div>
+          <h2 data-i18n="territoryTitle">Un desierto único: invernadero natural de Sudamérica</h2>
+          <p data-i18n="territoryP1">El Perú, ubicado en la costa occidental de Sudamérica, posee una de las costas más extraordinarias del mundo: un desierto único moldeado por la corriente de Humboldt, la cordillera de los Andes y un clima excepcional que lo convierte en un verdadero invernadero natural.</p>
+          <p style="margin-top:12px" data-i18n="territoryP2">Más horas de luz, temperaturas estables y condiciones ideales permiten una agricultura altamente eficiente durante gran parte del año.</p>
+          <div class="quote-band" data-i18n="territoryQuote">De esa costa salió nuestra historia. Ese desierto es el origen de Bioenergía del Perú.</div>
           <div class="stats-band">
-            <div class="stat"><div class="stat-num">Humboldt</div><div class="stat-label">corriente</div><div class="stat-text">Moldea el clima del desierto costero peruano.</div></div>
-            <div class="stat"><div class="stat-num">Andes</div><div class="stat-label">cordillera</div><div class="stat-text">Crea condiciones excepcionales para agricultura.</div></div>
-            <div class="stat"><div class="stat-num">365</div><div class="stat-label">días</div><div class="stat-text">Agricultura eficiente durante gran parte del año.</div></div>
+            <div class="stat"><div class="stat-num">Humboldt</div><div class="stat-label" data-i18n="stat1Label">corriente</div><div class="stat-text" data-i18n="stat1Text">Moldea el clima del desierto costero peruano.</div></div>
+            <div class="stat"><div class="stat-num">Andes</div><div class="stat-label" data-i18n="stat2Label">cordillera</div><div class="stat-text" data-i18n="stat2Text">Crea condiciones excepcionales para agricultura.</div></div>
+            <div class="stat"><div class="stat-num">365</div><div class="stat-label" data-i18n="stat3Label">días</div><div class="stat-text" data-i18n="stat3Text">Agricultura eficiente durante gran parte del año.</div></div>
           </div>
         </div>
       </div>
@@ -484,11 +561,9 @@
     <section class="section" style="background:rgba(244,242,236,.98)">
       <div class="section-inner">
         <div class="section-content">
-          <div class="section-kicker">Paisaje productivo</div>
-          <h2>Del terreno árido al campo verde</h2>
-          <p>Lo que alguna vez fue desierto hoy es tierra productiva.
-
-Gracias a la tecnología, el riego por goteo y una gestión eficiente de los recursos hídricos, extensas áreas áridas de la costa peruana se han transformado en campos de alto rendimiento. Una transformación que impulsa la agricultura, genera oportunidades y demuestra el extraordinario potencial de este territorio.</p>
+          <div class="section-kicker" data-i18n="landscapeKicker">Paisaje productivo</div>
+          <h2 data-i18n="landscapeTitle">Del terreno árido al campo verde</h2>
+          <p data-i18n="landscapeP">Lo que alguna vez fue desierto hoy es tierra productiva. Gracias a la tecnología, el riego por goteo y una gestión eficiente de los recursos hídricos, extensas áreas áridas de la costa peruana se han transformado en campos de alto rendimiento.</p>
         </div>
         <div class="section-media media-c"></div>
       </div>
@@ -496,15 +571,9 @@ Gracias a la tecnología, el riego por goteo y una gestión eficiente de los rec
 
     <section class="section" style="background:rgba(244,242,236,.98)">
       <div class="section-wide">
-        <div class="section-wide-img media-b">
-          <div class="section-wide-label">Riego por goteo</div>
-        </div>
-        <div class="section-wide-img media-trabajo">
-          <div class="section-wide-label">Tierra siendo trabajada</div>
-        </div>
-        <div class="section-wide-img media-verde">
-          <div class="section-wide-label">Campo verde productivo</div>
-        </div>
+        <div class="section-wide-img media-b"><div class="section-wide-label" data-i18n="labelDrip">Riego por goteo</div></div>
+        <div class="section-wide-img media-trabajo"><div class="section-wide-label" data-i18n="labelWork">Tierra siendo trabajada</div></div>
+        <div class="section-wide-img media-verde"><div class="section-wide-label" data-i18n="labelGreen">Campo verde productivo</div></div>
       </div>
     </section>
 
@@ -512,17 +581,17 @@ Gracias a la tecnología, el riego por goteo y una gestión eficiente de los rec
       <div class="section-inner">
         <div class="section-media media-frutas">
           <div class="media-float">
-            <div class="small">Nueva etapa</div>
-            <div class="big">Frutas peruanas con raíz local y destino global</div>
+            <div class="small" data-i18n="fruitFloatSmall">Nueva etapa</div>
+            <div class="big" data-i18n="fruitFloatBig">Frutas peruanas con raíz local y destino global</div>
           </div>
         </div>
         <div class="section-content">
-          <div class="section-kicker">Nueva etapa</div>
-          <h2>Frutas peruanas con raíz local y destino global</h2>
-          <p>Nuestro equipo trae décadas de trabajo en sectores exportadores como pesca y agroindustria, incluyendo harina de pescado, productos del mar congelados y mango IQF. Ese recorrido nos enseñó a manejar calidad, logística y mercados muy específicos.</p>
+          <div class="section-kicker" data-i18n="fruitKicker">Nueva etapa</div>
+          <h2 data-i18n="fruitTitle">Frutas peruanas con raíz local y destino global</h2>
+          <p data-i18n="fruitP">Nuestro equipo trae décadas de trabajo en sectores exportadores como pesca y agroindustria, incluyendo harina de pescado, productos del mar congelados y mango IQF. Ese recorrido nos enseñó a manejar calidad, logística y mercados muy específicos.</p>
           <div class="fact-grid">
-            <div class="fact f2"><div class="fact-label">Productos</div><div class="fact-value">Frescos, congelados y deshidratados</div><div class="fact-text">Una oferta diversificada para distintos canales y mercados.</div></div>
-            <div class="fact f1"><div class="fact-label">Origen</div><div class="fact-value">Raíz peruana</div><div class="fact-text">Historia, territorio y productividad convertidos en propuesta comercial.</div></div>
+            <div class="fact f2"><div class="fact-label" data-i18n="fruitFact1Label">Productos</div><div class="fact-value" data-i18n="fruitFact1Value">Frescos, congelados y deshidratados</div><div class="fact-text" data-i18n="fruitFact1Text">Una oferta diversificada para distintos canales y mercados.</div></div>
+            <div class="fact f1"><div class="fact-label" data-i18n="fruitFact2Label">Origen</div><div class="fact-value" data-i18n="fruitFact2Value">Raíz peruana</div><div class="fact-text" data-i18n="fruitFact2Text">Historia, territorio y productividad convertidos en propuesta comercial.</div></div>
           </div>
         </div>
       </div>
@@ -531,14 +600,34 @@ Gracias a la tecnología, el riego por goteo y una gestión eficiente de los rec
     <section class="closing" id="visión">
       <div class="closing-inner">
         <div class="closing-copy">
-          <div class="section-kicker">Visión</div>
-          <h2>Conectamos el potencial del Perú con los mercados del mundo</h2>
-          <p>Bioenergía del Perú evoluciona sin perder su esencia: rigor operativo, visión internacional y compromiso con el origen. Hoy esa base impulsa una nueva etapa en alimentos peruanos de calidad.</p>
+          <div class="section-kicker" data-i18n="visionKicker">Visión</div>
+          <h2 data-i18n="visionTitle">Conectamos el potencial del Perú con los mercados del mundo</h2>
+          <p data-i18n="visionP">Bioenergía del Perú evoluciona sin perder su esencia: rigor operativo, visión internacional y compromiso con el origen. Hoy esa base impulsa una nueva etapa en alimentos peruanos de calidad.</p>
+
+          <div class="vision-video">
+            <div class="video-frame">
+              <iframe
+                id="summaryVideo"
+                src="https://www.youtube.com/embed/YOUR_YOUTUBE_ID"
+                title="Video resumen Bioenergía del Perú"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <div class="vision-tags">
+            <span data-i18n="visionTag1">Sostenibilidad</span>
+            <span data-i18n="visionTag2">Agroexportación</span>
+            <span data-i18n="visionTag3">Innovación</span>
+            <span data-i18n="visionTag4">Mercado global</span>
+          </div>
         </div>
+
         <div class="closing-card">
-          <div class="closing-stat"><strong>Energía renovable</strong><span>Una historia construida sobre sostenibilidad, gestión y operación.</span></div>
-          <div class="closing-stat"><strong>Agroexportación</strong><span>Una nueva etapa enfocada en frutas peruanas con trazabilidad y valor agregado.</span></div>
-          <div class="closing-stat"><strong>Mercado global</strong><span>Un puente entre el potencial del Perú y compradores internacionales.</span></div>
+          <div class="closing-stat accent-green"><strong data-i18n="visionStat1Title">Energía renovable</strong><span data-i18n="visionStat1Text">Una historia construida sobre sostenibilidad, gestión y operación.</span></div>
+          <div class="closing-stat accent-orange"><strong data-i18n="visionStat2Title">Agroexportación</strong><span data-i18n="visionStat2Text">Una nueva etapa enfocada en frutas peruanas con trazabilidad y valor agregado.</span></div>
+          <div class="closing-stat accent-blue"><strong data-i18n="visionStat3Title">Mercado global</strong><span data-i18n="visionStat3Text">Un puente entre el potencial del Perú y compradores internacionales.</span></div>
         </div>
       </div>
     </section>
@@ -546,35 +635,295 @@ Gracias a la tecnología, el riego por goteo y una gestión eficiente de los rec
     <section class="contacto" id="contacto">
       <div class="contacto-inner">
         <div class="contacto-copy">
-          <div class="section-kicker">Contacto</div>
-          <h2>Estamos en dos continentes</h2>
-          <p>Bioenergía del Perú conecta América y Europa con oficinas estratégicas en Lima y Barcelona. Estamos cerca de nuestros mercados para gestionar operaciones de forma trazable y sostenible.</p>
+          <div class="section-kicker" data-i18n="contactKicker">Contacto</div>
+          <h2 data-i18n="contactTitle">Estamos en dos continentes</h2>
+          <p data-i18n="contactP">Bioenergía del Perú conecta América y Europa con oficinas estratégicas en Lima y Barcelona. Estamos cerca de nuestros mercados para gestionar operaciones de forma trazable y sostenible.</p>
+
+          <div class="contact-chips">
+            <a class="contact-chip" href="mailto:info@bioenergiadelperu.com" data-i18n="contactEmail1">info@bioenergiadelperu.com</a>
+            <a class="contact-chip" href="mailto:comercial@bioenergiadelperu.com" data-i18n="contactEmail2">comercial@bioenergiadelperu.com</a>
+            <a class="contact-chip" href="mailto:prensa@bioenergiadelperu.com" data-i18n="contactEmail3">prensa@bioenergiadelperu.com</a>
+            <a class="contact-chip" href="https://www.linkedin.com/" target="_blank" rel="noopener" data-i18n="contactLinkedIn">Follow us on LinkedIn</a>
+          </div>
         </div>
+
         <div class="contacto-oficinas">
           <div class="contacto-oficina">
             <div class="contacto-icon">🇵🇪</div>
             <div class="contacto-oficina-info">
-              <strong>Lima, Perú</strong>
-              <span>Alcanfores 1245, Miraflores</span>
-              <span style="margin-top:4px">Telf: +51998256656</span>
+              <strong data-i18n="limaTitle">Lima, Perú</strong>
+              <span data-i18n="limaAddress">Alcanfores 1245, Miraflores</span>
+              <span style="margin-top:4px" data-i18n="limaPhone">Telf: +51998256656</span>
             </div>
           </div>
+
           <div class="contacto-oficina">
             <div class="contacto-icon">🇪🇸</div>
             <div class="contacto-oficina-info">
-              <strong>Barcelona, España</strong>
-              <span>Ramon Turró 294, Sant Martí</span>
-              <span style="margin-top:4px">Telf: +34637612624</span>
+              <strong data-i18n="bcnTitle">Barcelona, España</strong>
+              <span data-i18n="bcnAddress">Ramon Turró 294, Sant Martí</span>
+              <span style="margin-top:4px" data-i18n="bcnPhone">Telf: +34637612624</span>
+            </div>
+          </div>
+
+          <div class="contacto-oficina contact-email-box">
+            <div class="contacto-icon">✉️</div>
+            <div class="contacto-oficina-info">
+              <strong data-i18n="emailsTitle">Emails directos</strong>
+              <span data-i18n="emails1">General: info@bioenergiadelperu.com</span>
+              <span data-i18n="emails2">Comercial: comercial@bioenergiadelperu.com</span>
+              <span data-i18n="emails3">Prensa: prensa@bioenergiadelperu.com</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="footer">Bioenergía del Perú · Energía renovable · Agroexportación · Perú</div>
+    <div class="footer" data-i18n="footer">Bioenergía del Perú · Energía renovable · Agroexportación · Perú</div>
   </div>
 
   <script>
+    const translations = {
+      es: {
+        brand: "Bioenergía del Perú",
+        navTag: "Learn · Share · Act",
+        navHistory: "Historia",
+        navTerritory: "Territorio",
+        navFruits: "Frutas",
+        navContact: "Contacto",
+        heroEyebrow: "Perú · origen · sostenibilidad",
+        heroTitle: "Conectamos el potencial del Perú con los mercados del mundo",
+        heroP1: "Somos desarrolladores de proyectos de inversión en biocombustibles, energía renovable, agricultura y valorización sostenible de residuos agrícolas e industriales.",
+        heroP2: "Bioenergía del Perú une territorio, experiencia exportadora y visión internacional para conectar el potencial productivo del Perú con mercados globales exigentes. Nacimos en energía renovable y hoy ampliamos nuestra visión hacia nuevas cadenas agroindustriales.",
+        heroBtn1: "Explorar la historia",
+        heroBtn2: "Ver la nueva etapa",
+        strip1Num: "25+ años",
+        strip1Title: "Trayectoria en el territorio",
+        strip1Text: "Más de dos décadas trabajando sobre la costa peruana y su potencial productivo.",
+        strip2Num: "2001",
+        strip2Title: "Inicio de operaciones",
+        strip2Text: "Acompañamos la transformación de tierras áridas en campos productivos.",
+        strip3Num: "Hoy",
+        strip3Title: "Nueva etapa agroexportadora",
+        strip3Text: "Frutas frescas, congeladas y deshidratadas con raíz peruana y destino global.",
+        panelSmall: "Bioenergía del Perú",
+        panelBig: "Territorio, sostenibilidad y una nueva economía exportadora",
+        pill1K: "Base",
+        pill1V: "Gestión, comercialización y operación durante todo el año",
+        pill2K: "Enfoque",
+        pill2V: "Productos peruanos de calidad con trazabilidad",
+        pill3K: "Mercado",
+        pill3V: "Destinos internacionales exigentes",
+        pill4K: "Evolución",
+        pill4V: "Frutas frescas, congeladas y deshidratadas",
+        historyKicker: "Nuestra historia",
+        historyTitle: "Energías renovables: transformar el desierto para la agricultura global",
+        historyP1: "En Bioenergía del Perú llevamos más de 25 años impulsando el desarrollo de energías renovables en el país. Desde 2001 hemos acompañado la transformación de tierras áridas de la costa peruana en áreas agrícolas productivas, incorporando tecnología internacional y conectando esta producción con la industria global de biocombustibles.",
+        historyP2: "Nos especializamos en la gestión y comercialización de bioetanol, operando durante todo el año bajo estándares y certificaciones que respaldan la reducción real de emisiones de gases de efecto invernadero.",
+        historyP3: "Trabajamos para conectar la producción sostenible con los mercados que demandan energías renovables, garantizando trazabilidad, eficiencia y cumplimiento ambiental en cada etapa de la cadena.",
+        fact1Label: "Transformación",
+        fact1Value: "Desierto → Campos",
+        fact1Text: "Tierras áridas convertidas en áreas productivas para agricultura y etanol.",
+        fact2Label: "Mercado",
+        fact2Value: "Europa",
+        fact2Text: "Exportamos bioetanol a Europa cumpliendo estándares ambientales exigentes.",
+        fact3Label: "Operación",
+        fact3Value: "Todo el año",
+        fact3Text: "Gestión y comercialización continua con certificaciones de emisiones.",
+        fact4Label: "Desde",
+        fact4Value: "2009",
+        fact4Text: "Perú exporta bioetanol con estándares ambientales verificables.",
+        territoryKicker: "Territorio Perú",
+        territoryTitle: "Un desierto único: invernadero natural de Sudamérica",
+        territoryP1: "El Perú, ubicado en la costa occidental de Sudamérica, posee una de las costas más extraordinarias del mundo: un desierto único moldeado por la corriente de Humboldt, la cordillera de los Andes y un clima excepcional que lo convierte en un verdadero invernadero natural.",
+        territoryP2: "Más horas de luz, temperaturas estables y condiciones ideales permiten una agricultura altamente eficiente durante gran parte del año.",
+        territoryQuote: "De esa costa salió nuestra historia. Ese desierto es el origen de Bioenergía del Perú.",
+        stat1Label: "corriente",
+        stat1Text: "Moldea el clima del desierto costero peruano.",
+        stat2Label: "cordillera",
+        stat2Text: "Crea condiciones excepcionales para agricultura.",
+        stat3Label: "días",
+        stat3Text: "Agricultura eficiente durante gran parte del año.",
+        landscapeKicker: "Paisaje productivo",
+        landscapeTitle: "Del terreno árido al campo verde",
+        landscapeP: "Lo que alguna vez fue desierto hoy es tierra productiva. Gracias a la tecnología, el riego por goteo y una gestión eficiente de los recursos hídricos, extensas áreas áridas de la costa peruana se han transformado en campos de alto rendimiento.",
+        labelDrip: "Riego por goteo",
+        labelWork: "Tierra siendo trabajada",
+        labelGreen: "Campo verde productivo",
+        fruitFloatSmall: "Nueva etapa",
+        fruitFloatBig: "Frutas peruanas con raíz local y destino global",
+        fruitKicker: "Nueva etapa",
+        fruitTitle: "Frutas peruanas con raíz local y destino global",
+        fruitP: "Nuestro equipo trae décadas de trabajo en sectores exportadores como pesca y agroindustria, incluyendo harina de pescado, productos del mar congelados y mango IQF. Ese recorrido nos enseñó a manejar calidad, logística y mercados muy específicos.",
+        fruitFact1Label: "Productos",
+        fruitFact1Value: "Frescos, congelados y deshidratados",
+        fruitFact1Text: "Una oferta diversificada para distintos canales y mercados.",
+        fruitFact2Label: "Origen",
+        fruitFact2Value: "Raíz peruana",
+        fruitFact2Text: "Historia, territorio y productividad convertidos en propuesta comercial.",
+        visionKicker: "Visión",
+        visionTitle: "Conectamos el potencial del Perú con los mercados del mundo",
+        visionP: "Bioenergía del Perú evoluciona sin perder su esencia: rigor operativo, visión internacional y compromiso con el origen. Hoy esa base impulsa una nueva etapa en alimentos peruanos de calidad.",
+        visionTag1: "Sostenibilidad",
+        visionTag2: "Agroexportación",
+        visionTag3: "Innovación",
+        visionTag4: "Mercado global",
+        visionStat1Title: "Energía renovable",
+        visionStat1Text: "Una historia construida sobre sostenibilidad, gestión y operación.",
+        visionStat2Title: "Agroexportación",
+        visionStat2Text: "Una nueva etapa enfocada en frutas peruanas con trazabilidad y valor agregado.",
+        visionStat3Title: "Mercado global",
+        visionStat3Text: "Un puente entre el potencial del Perú y compradores internacionales.",
+        contactKicker: "Contacto",
+        contactTitle: "Estamos en dos continentes",
+        contactP: "Bioenergía del Perú conecta América y Europa con oficinas estratégicas en Lima y Barcelona. Estamos cerca de nuestros mercados para gestionar operaciones de forma trazable y sostenible.",
+        contactEmail1: "info@bioenergiadelperu.com",
+        contactEmail2: "comercial@bioenergiadelperu.com",
+        contactEmail3: "prensa@bioenergiadelperu.com",
+        contactLinkedIn: "Follow us on LinkedIn",
+        limaTitle: "Lima, Perú",
+        limaAddress: "Alcanfores 1245, Miraflores",
+        limaPhone: "Telf: +51998256656",
+        bcnTitle: "Barcelona, España",
+        bcnAddress: "Ramon Turró 294, Sant Martí",
+        bcnPhone: "Telf: +34637612624",
+        emailsTitle: "Emails directos",
+        emails1: "General: info@bioenergiadelperu.com",
+        emails2: "Comercial: comercial@bioenergiadelperu.com",
+        emails3: "Prensa: prensa@bioenergiadelperu.com",
+        footer: "Bioenergía del Perú · Energía renovable · Agroexportación · Perú"
+      },
+      en: {
+        brand: "Bioenergía del Perú",
+        navTag: "Learn · Share · Act",
+        navHistory: "History",
+        navTerritory: "Territory",
+        navFruits: "Fruits",
+        navContact: "Contact",
+        heroEyebrow: "Peru · origin · sustainability",
+        heroTitle: "We connect Peru’s potential with markets around the world",
+        heroP1: "We develop investment projects in biofuels, renewable energy, agriculture, and the sustainable recovery of agricultural and industrial waste.",
+        heroP2: "Bioenergía del Perú combines territory, export experience, and an international outlook to connect Peru’s productive potential with demanding global markets. We began in renewable energy and now extend that vision toward new agro-industrial chains.",
+        heroBtn1: "Explore the story",
+        heroBtn2: "See the new stage",
+        strip1Num: "25+ years",
+        strip1Title: "Track record in the territory",
+        strip1Text: "More than two decades working on the Peruvian coast and its productive potential.",
+        strip2Num: "2001",
+        strip2Title: "Operations began",
+        strip2Text: "We helped transform arid land into productive fields.",
+        strip3Num: "Today",
+        strip3Title: "New export stage",
+        strip3Text: "Fresh, frozen, and dried fruit with Peruvian roots and a global destination.",
+        panelSmall: "Bioenergía del Perú",
+        panelBig: "Territory, sustainability, and a new export economy",
+        pill1K: "Base",
+        pill1V: "Management, trading, and year-round operations",
+        pill2K: "Focus",
+        pill2V: "Peruvian products with quality and traceability",
+        pill3K: "Market",
+        pill3V: "Demanding international destinations",
+        pill4K: "Evolution",
+        pill4V: "Fresh, frozen, and dried fruits",
+        historyKicker: "Our history",
+        historyTitle: "Renewable energy: turning desert into global agriculture",
+        historyP1: "At Bioenergía del Perú, we have spent more than 25 years driving renewable energy development in the country. Since 2001 we have helped transform arid coastal lands into productive agricultural areas, bringing in international technology and connecting production with the global biofuels industry.",
+        historyP2: "We specialize in managing and marketing bioethanol, operating year-round under standards and certifications that support real greenhouse-gas reductions.",
+        historyP3: "We work to connect sustainable production with markets that demand renewable energy, ensuring traceability, efficiency, and environmental compliance at every step of the chain.",
+        fact1Label: "Transformation",
+        fact1Value: "Desert → Fields",
+        fact1Text: "Arid land turned into productive areas for agriculture and ethanol.",
+        fact2Label: "Market",
+        fact2Value: "Europe",
+        fact2Text: "We export bioethanol to Europe under demanding environmental standards.",
+        fact3Label: "Operation",
+        fact3Value: "Year-round",
+        fact3Text: "Continuous management and trading with emissions certifications.",
+        fact4Label: "Since",
+        fact4Value: "2009",
+        fact4Text: "Peru has exported bioethanol with verifiable environmental standards.",
+        territoryKicker: "Peru Territory",
+        territoryTitle: "A unique desert: South America’s natural greenhouse",
+        territoryP1: "Peru, on the western coast of South America, has one of the most extraordinary coastlines in the world: a unique desert shaped by the Humboldt Current, the Andes, and an exceptional climate that makes it a true natural greenhouse.",
+        territoryP2: "More daylight, stable temperatures, and ideal conditions make highly efficient agriculture possible for much of the year.",
+        territoryQuote: "From that coast our story began. That desert is the origin of Bioenergía del Perú.",
+        stat1Label: "current",
+        stat1Text: "Shapes the climate of Peru’s coastal desert.",
+        stat2Label: "range",
+        stat2Text: "Creates exceptional conditions for agriculture.",
+        stat3Label: "days",
+        stat3Text: "Efficient agriculture during most of the year.",
+        landscapeKicker: "Productive landscape",
+        landscapeTitle: "From arid land to green fields",
+        landscapeP: "What was once desert is now productive land. Thanks to technology, drip irrigation, and efficient water management, large arid areas on the Peruvian coast have been transformed into high-yield fields.",
+        labelDrip: "Drip irrigation",
+        labelWork: "Land being worked",
+        labelGreen: "Productive green field",
+        fruitFloatSmall: "New stage",
+        fruitFloatBig: "Peruvian fruits with local roots and global reach",
+        fruitKicker: "New stage",
+        fruitTitle: "Peruvian fruits with local roots and global reach",
+        fruitP: "Our team brings decades of experience in export sectors such as fishing and agribusiness, including fishmeal, frozen seafood, and IQF mango. That path taught us how to handle quality, logistics, and highly specific markets.",
+        fruitFact1Label: "Products",
+        fruitFact1Value: "Fresh, frozen, and dried",
+        fruitFact1Text: "A diversified offer for different channels and markets.",
+        fruitFact2Label: "Origin",
+        fruitFact2Value: "Peruvian roots",
+        fruitFact2Text: "History, territory, and productivity turned into a commercial proposal.",
+        visionKicker: "Vision",
+        visionTitle: "We connect Peru’s potential with markets around the world",
+        visionP: "Bioenergía del Perú evolves without losing its essence: operational rigor, international vision, and commitment to origin. Today that foundation drives a new stage in high-quality Peruvian food.",
+        visionTag1: "Sustainability",
+        visionTag2: "Agro-export",
+        visionTag3: "Innovation",
+        visionTag4: "Global market",
+        visionStat1Title: "Renewable energy",
+        visionStat1Text: "A story built on sustainability, management, and operations.",
+        visionStat2Title: "Agro-export",
+        visionStat2Text: "A new stage focused on Peruvian fruits with traceability and added value.",
+        visionStat3Title: "Global market",
+        visionStat3Text: "A bridge between Peru’s potential and international buyers.",
+        contactKicker: "Contact",
+        contactTitle: "We are on two continents",
+        contactP: "Bioenergía del Perú connects America and Europe with strategic offices in Lima and Barcelona. We stay close to our markets to manage operations in a traceable and sustainable way.",
+        contactEmail1: "info@bioenergiadelperu.com",
+        contactEmail2: "comercial@bioenergiadelperu.com",
+        contactEmail3: "prensa@bioenergiadelperu.com",
+        contactLinkedIn: "Follow us on LinkedIn",
+        limaTitle: "Lima, Peru",
+        limaAddress: "Alcanfores 1245, Miraflores",
+        limaPhone: "Phone: +51998256656",
+        bcnTitle: "Barcelona, Spain",
+        bcnAddress: "Ramon Turró 294, Sant Martí",
+        bcnPhone: "Phone: +34637612624",
+        emailsTitle: "Direct emails",
+        emails1: "General: info@bioenergiadelperu.com",
+        emails2: "Commercial: comercial@bioenergiadelperu.com",
+        emails3: "Press: prensa@bioenergiadelperu.com",
+        footer: "Bioenergía del Perú · Renewable energy · Agro-export · Peru"
+      }
+    };
+
+    function applyLanguage(lang) {
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+      });
+      document.querySelectorAll('.lang-switch a').forEach(a => a.classList.toggle('active', a.dataset.lang === lang));
+      localStorage.setItem('siteLang', lang);
+    }
+
+    document.querySelectorAll('.lang-switch a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        applyLanguage(a.dataset.lang);
+      });
+    });
+
+    const savedLang = localStorage.getItem('siteLang') || 'es';
+    applyLanguage(savedLang);
+
     const width = window.innerWidth, height = window.innerHeight;
     const svg = d3.select('#particles').append('svg').attr('width', width).attr('height', height);
     const colors = ['#58b06a', '#b9df9f', '#d8782c', '#7a8b48', '#e4f4d7'];

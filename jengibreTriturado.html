@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jengibre Triturado 091012 — Europa</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+:root{
+  /* Página clara */
+  --page-bg:#f5f5f7;
+  --page-ink:#111827;
+
+  --hero-bg-from:#ffffff;
+  --hero-bg-to:#f3f4f6;
+
+  --sidebar-bg:#ffffff;
+  --sidebar-border:rgba(15,23,42,.08);
+
+  /* Mapa oscuro (tal como lo tenías) */
+  --bg0:#03070b;
+  --bg1:#071119;
+  --bg2:#0b1820;
+  --ink:#f4f7fb;
+  --muted:#8da1ad;
+  --card:rgba(4,14,20,.96);
+  --shadow:0 26px 96px rgba(0,0,0,.74);
+
+  --accent:#e11d28;
+  --accent2:#47bef8;
+  --accent3:#9fd7e6;
+  --accent4:#f7a12d;
+
+  --line:#e11d28;
+  --panel-accent:#e11d28;
+  --panel-bg:#101820;
+}
+
+*{ box-sizing:border-box; }
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  font-family:Inter,system-ui,sans-serif;
+  background:var(--page-bg);
+  color:var(--page-ink);
+}
+
+.page{
+  width:min(1820px, calc(100vw - 24px));
+  margin:18px auto 24px;
+}
+
+/* HERO claro */
+
+.hero{
+  position:relative;
+  background:linear-gradient(180deg,var(--hero-bg-from) 0%, var(--hero-bg-to) 100%);
+  border:1px solid rgba(15,23,42,.08);
+  border-radius:18px;
+  padding:18px 20px 16px;
+  box-shadow:0 14px 40px rgba(15,23,42,.06);
+  margin-bottom:10px;
+  overflow:hidden;
+}
+
+.hero-inner{
+  position:relative;
+  z-index:1;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.brand-mark{
+  width:140px;
+  height:60px;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(15,23,42,.08);
+  box-shadow:0 10px 26px rgba(15,23,42,.06);
+  background:#ffffff;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.brand-mark img{
+  max-width:110%;
+  max-height:110%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  display:block;
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.brand-name{
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:#111827;
+}
+
+.brand-tag{
+  font-size:10px;
+  color:#6b7280;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+
+.kicker{
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#6b7280;
+  margin-bottom:6px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:26px;
+  line-height:1.18;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#111827;
+}
+
+.subtitle{
+  margin-top:8px;
+  font-size:15px;
+  line-height:1.6;
+  color:#4b5563;
+  max-width:1200px;
+}
+
+/* LAYOUT principal */
+
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 360px;
+  gap:18px;
+  align-items:start;
+}
+
+@media (max-width:1220px){
+  .layout{grid-template-columns:1fr}
+}
+
+/* MAPA – cápsula oscura */
+
+.map-wrap{
+  position:relative;
+  min-height:1180px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(71,190,248,.08), transparent 32%),
+    linear-gradient(180deg, rgba(6,17,23,.97), rgba(4,10,14,.99));
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.map-topbar{
+  position:relative;
+  z-index:3;
+  padding:14px 16px 10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, rgba(8,18,26,.96), rgba(5,12,17,.88));
+}
+
+.map-topbar .left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.map-topbar .eyebrow{
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#9aaab4;
+}
+
+.map-topbar .title{
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#f7fbff;
+}
+
+.map-topbar .desc{
+  font-size:13px;
+  color:#8da1ad;
+  line-height:1.45;
+}
+
+.map-topbar .chip{
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#f7fbff;
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:8px 10px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+
+.stage{
+  position:relative;
+  min-height:1100px;
+  width:100%;
+  z-index:1;
+}
+
+.svg-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  overflow:visible;
+  z-index:0;
+}
+
+.grid-line{
+  stroke:rgba(255,255,255,.035);
+  stroke-width:1;
+}
+
+.country{
+  fill:#091c24;
+  stroke:#1b3947;
+  stroke-width:1.4;
+  transition:fill .2s ease, stroke .2s ease, opacity .18s ease, stroke-width .2s ease, filter .2s ease;
+}
+
+.country.hasData{
+  fill:url(#countryGradient);
+}
+.country.hasData.tier-top{
+  stroke:rgba(250,204,107,.95);
+  stroke-width:2.3;
+  filter:drop-shadow(0 0 22px rgba(250,204,107,.9));
+}
+.country.hasData.tier-mid{
+  stroke:rgba(163,219,255,.9);
+  stroke-width:1.9;
+  filter:drop-shadow(0 0 16px rgba(71,190,248,.42));
+}
+.country.hasData.tier-tail{
+  stroke:rgba(111,148,170,.9);
+  stroke-width:1.5;
+  opacity:.9;
+  filter:drop-shadow(0 0 10px rgba(87,125,145,.5));
+}
+.country.noData{
+  fill:#061117;
+  stroke:#0f2833;
+  opacity:.55;
+}
+
+.country.dim{ opacity:.14; }
+.country.active{
+  fill:#153847;
+  stroke:var(--accent2);
+  stroke-width:2.8;
+  filter:drop-shadow(0 0 22px rgba(71,190,248,.9));
+}
+
+.hover-layer{
+  fill:transparent;
+  stroke:transparent;
+  cursor:pointer;
+  pointer-events:all;
+}
+
+.countryLabel{
+  fill:var(--ink);
+  font-size:11px;
+  font-weight:700;
+  text-anchor:middle;
+  pointer-events:none;
+  paint-order:stroke;
+  stroke:rgba(0,0,0,.7);
+  stroke-width:3px;
+  stroke-linejoin:round;
+}
+.countryValue{
+  fill:#aee8d0;
+  font-size:10px;
+  text-anchor:middle;
+  pointer-events:none;
+  font-variant-numeric:tabular-nums;
+}
+
+/* Tooltip oscuro original */
+
+.tooltip{
+  position:absolute;
+  pointer-events:none;
+  opacity:0;
+  z-index:100;
+  width:340px;
+  padding:16px 16px 14px;
+  border-radius:18px;
+  background:radial-gradient(circle at 0 0, rgba(71,190,248,.12), rgba(3,12,16,.98));
+  border:1px solid rgba(255,255,255,.2);
+  color:var(--ink);
+  box-shadow:0 28px 80px rgba(0,0,0,.85);
+  backdrop-filter:blur(24px);
+}
+
+.tooltip .eyebrow{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#8da1ad;
+  margin-bottom:2px;
+}
+.tooltip .pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:2px 8px;
+  border-radius:999px;
+  background:rgba(7,37,46,.9);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#aee8d0;
+}
+.tooltip .pill-dot{
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:linear-gradient(120deg,var(--accent2),var(--accent));
+}
+.tooltip .title{
+  font-size:18px;
+  font-weight:800;
+  margin:10px 0 4px;
+}
+.tooltip .subtitle{
+  font-size:11px;
+  color:#8da1ad;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+.tooltip .row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:8px;
+  font-size:13px;
+}
+.tooltip .muted{ color:#8da1ad; }
+.tooltip strong{ font-variant-numeric:tabular-nums; }
+.tooltip .barRow{
+  margin-top:10px;
+}
+.tooltip .barLabel{
+  display:flex;
+  justify-content:space-between;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#8da1ad;
+  margin-bottom:4px;
+}
+.tooltip .barTrack{
+  width:100%;
+  height:5px;
+  border-radius:999px;
+  background:rgba(15,42,53,.9);
+  overflow:hidden;
+}
+.tooltip .barFill{
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent4));
+  box-shadow:0 0 10px rgba(255,110,169,.6);
+}
+
+/* SIDEBAR clara */
+
+.sidebar{
+  position:sticky;
+  top:10px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.panel{
+  position:relative;
+  background:var(--sidebar-bg);
+  border:1px solid var(--sidebar-border);
+  box-shadow:0 10px 26px rgba(15,23,42,.04);
+  padding:16px 14px 12px;
+  overflow:hidden;
+  transition:background .2s ease;
+}
+.panel:nth-of-type(2),
+.panel:nth-of-type(3){
+  background:#ffffff;
+}
+.panel::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:var(--panel-accent);
+}
+.panel h2{
+  margin:8px 0 8px 0;
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.20em;
+  color:#111827;
+}
+.panel .main{
+  font-size:17px;
+  font-weight:800;
+  line-height:1.3;
+  margin-bottom:8px;
+  color:#111827;
+}
+.panel .body{
+  color:#4b5563;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+.pill{
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.7);
+  background:#f3f4f6;
+  padding:6px 10px;
+  font-size:13px;
+  color:#111827;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.pill-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+}
+.pill-dot.red{background:var(--accent);}
+.pill-dot.gray{background:#9ca3af;}
+
+.info-grid{
+  display:grid;
+  gap:8px;
+  margin-top:10px;
+}
+.info-box{
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  padding:10px 11px;
+}
+.info-k{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#6b7280;
+  margin-bottom:4px;
+}
+.info-v{
+  font-size:14px;
+  line-height:1.4;
+  color:#111827;
+}
+
+.details{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.detail-card{
+  border:1px solid #e5e7eb;
+  border-left:3px solid var(--detail-color);
+  background:#ffffff;
+  padding:10px 12px;
+}
+.detail-card .t{
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:4px;
+  color:#111827;
+}
+.detail-card .b{
+  font-size:14px;
+  line-height:1.45;
+  color:#374151;
+}
+
+.top3{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid #e5e7eb;
+}
+
+.top3-title{
+  font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#6b7280;
+  margin-bottom:6px;
+}
+
+.top3-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 8px;
+  border-radius:6px;
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  margin-bottom:4px;
+}
+
+.top3-item-main{
+  display:flex;
+  flex-direction:column;
+}
+
+.top3-rank{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#6b7280;
+}
+
+.top3-country{
+  font-size:13px;
+  font-weight:600;
+  color:#111827;
+}
+
+.top3-value{
+  font-size:12px;
+  font-variant-numeric:tabular-nums;
+  color:#047857;
+}
+
+.top3-chip{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#9333ea;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Bioenergía del Perú</span>
+          <span class="brand-tag">Data Atlas · Jengibre Triturado</span>
+        </div>
+      </div>
+
+      <div class="kicker">Jengibre Triturado · Partida 091012 · Europa · 2025</div>
+      <h1>Mercado europeo de jengibre Triturado</h1>
+      <div class="subtitle">
+        Mapa interactivo de importaciones de jengibre triturado en Europa. Pasa el cursor sobre cada país
+        para ver valor importado, volumen, valor unitario y participación mundial.
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <section class="map-wrap">
+      <div class="map-topbar">
+        <div class="left">
+          <div class="eyebrow">Mapa interactivo</div>
+          <div class="title">Importaciones europeas de jengibre</div>
+          <div class="desc">Jengibre 091012 · datos 2025 · valores FOB en mil USD.</div>
+        </div>
+        <div class="chip">Europa · 2025</div>
+      </div>
+
+      <div class="stage" id="stage">
+        <svg class="svg-layer" id="svg-layer" aria-hidden="true"></svg>
+        <div class="tooltip" id="tooltip"></div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="panel" id="panel-selected">
+        <h2>Estado</h2>
+        <div class="main" id="panel-title">Explora el mapa</div>
+        <div class="body" id="panel-body">
+          Pasa el cursor sobre un país para ver sus datos y resaltar su posición dentro del mercado europeo.
+        </div>
+        <div class="legend">
+          <span class="pill">
+            <span class="pill-dot red"></span>
+            País con datos
+          </span>
+          <span class="pill">
+            <span class="pill-dot gray"></span>
+            Fondo sin datos
+          </span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Contexto</h2>
+        <div class="info-grid">
+          <div class="info-box"><div class="info-k">Producto</div><div class="info-v">Jengibre · Partida 091012</div></div>
+          <div class="info-box"><div class="info-k">Cobertura</div><div class="info-v">Mercado europeo</div></div>
+          <div class="info-box"><div class="info-k">Uso</div><div class="info-v">Inteligencia de mercado y relato comercial</div></div>
+          <div class="info-box"><div class="info-k">Año</div><div class="info-v">2025</div></div>
+        </div>
+
+        <div class="top3" id="top3">
+          <div class="top3-title">Top 3 importadores en Europa</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Notas metodológicas</h2>
+        <div class="details" id="details"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const data = [
+  {"importador":"Mundo","valor_importado_2025_musd":201622,"cantidad_importada_2025":68942,"unidad_cantidad":"Toneladas","valor_unitario_usd":2925,"participacion_mundial_pct":100},
+  {"importador":"Alemania","valor_importado_2025_musd":17067,"cantidad_importada_2025":3557,"unidad_cantidad":"Toneladas","valor_unitario_usd":4798,"participacion_mundial_pct":8.5},
+  {"importador":"Reino Unido","valor_importado_2025_musd":16784,"cantidad_importada_2025":7229,"unidad_cantidad":"Toneladas","valor_unitario_usd":2322,"participacion_mundial_pct":8.3},
+  {"importador":"Países Bajos","valor_importado_2025_musd":13001,"cantidad_importada_2025":2751,"unidad_cantidad":"Toneladas","valor_unitario_usd":4726,"participacion_mundial_pct":6.4},
+  {"importador":"Polonia","valor_importado_2025_musd":5328,"cantidad_importada_2025":935,"unidad_cantidad":"Toneladas","valor_unitario_usd":5698,"participacion_mundial_pct":2.6},
+  {"importador":"Francia","valor_importado_2025_musd":5210,"cantidad_importada_2025":1018,"unidad_cantidad":"Toneladas","valor_unitario_usd":5118,"participacion_mundial_pct":2.6},
+  {"importador":"España","valor_importado_2025_musd":4564,"cantidad_importada_2025":1136,"unidad_cantidad":"Toneladas","valor_unitario_usd":4018,"participacion_mundial_pct":2.3},
+  {"importador":"Bélgica","valor_importado_2025_musd":3827,"cantidad_importada_2025":1471,"unidad_cantidad":"Toneladas","valor_unitario_usd":2602,"participacion_mundial_pct":1.9},
+  {"importador":"Austria","valor_importado_2025_musd":3048,"cantidad_importada_2025":519,"unidad_cantidad":"Toneladas","valor_unitario_usd":5873,"participacion_mundial_pct":1.5},
+  {"importador":"Italia","valor_importado_2025_musd":2052,"cantidad_importada_2025":319,"unidad_cantidad":"Toneladas","valor_unitario_usd":6433,"participacion_mundial_pct":1.0},
+  {"importador":"Suecia","valor_importado_2025_musd":1906,"cantidad_importada_2025":292,"unidad_cantidad":"Toneladas","valor_unitario_usd":6527,"participacion_mundial_pct":0.9},
+  {"importador":"Suiza","valor_importado_2025_musd":1224,"cantidad_importada_2025":116,"unidad_cantidad":"Toneladas","valor_unitario_usd":10552,"participacion_mundial_pct":0.6},
+  {"importador":"Irlanda","valor_importado_2025_musd":955,"cantidad_importada_2025":367,"unidad_cantidad":"Toneladas","valor_unitario_usd":2602,"participacion_mundial_pct":0.5},
+  {"importador":"Albania","valor_importado_2025_musd":953,"cantidad_importada_2025":140,"unidad_cantidad":"Toneladas","valor_unitario_usd":6807,"participacion_mundial_pct":0.5},
+  {"importador":"República Checa","valor_importado_2025_musd":905,"cantidad_importada_2025":137,"unidad_cantidad":"Toneladas","valor_unitario_usd":6606,"participacion_mundial_pct":0.4}
+];
+
+const stage = d3.select("#stage");
+const svg = d3.select("#svg-layer");
+const tooltip = d3.select("#tooltip");
+const panelTitle = document.getElementById("panel-title");
+const panelBody = document.getElementById("panel-body");
+const details = document.getElementById("details");
+const top3Container = document.getElementById("top3");
+
+const nodes = data.filter(d => d.importador !== "Mundo");
+const defs = svg.append("defs");
+
+/* Gradientes */
+
+const bgGradient = defs.append("radialGradient").attr("id","bgGradient");
+bgGradient.append("stop").attr("offset","0%").attr("stop-color","#285b73");
+bgGradient.append("stop").attr("offset","55%").attr("stop-color","#07151b");
+bgGradient.append("stop").attr("offset","100%").attr("stop-color","#02080c");
+
+const countryGradient = defs.append("linearGradient")
+  .attr("id","countryGradient")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","100%");
+countryGradient.append("stop").attr("offset","0%").attr("stop-color","#1a3a48");
+countryGradient.append("stop").attr("offset","45%").attr("stop-color","#235b6f");
+countryGradient.append("stop").attr("offset","100%").attr("stop-color","#2b7c84");
+
+const miniBarGradient = defs.append("linearGradient")
+  .attr("id","miniBarGradient")
+  .attr("x1","0%").attr("y1","0%")
+  .attr("x2","100%").attr("y2","0%");
+miniBarGradient.append("stop").attr("offset","0%").attr("stop-color","#6dd5ff");
+miniBarGradient.append("stop").attr("offset","50%").attr("stop-color","#ff6ea9");
+miniBarGradient.append("stop").attr("offset","100%").attr("stop-color","#facc6b");
+
+function normalizeText(str){
+  return (str || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+const nameMap = new Map([
+  ["Alemania", ["Germany"]],
+  ["Reino Unido", ["United Kingdom","UK","Great Britain","Britain"]],
+  ["Países Bajos", ["Netherlands","Holland"]],
+  ["Polonia", ["Poland"]],
+  ["Francia", ["France"]],
+  ["España", ["Spain"]],
+  ["Bélgica", ["Belgium"]],
+  ["Austria", ["Austria"]],
+  ["Italia", ["Italy"]],
+  ["Suecia", ["Sweden"]],
+  ["Suiza", ["Switzerland"]],
+  ["Irlanda", ["Ireland"]],
+  ["Albania", ["Albania"]],
+  ["República Checa", ["Czech Republic","Czechia"]]
+]);
+
+function getAliases(nameES){
+  return nameMap.get(nameES) || [nameES];
+}
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+/* Halo de fondo */
+
+svg.append("circle")
+  .attr("cx", width * 0.58)
+  .attr("cy", height * 0.56)
+  .attr("r", Math.max(width, height) * 0.6)
+  .attr("fill", "url(#bgGradient)")
+  .attr("opacity", .95);
+
+const grid = svg.append("g");
+const gridStep = 80;
+for(let x = 0; x < width; x += gridStep){
+  grid.append("line")
+    .attr("class","grid-line")
+    .attr("x1", x)
+    .attr("y1", 0)
+    .attr("x2", x)
+    .attr("y2", height);
+}
+for(let y = 0; y < height; y += gridStep){
+  grid.append("line")
+    .attr("class","grid-line")
+    .attr("x1", 0)
+    .attr("y1", y)
+    .attr("x2", width)
+    .attr("y2", y);
+}
+
+const g = svg.append("g");
+const projection = d3.geoMercator();
+const path = d3.geoPath(projection);
+
+/* Notas metodológicas */
+
+const detailsData = [
+  { step: 1, color: "#e11d28", title: "Protocolo", body: "Variedad, agroquímicos permitidos, características organolépticas, brix y calibre según especificaciones europeas." },
+  { step: 2, color: "#2563eb", title: "Recepción", body: "Control de entrega, inspección visual y verificación documental de cada lote a la llegada." },
+  { step: 3, color: "#16a34a", title: "Clasificación", body: "Selección y ordenamiento del producto antes de su empaquetado y distribución al cliente final." }
+];
+
+detailsData.forEach(d => {
+  const el = document.createElement("div");
+  el.className = "detail-card";
+  el.style.setProperty("--detail-color", d.color);
+  el.innerHTML = `<div class="t">Paso ${d.step} · ${d.title}</div><div class="b">${d.body}</div>`;
+  details.appendChild(el);
+});
+
+/* Panel helpers */
+
+function setPanelAccent(color){
+  document.documentElement.style.setProperty("--panel-accent", color);
+}
+function setPanelBackground(bg){
+  document.documentElement.style.setProperty("--panel-bg", bg);
+}
+function activatePanel(title, body, color, bg){
+  panelTitle.textContent = title;
+  panelBody.textContent = body;
+  setPanelAccent(color || "#e11d28");
+  setPanelBackground(bg || "#ffffff");
+}
+
+/* Carga mapa */
+
+d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(worldGeo => {
+
+  let europeRaw = worldGeo.features.filter(f => {
+    const centroid = d3.geoCentroid(f);
+    const lon = centroid[0];
+    const lat = centroid[1];
+    return lon >= -25 && lon <= 45 && lat >= 34 && lat <= 72;
+  });
+
+  const islandNames = new Set(["Iceland","Greenland","Cyprus","Malta"]);
+
+  europeRaw = europeRaw.filter(f => {
+    const name = f.properties.name || f.properties.NAME || "";
+    return !islandNames.has(name);
+  });
+
+  const areaThreshold = 0.1;
+  const europe = europeRaw.filter(f => {
+    const geom = f.geometry;
+    let coords = [];
+    if (geom.type === "Polygon") coords = geom.coordinates[0];
+    else if (geom.type === "MultiPolygon") coords = geom.coordinates[0][0] || [];
+    if (!coords.length) return false;
+
+    let minLon = Infinity, maxLon = -Infinity, minLat = Infinity, maxLat = -Infinity;
+    coords.forEach(p => {
+      const [lon, lat] = p;
+      if (lon < minLon) minLon = lon;
+      if (lon > maxLon) maxLon = lon;
+      if (lat < minLat) minLat = lat;
+      if (lat > maxLat) maxLat = lat;
+    });
+    return (maxLon - minLon) * (maxLat - minLat) > areaThreshold;
+  });
+
+  /* Zoom grande */
+
+  projection.fitSize([width * 3.1, height * 3.1], { type:"FeatureCollection", features:europe });
+
+  const allCoords = [];
+  europe.forEach(f => {
+    const geom = f.geometry;
+    if (geom.type === "Polygon") {
+      geom.coordinates[0].forEach(p => allCoords.push(projection(p)));
+    } else if (geom.type === "MultiPolygon") {
+      geom.coordinates.forEach(poly => {
+        if (poly[0]) {
+          poly[0].forEach(p => allCoords.push(projection(p)));
+        }
+      });
+    }
+  });
+
+  const xs = allCoords.map(p => p[0]);
+  const ys = allCoords.map(p => p[1]);
+  const mapCx = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const mapCy = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const viewCx = width / 2;
+  const viewCy = height / 2 - 80;
+
+  g.attr("transform", `translate(${viewCx - mapCx},${viewCy - mapCy})`);
+
+  const geoIndex = new Map();
+  europe.forEach(f => {
+    const raw = f.properties.name || f.properties.NAME || "";
+    geoIndex.set(normalizeText(raw), f);
+  });
+
+  function findFeatureByName(nameES){
+    const aliases = getAliases(nameES);
+    for (const alias of aliases) {
+      const hit = geoIndex.get(normalizeText(alias));
+      if (hit) return hit;
+    }
+
+    if (nameES === "Reino Unido") {
+      return europe.find(f => {
+        const c = d3.geoCentroid(f);
+        return c[0] >= -12 && c[0] <= 3 && c[1] >= 49 && c[1] <= 60;
+      }) || null;
+    }
+
+    if (nameES === "República Checa") {
+      return europe.find(f => {
+        const c = d3.geoCentroid(f);
+        return c[0] >= 12 && c[0] <= 19 && c[1] >= 48 && c[1] <= 51.5;
+      }) || null;
+    }
+
+    return null;
+  }
+
+  const dataByCountry = nodes.map(d => {
+    const feature = findFeatureByName(d.importador);
+    const centroid = feature ? path.centroid(feature) : null;
+    return feature ? {...d, feature, centroid} : null;
+  }).filter(Boolean);
+
+  const ranked = [...dataByCountry].sort((a,b) => b.valor_importado_2025_musd - a.valor_importado_2025_musd);
+  const rankByES = new Map();
+  ranked.forEach((d,i) => rankByES.set(d.importador, i+1));
+  const rankThresholdTop = 3;
+  const rankThresholdTail = ranked.length - 2;
+
+  const mapGroup = g.append("g");
+  mapGroup.selectAll("path.country")
+    .data(europe)
+    .enter()
+    .append("path")
+    .attr("class", f => {
+      const dMatch = dataByCountry.find(d => d.feature === f);
+      if(!dMatch) return "country noData";
+      const rank = rankByES.get(dMatch.importador);
+      if(rank && rank <= rankThresholdTop) return "country hasData tier-top";
+      if(rank && rank > rankThresholdTail) return "country hasData tier-tail";
+      return "country hasData tier-mid";
+    })
+    .attr("d", path);
+
+  const hoverGroup = g.append("g");
+  hoverGroup.selectAll("path.hover-layer")
+    .data(europe)
+    .enter()
+    .append("path")
+    .attr("class","hover-layer")
+    .attr("d", path);
+
+  /* TOP 3 */
+
+  const topoEurope = [...dataByCountry]
+    .sort((a,b) => b.valor_importado_2025_musd - a.valor_importado_2025_musd)
+    .slice(0,3);
+
+  topoEurope.forEach((d,i) => {
+    const item = document.createElement("div");
+    item.className = "top3-item";
+
+    const main = document.createElement("div");
+    main.className = "top3-item-main";
+
+    const rankEl = document.createElement("div");
+    rankEl.className = "top3-rank";
+    rankEl.textContent = `#${i+1} · Hub europeo`;
+
+    const countryEl = document.createElement("div");
+    countryEl.className = "top3-country";
+    countryEl.textContent = d.importador;
+
+    main.appendChild(rankEl);
+    main.appendChild(countryEl);
+
+    const right = document.createElement("div");
+    const valueEl = document.createElement("div");
+    valueEl.className = "top3-value";
+    valueEl.textContent = d3.format(",")(d.valor_importado_2025_musd) + " mil USD";
+
+    const chipEl = document.createElement("div");
+    chipEl.className = "top3-chip";
+    chipEl.textContent = d.participacion_mundial_pct + "% mundial";
+
+    right.appendChild(valueEl);
+    right.appendChild(chipEl);
+
+    item.appendChild(main);
+    item.appendChild(right);
+    top3Container.appendChild(item);
+  });
+
+  /* Labels en el mapa */
+
+  const labels = g.append("g");
+  labels.selectAll("text.countryLabel")
+    .data(dataByCountry)
+    .enter()
+    .append("text")
+    .attr("class","countryLabel")
+    .attr("x", d => d.centroid[0])
+    .attr("y", d => d.centroid[1] + 4)
+    .text(d => d.importador);
+
+  const values = g.append("g");
+  values.selectAll("text.countryValue")
+    .data(dataByCountry)
+    .enter()
+    .append("text")
+    .attr("class","countryValue")
+    .attr("x", d => d.centroid[0])
+    .attr("y", d => d.centroid[1] + 18)
+    .text(d => `${d3.format(",")(d.valor_importado_2025_musd)} mil USD`);
+
+  /* Callouts */
+
+  const callouts = svg.append("g");
+
+  (function(){
+    const d = dataByCountry.find(x => x.importador === "Alemania");
+    if(!d) return;
+    const anchorX = d.centroid[0];
+    const anchorY = d.centroid[1] - 10;
+    const boxX = anchorX + 80;
+    const boxY = anchorY - 40;
+    const boxW = 220;
+    const boxH = 56;
+
+    callouts.append("line")
+      .attr("class","callout-line")
+      .attr("x1", anchorX)
+      .attr("y1", anchorY)
+      .attr("x2", boxX)
+      .attr("y2", boxY + boxH/2);
+
+    const box = callouts.append("g");
+    box.append("rect")
+      .attr("class","callout-box")
+      .attr("x", boxX)
+      .attr("y", boxY)
+      .attr("width", boxW)
+      .attr("height", boxH);
+
+    box.append("text")
+      .attr("class","callout-title")
+      .attr("x", boxX + 12)
+      .attr("y", boxY + 18)
+      .text("ALEMANIA · HUB DEL NORTE");
+
+    box.append("text")
+      .attr("class","callout-text")
+      .attr("x", boxX + 12)
+      .attr("y", boxY + 34)
+      .text("Principal mercado europeo por valor, con demanda estable y diversificada.");
+  })();
+
+  (function(){
+    const d = dataByCountry.find(x => x.importador === "España");
+    if(!d) return;
+    const anchorX = d.centroid[0];
+    const anchorY = d.centroid[1] + 12;
+    const boxX = anchorX - 260;
+    const boxY = anchorY + 18;
+    const boxW = 240;
+    const boxH = 56;
+
+    callouts.append("line")
+      .attr("class","callout-line")
+      .attr("x1", anchorX)
+      .attr("y1", anchorY)
+      .attr("x2", boxX + boxW)
+      .attr("y2", boxY + 10);
+
+    const box = callouts.append("g");
+    box.append("rect")
+      .attr("class","callout-box")
+      .attr("x", boxX)
+      .attr("y", boxY)
+      .attr("width", boxW)
+      .attr("height", boxH);
+
+    box.append("text")
+      .attr("class","callout-title")
+      .attr("x", boxX + 12)
+      .attr("y", boxY + 18)
+      .text("ESPAÑA · PUERTA SUR");
+
+    box.append("text")
+      .attr("class","callout-text")
+      .attr("x", boxX + 12)
+      .attr("y", boxY + 34)
+      .text("Nodo mediterráneo para abastecer la península y conectar con otros mercados.");
+  })();
+
+  /* Tooltip */
+
+  function showTooltip(event, d){
+    const x = Math.min(window.innerWidth - 360, event.clientX + 18);
+    const y = Math.max(12, event.clientY - 10);
+    const share = d.participacion_mundial_pct;
+    const shareClamped = Math.max(1, Math.min(share, 20));
+
+    tooltip
+      .style("left", x + "px")
+      .style("top", y + "px")
+      .style("opacity", 1)
+      .html(`
+        <div class="eyebrow">Importador · Jengibre 091012 · 2025</div>
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span>${d.unidad_cantidad} · FOB</span>
+        </div>
+        <div class="title">${d.importador}</div>
+        <div class="subtitle">Mercado europeo · Datos oficiales</div>
+        <div class="row">
+          <span class="muted">Valor importado</span>
+          <strong>${d3.format(",")(d.valor_importado_2025_musd)} mil USD</strong>
+        </div>
+        <div class="row">
+          <span class="muted">Cantidad</span>
+          <strong>${d3.format(",")(d.cantidad_importada_2025)} ${d.unidad_cantidad}</strong>
+        </div>
+        <div class="row">
+          <span class="muted">Valor unitario</span>
+          <strong>${d3.format(",")(d.valor_unitario_usd)} USD / t</strong>
+        </div>
+        <div class="row">
+          <span class="muted">Participación mundial</span>
+          <strong>${d.participacion_mundial_pct}%</strong>
+        </div>
+        <div class="barRow">
+          <div class="barLabel">
+            <span>Relevancia global</span>
+            <span>${d.participacion_mundial_pct}%</span>
+          </div>
+          <div class="barTrack">
+            <div class="barFill" style="width:${shareClamped*4}%;"></div>
+          </div>
+        </div>
+      `);
+  }
+
+  function reset(){
+    mapGroup.selectAll(".country")
+      .classed("dim", false)
+      .classed("active", false);
+    labels.style("opacity", 1);
+    values.style("opacity", 1);
+    tooltip.style("opacity", 0);
+    activatePanel(
+      "Explora el mapa",
+      "Pasa el cursor sobre un país para ver sus datos y resaltar su posición dentro del mercado europeo.",
+      "#e11d28",
+      "#ffffff"
+    );
+  }
+
+  hoverGroup.selectAll("path.hover-layer")
+    .style("pointer-events","all")
+    .on("mouseenter", function(event, f){
+      const d = dataByCountry.find(x => x.feature === f);
+      if(!d) return;
+
+      mapGroup.selectAll(".country")
+        .classed("dim", x => x !== f)
+        .classed("active", x => x === f);
+
+      labels.style("opacity", l => l.importador === d.importador ? 1 : 0.2);
+      values.style("opacity", v => v.importador === d.importador ? 1 : 0.15);
+
+      activatePanel(
+        d.importador,
+        `Valor importado: ${d3.format(",")(d.valor_importado_2025_musd)} mil USD · Cantidad: ${d3.format(",")(d.cantidad_importada_2025)} ${d.unidad_cantidad} · Valor unitario: ${d3.format(",")(d.valor_unitario_usd)} USD/t.`,
+        "#47bef8",
+        "#ffffff"
+      );
+
+      showTooltip(event, d);
+      d3.select(this).raise();
+    })
+    .on("mousemove", function(event, f){
+      const d = dataByCountry.find(x => x.feature === f);
+      if(d) showTooltip(event, d);
+    })
+    .on("mouseleave", reset);
+
+  activatePanel(
+    "Explora el mapa",
+    "Pasa el cursor sobre un país para ver sus datos y resaltar su posición dentro del mercado europeo.",
+    "#e11d28",
+    "#ffffff"
+  );
+});
+
+window.addEventListener("resize", () => location.reload());
+</script>
+</body>
+</html>

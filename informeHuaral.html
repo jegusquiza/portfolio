@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap de decisiones · Pitahaya Perú–Europa</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --bg2:#f5f5f5;
+      --ink:#111827;
+      --muted:#6b7280;
+      --line:#e11d28;
+      --border:#111827;
+      --shadow:0 18px 44px rgba(15,23,42,.10);
+      --soft:0 8px 18px rgba(15,23,42,.06);
+      --s1:#f97373;
+      --s2:#f59e0b;
+      --s3:#3b82f6;
+      --s4:#22c55e;
+      --s5:#ec4899;
+      --s6:#6366f1;
+      --s7:#0ea5e9;
+      --s8:#f97316;
+      --s9:#eab308;
+      --s10:#16a34a;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Arial,sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,var(--bg),var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .page{
+      width:min(1820px,calc(100vw - 24px));
+      margin:18px auto 24px;
+    }
+
+    .hero{
+      background:linear-gradient(180deg,#fff,#fafafa);
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      padding:18px 20px 16px;
+      box-shadow:var(--soft);
+      margin-bottom:14px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand-mark{
+      width:140px;
+      height:60px;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid rgba(15,23,42,.12);
+      box-shadow:0 14px 32px rgba(15,23,42,.18);
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:none;
+    }
+
+    .brand-mark img{
+      max-width:110%;
+      max-height:110%;
+      object-fit:contain;
+      display:block;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+
+    .brand-name{
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.20em;
+      text-transform:uppercase;
+    }
+
+    .brand-tag{
+      font-size:10px;
+      color:var(--muted);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-weight:600;
+    }
+
+    .kicker{
+      font-family:ui-monospace,monospace;
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:#9ca3af;
+      margin:10px 0 6px;
+    }
+
+    h1{
+      margin:0;
+      font-size:24px;
+      line-height:1.18;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+    }
+
+    .subtitle{
+      margin-top:8px;
+      font-size:15px;
+      line-height:1.6;
+      color:var(--muted);
+      max-width:1200px;
+    }
+
+    .board{
+      background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(248,250,252,.96));
+      border:1px solid #e5e7eb;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      padding:16px;
+    }
+
+    .board-title{
+      font-family:ui-monospace,monospace;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.22em;
+      color:#6b7280;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .board-title::before{
+      content:"";
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      border:2px solid var(--line);
+    }
+
+    .roadmap{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+
+    @media (max-width:1180px){
+      .roadmap{grid-template-columns:1fr}
+    }
+
+    .group{
+      position:relative;
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 20px rgba(15,23,42,.05);
+      padding:14px;
+      overflow:hidden;
+    }
+
+    .group::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:var(--line);
+    }
+
+    .group-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      padding-top:4px;
+    }
+
+    .group-title-pill{
+      font-family:ui-monospace,monospace;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.20em;
+      color:#111827;
+      border:1px solid #111827;
+      background:#fff;
+      padding:7px 12px;
+      border-radius:999px;
+    }
+
+    .group-sub{
+      font-family:ui-monospace,monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      color:#9ca3af;
+      white-space:nowrap;
+    }
+
+    .cards{
+      display:grid;
+      gap:14px;
+      grid-template-columns:repeat(1,minmax(0,1fr));
+    }
+
+    .cards.two{
+      grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .cards.three{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    @media (max-width:900px){
+      .cards.two,.cards.three{grid-template-columns:1fr}
+    }
+
+    .card{
+      position:relative;
+      border:1px solid #e5e7eb;
+      background:#fff;
+      border-radius:18px;
+      box-shadow:0 10px 20px rgba(15,23,42,.06);
+      padding:14px 14px 13px;
+      overflow:hidden;
+      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 14px 30px rgba(15,23,42,.14);
+      border-color:var(--line);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,0));
+      pointer-events:none;
+    }
+
+    .card .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    .num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:34px;
+      height:34px;
+      padding:0 11px;
+      border-radius:999px;
+      border:1px solid #111827;
+      background:#fff;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.08em;
+      flex:none;
+    }
+
+    .tag{
+      font-family:ui-monospace,monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#111827;
+      text-align:right;
+      line-height:1.35;
+    }
+
+    .title{
+      font-size:18px;
+      line-height:1.08;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      white-space:pre-line;
+      margin:0 0 10px 0;
+    }
+
+    .body{
+      font-size:13.5px;
+      line-height:1.55;
+      color:#374151;
+      display:grid;
+      gap:10px;
+    }
+
+    .block{
+      border-left:3px solid var(--accent);
+      padding-left:10px;
+    }
+
+    .label{
+      font-family:ui-monospace,monospace;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      color:#111827;
+      font-weight:800;
+      margin-bottom:4px;
+    }
+
+    .value{
+      font-size:13.5px;
+      line-height:1.5;
+      color:#374151;
+    }
+
+    .list{
+      margin:6px 0 0 18px;
+      padding:0;
+    }
+
+    .list li{
+      margin:3px 0;
+    }
+
+    .c1{--accent:#f97373}
+    .c2{--accent:#f59e0b}
+    .c3{--accent:#3b82f6}
+    .c4{--accent:#22c55e}
+    .c5{--accent:#ec4899}
+    .c6{--accent:#6366f1}
+    .c7{--accent:#0ea5e9}
+    .c8{--accent:#f97316}
+    .c9{--accent:#eab308}
+    .c10{--accent:#16a34a}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú">
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Bioenergía del Perú</span>
+          <span class="brand-tag">Roadmap de decisiones · Pitahaya Perú – Europa</span>
+        </div>
+      </div>
+      <div class="kicker">Proyecto estratégico · reunión con Gralsen</div>
+      <h1>Roadmap de decisiones · pitahaya Perú – Europa</h1>
+      <div class="subtitle">
+        Cada tarjeta contiene el contenido completo del punto para poder leerse sin abrir paneles secundarios.
+      </div>
+    </div>
+
+    <section class="board">
+      <div class="board-title">Tablero completo</div>
+
+      <div class="roadmap">
+        <div class="group">
+          <div class="group-head">
+            <div class="group-title-pill">Producción</div>
+            <div class="group-sub">Puntos 01 · 02</div>
+          </div>
+          <div class="cards two">
+            <article class="card c1">
+              <div class="top">
+                <div class="num">01</div>
+                <div class="tag">225 ton<br>objetivo inicial</div>
+              </div>
+              <h3 class="title">Capacidad<br>de producción</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Situación</div>
+                  <div class="value">El productor estima poder asegurar inicialmente 15 hectáreas de pitahaya variedad American Beauty (pulpa roja), con un rendimiento promedio esperado de 15 toneladas por hectárea.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Volumen estimado</div>
+                  <div class="value">Eso representa un volumen objetivo aproximado de 225 toneladas para la campaña.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Propuesta Bio</div>
+                  <div class="value">Comenzar con un volumen conservador que pueda cumplirse con total confiabilidad e ir incrementándolo en campañas posteriores conforme se consolide la operación.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Para definir con Gralsen</div>
+                  <ul class="list">
+                    <li>Volumen objetivo.</li>
+                    <li>Tamaños / calibres.</li>
+                    <li>Planificación de campaña.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c2">
+              <div class="top">
+                <div class="num">02</div>
+                <div class="tag">Definir<br>antes de octubre</div>
+              </div>
+              <h3 class="title">Condiciones<br>comerciales</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Qué necesitamos</div>
+                  <div class="value">Conviene contar entre finales de septiembre y mediados de octubre con una definición preliminar de las principales condiciones comerciales.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Puntos clave</div>
+                  <ul class="list">
+                    <li>Calibres o tamaños de fruta requeridos.</li>
+                    <li>Precio objetivo de compra.</li>
+                    <li>Especificaciones generales de calidad.</li>
+                  </ul>
+                </div>
+                <div class="block">
+                  <div class="label">Por qué ahora</div>
+                  <div class="value">En ese período el productor comienza a recorrer los campos para estimar con mayor precisión la producción disponible, por lo que disponer de estas definiciones facilitará la planificación de la cosecha.</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-head">
+            <div class="group-title-pill">Piloto</div>
+            <div class="group-sub">Puntos 03 · 04</div>
+          </div>
+          <div class="cards two">
+            <article class="card c3">
+              <div class="top">
+                <div class="num">03</div>
+                <div class="tag">Primera<br>quincena enero 2027</div>
+              </div>
+              <h3 class="title">Embarque<br>piloto</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Propuesta</div>
+                  <div class="value">Considerando que la cosecha comenzaría en enero de 2027, se propone realizar un embarque piloto durante la primera quincena de enero mediante transporte aéreo.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Qué permitirá validar</div>
+                  <ul class="list">
+                    <li>Calidad de fruta.</li>
+                    <li>Comportamiento durante el transporte.</li>
+                    <li>Eficiencia del proceso de packing.</li>
+                    <li>Cadena de frío.</li>
+                    <li>Recepción del producto en destino.</li>
+                  </ul>
+                </div>
+                <div class="block">
+                  <div class="label">Tiempo de revisión</div>
+                  <div class="value">Al tratarse de un embarque aéreo, los resultados podrán evaluarse aproximadamente dentro de la primera semana posterior al envío.</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c4">
+              <div class="top">
+                <div class="num">04</div>
+                <div class="tag">Si el piloto<br>es exitoso</div>
+              </div>
+              <h3 class="title">Escalamiento<br>del programa</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Escenario</div>
+                  <div class="value">Si los resultados del piloto son satisfactorios para ambas partes, el productor está en condiciones de programar posteriormente embarques semanales.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Resultado buscado</div>
+                  <div class="value">Permitir construir un programa de abastecimiento estable durante la campaña.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Enfoque</div>
+                  <div class="value">Escalamiento ordenado, sin saltar etapas, priorizando confiabilidad y continuidad del suministro.</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="group" style="grid-column:1 / -1;">
+          <div class="group-head">
+            <div class="group-title-pill">Operación</div>
+            <div class="group-sub">Puntos 05 · 06 · 07</div>
+          </div>
+          <div class="cards three">
+            <article class="card c5">
+              <div class="top">
+                <div class="num">05</div>
+                <div class="tag">Transparencia<br>inicial</div>
+              </div>
+              <h3 class="title">Control de<br>calidad</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Observación</div>
+                  <div class="value">El uso de un Surveyor independiente para verificar la calidad del producto antes del embarque no es una práctica habitual en este tipo de operaciones.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Propuesta</div>
+                  <div class="value">Puede implementarse durante las primeras exportaciones para brindar mayor transparencia y confianza.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Definir juntos</div>
+                  <ul class="list">
+                    <li>Alcance de inspecciones.</li>
+                    <li>Parámetros de calidad a controlar.</li>
+                    <li>Esquema operativo más conveniente.</li>
+                    <li>Documentación requerida, tomando como referencia modelos utilizados actualmente en operaciones similares desde Ecuador.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c6">
+              <div class="top">
+                <div class="num">06</div>
+                <div class="tag">Validación<br>operativa</div>
+              </div>
+              <h3 class="title">Validación<br>del proceso</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Propuesta del productor</div>
+                  <div class="value">Compartir para revisión el flujo completo de operaciones, desde el ingreso de la fruta a la planta procesadora hasta su despacho al aeropuerto.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Objetivo</div>
+                  <ul class="list">
+                    <li>Validar tiempos de proceso.</li>
+                    <li>Revisar cadena de manipulación.</li>
+                    <li>Confirmar controles de calidad.</li>
+                    <li>Verificar cumplimiento de estándares requeridos.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c7">
+              <div class="top">
+                <div class="num">07</div>
+                <div class="tag">Mantener<br>temperatura óptima</div>
+              </div>
+              <h3 class="title">Manejo de<br>cadena de frío</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Recomendación</div>
+                  <div class="value">Una vez finalizado el proceso de empaque, la fruta debe permanecer en almacenamiento refrigerado durante el tiempo disponible que permita la procesadora.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Objetivo</div>
+                  <div class="value">Mantener la temperatura óptima hasta su traslado al almacén del aeropuerto y preservar la calidad del producto durante toda la cadena logística.</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="group" style="grid-column:1 / -1;">
+          <div class="group-head">
+            <div class="group-title-pill">Crecimiento</div>
+            <div class="group-sub">Puntos 08 · 09 · 10</div>
+          </div>
+          <div class="cards three">
+            <article class="card c8">
+              <div class="top">
+                <div class="num">08</div>
+                <div class="tag">Piloto<br>presentación</div>
+              </div>
+              <h3 class="title">Presentación<br>comercial</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Para el piloto</div>
+                  <div class="value">La alternativa más práctica sería utilizar etiquetas sobre cajas estándar.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Decisión pendiente</div>
+                  <div class="value">La decisión final respecto a etiquetas, diseño de cajas, certificaciones e información impresa quedará sujeta a las especificaciones y aprobación de Gralsen.</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c9">
+              <div class="top">
+                <div class="num">09</div>
+                <div class="tag">Aprovechar<br>más producto</div>
+              </div>
+              <h3 class="title">Fruta fuera de<br>especificación</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Oportunidad</div>
+                  <div class="value">Durante la conversación surgió la posibilidad de destinar la fruta que no cumpla con los requisitos comerciales para exportación en fresco, principalmente por tamaño, a elaboración de productos congelados o procesados.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Interés adicional</div>
+                  <div class="value">Existe interés por conocer la planta donde eventualmente se realizaría este proceso, por lo que conviene presentar esta alternativa como una posible línea de desarrollo futuro.</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card c10">
+              <div class="top">
+                <div class="num">10</div>
+                <div class="tag">Portafolio<br>futuro</div>
+              </div>
+              <h3 class="title">Desarrollo de<br>otras frutas</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Interés del productor</div>
+                  <div class="value">Además de la pitahaya, manifestó interés en desarrollar otras frutas exóticas que considera con alto potencial de crecimiento en el mercado europeo.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Propuesta</div>
+                  <div class="value">Recopilar información técnica, fotografías y antecedentes comerciales de estas especies para analizarlas conjuntamente en una etapa posterior, una vez consolidado el programa de pitahaya.</div>
+                </div>
+                <div class="block">
+                  <div class="label">Objetivo estratégico</div>
+                  <div class="value">Identificar oportunidades de crecimiento futuro que permitan ampliar el portafolio de productos exportados desde Perú.</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="group" style="grid-column:1 / -1;">
+          <div class="group-head">
+            <div class="group-title-pill">Próximos temas</div>
+            <div class="group-sub">Agenda complementaria</div>
+          </div>
+          <div class="cards">
+            <article class="card c1">
+              <div class="top">
+                <div class="num">+</div>
+                <div class="tag">Agenda<br>de trabajo</div>
+              </div>
+              <h3 class="title">Próximos<br>temas de trabajo</h3>
+              <div class="body">
+                <div class="block">
+                  <div class="label">Revisar conjuntamente</div>
+                  <ul class="list">
+                    <li>La estructura completa de costos desde el productor hasta el aeropuerto, incluyendo el detalle de la propuesta de la procesadora para dar total transparencia al origen de cada costo.</li>
+                    <li>El esquema operativo y de representación local que Bio brindará durante el desarrollo del proyecto.</li>
+                    <li>La definición de las condiciones FOB y del modelo de trabajo para las futuras exportaciones.</li>
+                    <li>Los avances relacionados con la disponibilidad de terrenos en Olmos como parte del desarrollo futuro del proyecto.</li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</body>
+</html>

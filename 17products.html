@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bioenergía · Atlas radial</title>
+<style>
+  :root{
+    --bg:#f5f5f4;
+    --ink:#0f172a;
+    --muted:#6b7280;
+    --line:#cbd5f5;
+
+    --accent:#f97316;   /* naranja pétalos */
+    --accent-soft:#fff3e0;
+    --accent2:#0ea5e9;  /* azul stats */
+    --accent3:#22c55e;  /* verde detalle */
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+    background:radial-gradient(circle at 0% 0%, #ffffff 0, #f5f5f4 55%, #e5e7eb 100%);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.16;
+    mix-blend-mode:multiply;
+    background-image:
+      linear-gradient(0deg,rgba(148,163,184,.08) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(148,163,184,.06) 1px,transparent 1px);
+    background-size:28px 28px,28px 28px;
+    z-index:-1;
+  }
+
+  .page{
+    width:min(1760px, calc(100vw - 40px));
+    margin:20px auto 32px;
+  }
+
+  /* CABECERA */
+
+  .hero{
+    border-radius:22px;
+    background:#ffffff;
+    box-shadow:0 18px 40px rgba(15,23,42,.12);
+    padding:16px 18px 18px;
+    margin-bottom:20px;
+    border:1px solid rgba(15,23,42,.06);
+  }
+
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    align-items:flex-start;
+  }
+
+  .brand{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-bottom:6px;
+  }
+
+  .brand-mark{
+    width:134px;
+    height:56px;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid rgba(15,23,42,.08);
+    background:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .brand-mark img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+
+  .brand-name{
+    font-size:13px;
+    letter-spacing:.20em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:#111827;
+  }
+
+  .brand-tag{
+    font-size:10px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:#6b7280;
+    margin-top:3px;
+  }
+
+  .hero-meta{
+    text-align:right;
+    font-size:10px;
+    color:#9ca3af;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  .kicker{
+    font-size:11px;
+    letter-spacing:.26em;
+    text-transform:uppercase;
+    color:#9ca3af;
+    margin:8px 0 6px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  h1{
+    margin:0;
+    font-size:26px;
+    line-height:1.12;
+    text-transform:uppercase;
+    letter-spacing:-.03em;
+    color:#111827;
+  }
+
+  h1 .accent{
+    color:#b91c1c;
+  }
+
+  .subtitle{
+    margin-top:8px;
+    max-width:860px;
+    color:#4b5563;
+    font-size:13px;
+    line-height:1.6;
+  }
+
+  /* PANEL PRINCIPAL */
+
+  .wheel-panel{
+    margin-top:6px;
+    border-radius:24px;
+    border:1px solid rgba(148,163,184,.55);
+    background:
+      radial-gradient(circle at 0% 0%, rgba(254,243,199,0.7) 0, transparent 55%),
+      radial-gradient(circle at 100% 0%, rgba(191,219,254,0.8) 0, transparent 55%),
+      radial-gradient(circle at 50% 110%, rgba(209,250,229,0.9) 0, transparent 70%),
+      #f9fafb;
+    box-shadow:0 24px 60px rgba(15,23,42,.18);
+    padding:16px 18px 20px;
+    position:relative;
+  }
+
+  .panel-header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:8px;
+  }
+
+  .panel-title-group{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+
+  .panel-kicker{
+    font-size:10px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:#9ca3af;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+
+  .panel-title{
+    font-size:14px;
+    letter-spacing:.20em;
+    text-transform:uppercase;
+    color:#111827;
+    font-weight:600;
+  }
+
+  .panel-sub{
+    font-size:11px;
+    color:#6b7280;
+  }
+
+  .controls{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .btn{
+    border-radius:999px;
+    border:1px solid rgba(148,163,184,.9);
+    background:#ffffff;
+    padding:6px 14px;
+    font-size:10px;
+    color:#111827;
+    cursor:pointer;
+    box-shadow:0 10px 20px rgba(15,23,42,.10);
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+
+  .btn:hover{
+    border-color:var(--accent);
+    color:#b45309;
+    background:#fff7ed;
+  }
+
+  .legend-chips{
+    display:flex;
+    gap:10px;
+    margin-left:8px;
+  }
+
+  .chip{
+    display:flex;
+    align-items:center;
+    gap:4px;
+    font-size:10px;
+    color:#4b5563;
+  }
+
+  .chip-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+  }
+
+  .chip-dot.orange{background:#f97316;}
+  .chip-dot.red{background:#ef4444;}
+  .chip-dot.green{background:#22c55e;}
+
+  /* CANVAS */
+
+  .canvas{
+    position:relative;
+    margin-top:6px;
+    min-height:540px;
+  }
+
+  .wheel-wrap{
+    position:relative;
+    width:min(1180px, 100%);
+    margin:0 auto;
+    aspect-ratio:1/1;
+    max-height:78vh;
+  }
+
+  .wheel{
+    position:absolute;
+    inset:0;
+    margin:auto;
+    border-radius:50%;
+  }
+
+  .ring{
+    position:absolute;
+    border-radius:50%;
+    border:1px dashed rgba(148,163,184,.45);
+  }
+
+  .ring.r1{inset:14%;}
+  .ring.r2{inset:26%;}
+  .ring.r3{inset:38%;border-style:solid;border-color:rgba(148,163,184,.35);}
+  .ring.r4{inset:52%;border-style:solid;border-color:rgba(148,163,184,.25);}
+
+  .circle-outline{
+    position:absolute;
+    border-radius:50%;
+    border:1px solid var(--line);
+    box-shadow:0 0 0 1px rgba(148,163,184,.25);
+  }
+
+  .center{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    width:23%;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(249,115,22,.18) 0, transparent 55%),
+      radial-gradient(circle at 90% 90%, rgba(14,165,233,.18) 0, transparent 55%),
+      #ffffff;
+    border:1px solid rgba(148,163,184,.95);
+    box-shadow:0 22px 42px rgba(15,23,42,.20);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:3;
+  }
+
+  .center-img{
+    width:82%;
+    aspect-ratio:1/1;
+    border-radius:999px;
+    overflow:hidden;
+    border:1px solid rgba(148,163,184,.9);
+    background:#f9fafb;
+  }
+
+  .center-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  /* pétalos */
+
+  .item{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform-origin:center;
+    z-index:4;
+    pointer-events:none;
+  }
+
+  .item-inner{
+    display:flex;
+    align-items:center;
+    pointer-events:auto;
+  }
+
+  .item-dot-wrap{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .item-dot-halo{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:1px solid rgba(248,113,22,.35);
+  }
+
+  .item-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px rgba(249,115,22,.18);
+    flex:none;
+  }
+
+  .item-stem{
+    width:16px;
+    height:1px;
+    background:rgba(148,163,184,.8);
+    margin-left:4px;
+  }
+
+  .item-label{
+    margin-left:8px;
+    padding:3px 9px;
+    border-radius:999px;
+    background:#ffffff;
+    border:1px solid rgba(148,163,184,.8);
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:10px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    color:#111827;
+    box-shadow:0 8px 18px rgba(15,23,42,.10);
+    cursor:pointer;
+    user-select:none;
+  }
+
+  .item.active .item-label{
+    border-color:var(--accent);
+    color:#b45309;
+    background:#fff7ed;
+  }
+
+  .item.dim .item-label{
+    opacity:.40;
+  }
+
+  .item-id{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform-origin:center;
+    font-size:9px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#9ca3af;
+    pointer-events:none;
+  }
+
+  /* LEYENDA */
+
+  .legend{
+    position:absolute;
+    right:0;
+    bottom:0;
+    max-width:260px;
+    width:40%;
+    min-width:220px;
+  }
+
+  .detail{
+    border-radius:14px;
+    border:1px solid rgba(148,163,184,.95);
+    background:#ffffff;
+    box-shadow:0 16px 36px rgba(15,23,42,.20);
+    padding:8px 10px;
+    font-size:12px;
+  }
+
+  .detail h2{
+    margin:0 0 4px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:9px;
+    letter-spacing:.20em;
+    text-transform:uppercase;
+    color:#6b7280;
+  }
+
+  .detail-main{
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:5px;
+    color:#111827;
+  }
+
+  .mini-table{
+    border-radius:10px;
+    border:1px solid rgba(229,231,235,1);
+    background:#f9fafb;
+    overflow:hidden;
+  }
+
+  .row{
+    display:grid;
+    grid-template-columns:64px 1fr;
+    gap:6px;
+    align-items:center;
+    padding:4px 7px;
+    border-bottom:1px solid rgba(229,231,235,1);
+  }
+
+  .row:last-child{border-bottom:none}
+
+  .key{
+    font-size:9px;
+    letter-spacing:.10em;
+    text-transform:uppercase;
+    color:#9ca3af;
+  }
+
+  .val{
+    font-variant-numeric:tabular-nums;
+    color:#111827;
+    font-size:11px;
+  }
+
+  .val.accent-blue{color:var(--accent2);}
+  .val.accent-green{color:var(--accent3);}
+  .val.accent-orange{color:#b45309;}
+
+  .thumb{
+    width:100%;
+    height:52px;
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid rgba(209,213,219,1);
+    background:#e5e7eb;
+  }
+
+  .thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .link-btn{
+    margin-top:5px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:var(--accent);
+    color:#111827;
+    text-decoration:none;
+    font-size:9px;
+    box-shadow:0 8px 20px rgba(248,113,22,.35);
+  }
+
+  .link-btn span{
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    font-size:8px;
+  }
+
+  @media(max-width:900px){
+    .wheel-wrap{width:100%;aspect-ratio:1/1;}
+    .center{width:28%;}
+    .legend{
+      position:static;
+      margin-top:10px;
+      width:100%;
+      max-width:320px;
+      margin-left:auto;
+    }
+    .canvas{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+  }
+
+  @media(max-width:640px){
+    .row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div class="hero-top">
+      <div>
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="https://64.media.tumblr.com/86b839be0dc6ada34e5927f873a0c772/c4b9a38306dca12a-48/s1280x1920/163790209bbe1b58467ad30d0ed447155a28fc51.pnj" alt="Logo Bioenergía del Perú">
+          </div>
+          <div>
+            <div class="brand-name">Bioenergía del Perú</div>
+            <div class="brand-tag">Atlas radial · 17 productos</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-meta">
+        Ficha editorial · Bloque 1<br/>
+        Versión 0.3 · Borrador
+      </div>
+    </div>
+
+    <div class="kicker">Exploración radial</div>
+    <h1>Un atlas <span class="accent">editorial</span> para seleccionar productos</h1>
+    <div class="subtitle">
+      Cada pétalo corresponde a un producto procesado. El círculo central muestra la fruta activa;
+      la ficha lateral añade un resumen mínimo de datos comerciales.
+    </div>
+  </header>
+
+  <section class="wheel-panel">
+    <div class="panel-header">
+      <div class="panel-title-group">
+        <div class="panel-kicker">Bloque 1 · Productos</div>
+        <div class="panel-title">Rueda de exportaciones</div>
+        <div class="panel-sub">Distribución radial de 17 referencias clave del portafolio.</div>
+      </div>
+
+      <div class="controls">
+        <div class="legend-chips">
+          <div class="chip"><span class="chip-dot orange"></span><span>Pétalos · Producto</span></div>
+          <div class="chip"><span class="chip-dot red"></span><span>FOB (USD m)</span></div>
+          <div class="chip"><span class="chip-dot green"></span><span>Procesado (t)</span></div>
+        </div>
+        <button class="btn" id="prevBtn">← GIRAR</button>
+        <button class="btn" id="nextBtn">GIRAR →</button>
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="wheel-wrap">
+        <div class="wheel" id="wheel">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <div class="ring r4"></div>
+
+          <div class="circle-outline" id="circleOutline"></div>
+
+          <div class="center">
+            <div class="center-img">
+              <img id="centerImage" src="https://via.placeholder.com/800x800?text=Palta" alt="Palta">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="legend">
+        <section class="detail">
+          <h2>Producto seleccionado</h2>
+          <div class="detail-main" id="detailMain">01 · Palta · Avocado</div>
+          <div class="mini-table">
+            <div class="row"><div class="key">ID</div><div class="val" id="cellId">01</div></div>
+            <div class="row"><div class="key">Nombre</div><div class="val" id="cellName">Palta · Avocado</div></div>
+            <div class="row">
+              <div class="key">Imagen</div>
+              <div class="thumb"><img id="cellImage" src="https://via.placeholder.com/800x800?text=Palta" alt="Palta"></div>
+            </div>
+            <div class="row"><div class="key">FOB</div><div class="val accent-orange" id="cellFob">—</div></div>
+            <div class="row"><div class="key">Fresco</div><div class="val accent-blue" id="cellFresh">—</div></div>
+            <div class="row"><div class="key">% Proc.</div><div class="val accent-green" id="cellPct">—</div></div>
+            <div class="row"><div class="key">Proc.</div><div class="val accent-green" id="cellProc">—</div></div>
+          </div>
+          <a class="link-btn" id="detailLink" href="#"><span>VER FICHA</span>→</a>
+        </section>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<script>
+// ------------------ DATOS ------------------
+const products = [
+  { id: 1,  key:"palta",      es:"Palta",             en:"Avocado",        href:"producto-palta.html" },
+  { id: 2,  key:"mango",      es:"Mango",             en:"Mango",          href:"producto-mango.html" },
+  { id: 3,  key:"arandanos",  es:"Arándanos",         en:"Blueberries",    href:"producto-arandanos.html" },
+  { id: 4,  key:"fresa",      es:"Fresa",             en:"Strawberry",     href:"producto-fresa.html" },
+  { id: 5,  key:"jengibre",   es:"Jengibre",          en:"Ginger",         href:"producto-jengibre.html" },
+  { id: 6,  key:"camu",       es:"Camu Camu",         en:"Camu Camu",      href:"producto-camu.html" },
+  { id: 7,  key:"maracuya",   es:"Maracuyá",          en:"Passion Fruit",  href:"producto-maracuya.html" },
+  { id: 8,  key:"uva",        es:"Uva",               en:"Grapes",         href:"producto-uva.html" },
+  { id: 9,  key:"granada",    es:"Granada",           en:"Pomegranate",    href:"producto-granada.html" },
+  { id:10,  key:"aceitunas",  es:"Aceitunas",         en:"Olives",         href:"producto-aceitunas.html" },
+  { id:11,  key:"brasil",     es:"Nueces del Brasil", en:"Brazil Nuts",    href:"producto-nueces-brasil.html" },
+  { id:12,  key:"limon",      es:"Limón / Lima",      en:"Lemon / Lime",   href:"producto-limon.html" },
+  { id:13,  key:"pina",       es:"Piña",              en:"Pineapple",      href:"producto-pina.html" },
+  { id:14,  key:"esparrago",  es:"Espárrago",         en:"Asparagus",      href:"producto-esparrago.html" },
+  { id:15,  key:"mandarina",  es:"Mandarina",         en:"Mandarin",       href:"producto-mandarina.html" },
+  { id:16,  key:"naranja",    es:"Naranja",           en:"Orange",         href:"producto-naranja.html" },
+  { id:17,  key:"pitahaya",   es:"Pitahaya",          en:"Dragon Fruit",   href:"producto-pitahaya.html" }
+];
+
+// AQUÍ PONES TUS URLs REALES, UNA POR PRODUCTO
+const imageMap = {
+  palta:    "https://64.media.tumblr.com/8d73fc0ee02f2543c81e710c132f83bc/f6090dab02d860d9-b5/s2048x3072/04bcd70bbf0b9bb9f8c0bf4be02c3cf413cd1a18.pnj",
+  mango:    "https://64.media.tumblr.com/377c22cbe8b59071ef8d15c24a364d2d/f6090dab02d860d9-3a/s2048x3072/5df09561bb8702b7f30f1f6dd4f4fb60ea644c24.pnj",
+  arandanos:"https://64.media.tumblr.com/6479291b63c02d20312a5bda775849c1/f6090dab02d860d9-a1/s2048x3072/3aceeaa2ebf364937e5b77069b67a9e2eff0a342.pnj",
+  fresa:    "https://64.media.tumblr.com/e2b3799d1e0ab99d2ed005f191dad87e/f6090dab02d860d9-5a/s2048x3072/e7644e88e4574d3cf3277e3766a58adbcfc9eef6.pnj",
+  jengibre: "https://64.media.tumblr.com/9b397c232bf687debae47a8503024586/f6090dab02d860d9-38/s2048x3072/3eb0ee0e5911bcd7a95a77b0d9aae3beb003f7c2.pnj",
+  camu:     "https://64.media.tumblr.com/78804a7637bcf96de506b5a160dcce6c/f6090dab02d860d9-5c/s2048x3072/5b1cc3da0a44edb89a683267c7d00b57289bd215.pnj",
+  maracuya: "https://64.media.tumblr.com/5d5dc35a6c40f28b2c9a2064f88f0616/f6090dab02d860d9-7f/s2048x3072/ffe27c3c4a44be0e22f198c2d2dc7b6c4c1b857c.pnj",
+  uva:      "https://64.media.tumblr.com/2ecd55f7e9337e2a92722f1d33c632b1/f6090dab02d860d9-46/s2048x3072/1fbec6901b67df57c5e7a0d3150e97f33eba74ce.pnj",
+  granada:  "https://64.media.tumblr.com/1b24dc33ac42b0c74480856e268c4983/f6090dab02d860d9-f9/s2048x3072/1a6d6e9ce7edd53c23f92277fe6130e7b69f9b5e.pnj",
+  aceitunas:"https://64.media.tumblr.com/45b631d378c8b69b9c73ee53cf10f416/f6090dab02d860d9-9d/s2048x3072/94f1c8679366579ecc8afa0603cc34bcb113fef9.pnj",
+  brasil:   "https://64.media.tumblr.com/411a0981d10d06a3d8205b87f12f4c1c/f6090dab02d860d9-c1/s2048x3072/9db9edfcbfa125ed8e1e9cfcbb4976786a4e5d8a.pnj",
+  limon:    "https://64.media.tumblr.com/68fc40a4808f3aa3db31587daacf3e86/f6090dab02d860d9-50/s2048x3072/054711b8389da2e80ef4f2eabb0a339156533565.pnj",
+  pina:     "https://64.media.tumblr.com/43b97f68366fbe2ad690554fe259eb19/f6090dab02d860d9-9b/s2048x3072/bfe83c20b2dfde008874e5b533ad81425af9de52.pnj",
+  esparrago:"https://64.media.tumblr.com/7d3ff1d443096d92a4933395eadd7231/f6090dab02d860d9-a6/s2048x3072/43a3660d6aae5040631583df2fb7f1f15f719bd2.pnj",
+  mandarina:"https://64.media.tumblr.com/9c74c74258484191ab6238a5626e00a2/f6090dab02d860d9-5e/s2048x3072/0f9ea6b4272b57338f5096970df67ecc61f92132.pnj",
+  naranja:  "https://64.media.tumblr.com/646f603e64c07728403f27c1f897c9ad/f6090dab02d860d9-78/s2048x3072/dc5e8f0cf87c586bf8cc75f4fdd8ec9ec5454c6f.pnj",
+  pitahaya: "https://64.media.tumblr.com/9af538d6dafcf4a17c33eba503b09e8c/f6090dab02d860d9-6d/s2048x3072/350f7eef13d43df87316627b04894801d9def224.pnj"
+};
+
+const metrics = {
+  palta:[72.4,42000,35,14700], mango:[31.8,31000,30,9300], arandanos:[248.1,55000,25,13750],
+  fresa:[21.6,18000,40,7200], jengibre:[9.2,9000,45,4050], camu:[6.7,6500,60,3900],
+  maracuya:[18.9,12000,50,6000], uva:[198.2,78000,20,15600], granada:[28.4,24000,35,8400],
+  aceitunas:[14.3,15000,30,4500], brasil:[22.7,19000,55,10450], limon:[19.5,22000,25,5500],
+  pina:[38.1,36000,40,14400], esparrago:[145.8,47000,15,7050], mandarina:[29.7,28000,30,8400],
+  naranja:[35.4,33000,35,11550], pitahaya:[44.6,225000,65,146250]
+};
+
+// ------------------ DOM ------------------
+const wheel = document.getElementById('wheel');
+const circleOutline = document.getElementById('circleOutline');
+const centerImage = document.getElementById('centerImage');
+const detailMain = document.getElementById('detailMain');
+const cellId = document.getElementById('cellId');
+const cellName = document.getElementById('cellName');
+const cellImage = document.getElementById('cellImage');
+const cellFob = document.getElementById('cellFob');
+const cellFresh = document.getElementById('cellFresh');
+const cellPct = document.getElementById('cellPct');
+const cellProc = document.getElementById('cellProc');
+const detailLink = document.getElementById('detailLink');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+let angleOffset = -90;
+let activeId = 1;
+
+// ------------------ RENDER RUEDA ------------------
+function renderWheel(){
+  wheel.querySelectorAll('.item').forEach(el => el.remove());
+  wheel.querySelectorAll('.item-id').forEach(el => el.remove());
+
+  const rect = wheel.getBoundingClientRect();
+  const size = Math.min(rect.width, rect.height);
+  const n = products.length;
+
+  const radius = size * 0.39;
+  const labelOffset = 16;
+
+  const circleSize = radius * 2;
+  circleOutline.style.width = circleSize + 'px';
+  circleOutline.style.height = circleSize + 'px';
+  circleOutline.style.left = (rect.width - circleSize) / 2 + 'px';
+  circleOutline.style.top  = (rect.height - circleSize) / 2 + 'px';
+
+  products.forEach((p, i) => {
+    const aDeg = (360 / n) * i + angleOffset;
+
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.dataset.id = p.id;
+    el.style.transform = `
+      translate(-50%, -50%)
+      rotate(${aDeg}deg)
+      translate(${radius}px, 0)
+    `;
+
+    const inner = document.createElement('div');
+    inner.className = 'item-inner';
+    inner.style.transform = `
+      rotate(${-aDeg}deg)
+      translate(${labelOffset}px, 0)
+    `;
+
+    inner.innerHTML = `
+      <span class="item-dot-wrap">
+        <span class="item-dot-halo"></span>
+        <span class="item-dot"></span>
+      </span>
+      <span class="item-stem"></span>
+      <span class="item-label">${p.es}</span>
+    `;
+
+    const [fob] = metrics[p.key];
+const halo = inner.querySelector('.item-dot-halo');
+const scale = 0.8 + Math.min(fob / 250, 1) * 0.6;
+halo.style.transform = `scale(${scale})`;
+halo.style.opacity = fob > 0 ? 1 : 0.7;
+
+inner.addEventListener('mouseenter', () => setActive(p.id));
+inner.addEventListener('click', () => {
+  setActive(p.id);
+  window.location.href = p.href;
+});
+
+el.appendChild(inner);
+wheel.appendChild(el);
+
+// numerito en el anillo exterior
+const idLabel = document.createElement('div');
+idLabel.className = 'item-id';
+idLabel.textContent = String(p.id).padStart(2,'0');
+
+const idRadius = radius + 28;
+idLabel.style.transform = `
+  translate(-50%, -50%)
+  rotate(${aDeg}deg)
+  translate(${idRadius}px, 0)
+  rotate(${-aDeg}deg)
+`;
+
+wheel.appendChild(idLabel);
+});
+
+setActive(activeId);
+}
+
+// ------------------ ESTADO ACTIVO ------------------
+function setActive(id){
+activeId = id;
+const p = products.find(x => x.id === id);
+if(!p) return;
+
+document.querySelectorAll('.item').forEach(el => {
+const isActive = Number(el.dataset.id) === id;
+el.classList.toggle('active', isActive);
+el.classList.toggle('dim', !isActive);
+});
+
+const [fob,fresh,pct,proc] = metrics[p.key];
+const idStr = String(p.id).padStart(2,'0');
+
+centerImage.src = imageMap[p.key];
+centerImage.alt = p.es;
+
+detailMain.textContent = `${idStr} · ${p.es} · ${p.en}`;
+cellId.textContent = idStr;
+cellName.textContent = `${p.es} · ${p.en}`;
+cellImage.src = imageMap[p.key];
+cellImage.alt = p.es;
+cellFob.textContent = `${fob.toFixed(1)} USD m`;
+cellFresh.textContent = `${fresh.toLocaleString('es-ES')} t`;
+cellPct.textContent = `${pct}%`;
+cellProc.textContent = `${proc.toLocaleString('es-ES')} t`;
+detailLink.href = p.href;
+}
+
+// ------------------ CONTROLES DE GIRO ------------------
+prevBtn.addEventListener('click', () => {
+angleOffset -= 360 / products.length;
+renderWheel();
+});
+
+nextBtn.addEventListener('click', () => {
+angleOffset += 360 / products.length;
+renderWheel();
+});
+
+// ------------------ INIT ------------------
+window.addEventListener('resize', renderWheel);
+window.addEventListener('load', renderWheel);
+</script>
+</body>
+</html>
